@@ -12,7 +12,7 @@ public class ATask extends Thread {
      * A任务定期修改自己的dead标志，dead是一个布尔变量，理论上只要A没有死，
      * 那么dead肯定是周期变化的（和心跳概念差不多）
      */
-    public boolean dead = false;
+    public boolean sign = false;
     Stakeout m;
 
     ATask(Stakeout m) {
@@ -24,15 +24,15 @@ public class ATask extends Thread {
         try {
             for (int i = -3; i <= 5; i++) {
                 int j = 1 / i;   // 人为设置过程中陷阱
-                dead = !dead;  // 活动状态
-                System.out.println("i=" + i + ": status=" + dead);
+                sign = !sign;  // 活动状态
+                System.out.println("i=" + i + ": status=" + sign);
                 try {
                     sleep(2000);
                 } catch (InterruptedException ie) {
                     System.out.println("A is Interrupted!");
                 }
             }
-            m.Keepchecking = false;  //A 正常结束后关闭监控线程
+            m.keepchecking = false;  //A 正常结束后关闭监控线程
             System.out.println("A is Ending M");
         } catch (Exception e) {
             System.out.println("A become Exception!");
