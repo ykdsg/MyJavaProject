@@ -1,6 +1,5 @@
 package com.hz.yk.safethread;
 
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by IntelliJ IDEA.
