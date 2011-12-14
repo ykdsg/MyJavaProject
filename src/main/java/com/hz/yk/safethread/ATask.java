@@ -1,5 +1,7 @@
 package com.hz.yk.safethread;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Created by IntelliJ IDEA.
  * User: yangke
@@ -19,6 +21,11 @@ public class ATask extends Thread {
         m = m;
         start();
     }
+
+    public String getUserName(){
+        return null;
+    }
+
 
     public void run() {
         try {
