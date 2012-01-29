@@ -1,6 +1,7 @@
 package com.hz.yk.concurrent.frame;
 
 /**
+ * 线程对象，封装了并发逻辑
  * Created by IntelliJ IDEA.
  * User: yangke
  * Date: 11-8-21

@@ -9,7 +9,7 @@ package com.hz.yk.safethread;
  * To change this template use File | Settings | File Templates.
  */
 public class Stakeout extends Thread {
-    public static boolean Keepchecking = true;  // 持续监控标志
+    public static boolean keepchecking = true;  // 持续监控标志
     boolean laststatus;     //保存上次监控状态
     int maydeadtimes = 0;  //监控线程可能死亡的计数器
     int maydeadtimeout = 3;//定义判断线程死亡的边界条件
@@ -23,16 +23,16 @@ public class Stakeout extends Thread {
 
     public void run() {
         schedule();
-        while (Keepchecking) {
-            laststatus = a.dead;
+        while (keepchecking) {
+            laststatus = a.sign;
             try {
                 sleep(2000);
             } catch (InterruptedException e) {
                 System.out.println("M is Interrupted!");
             }
-            System.out.println("M read A status = " + a.dead);
+            System.out.println("M read A status = " + a.sign);
             //如果过了一段时间记录的状态与a中的状态相同，说明可能存在线程死亡的情况
-            if (laststatus == a.dead) {
+            if (laststatus == a.sign) {
                 // 线程可能死亡的次数超过设定值
                 if (++maydeadtimes >= maydeadtimeout) {
                     //实际线程死亡的次数

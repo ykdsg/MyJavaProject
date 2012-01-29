@@ -3,6 +3,7 @@ package com.hz.yk.concurrent.frame;
 import java.util.Stack;
 
 /**
+ * 用来存放调用者请求，就是一个并发栈的实现
  * Created by IntelliJ IDEA.
  * User: yangke
  * Date: 11-8-21

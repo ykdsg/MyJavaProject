@@ -11,10 +11,11 @@
     <name>MyjavaExperiment</name>
     <url>http://maven.apache.org</url>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	<properties>
+        <java.version>1.6</java.version>
+        <java.encoding>GBK</java.encoding>
     </properties>
-
+	
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
