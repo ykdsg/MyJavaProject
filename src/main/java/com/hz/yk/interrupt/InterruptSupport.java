@@ -12,6 +12,7 @@ abstract class InterruptSupport implements InterruptAble {
 
     private volatile boolean interrupted = false;
     private Interruptible interruptor = new Interruptible() {
+        @Override
         public void interrupt() {
             interrupted = true;
             //定义了Interruptible事件钩子的处理方法，回调InterruptSupport.this.interrupt()方法，
