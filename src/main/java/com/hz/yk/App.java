@@ -1,19 +1,12 @@
 package com.hz.yk;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Hello world!
  */
 public class App {
     public static void main(String[] args) {
-        String str="";
-        String[] strs=str.split(",");
+        String str="ab06e715bea9f99c0abcd3d3ac9a161401e8507448c3da0d17c455890551e2fe";
 
-        List list=new ArrayList();
-        list.add(null);
-        System.out.print(list.size());
-        System.out.println("Hello World!");
+        System.out.println(str.hashCode());
     }
 }
