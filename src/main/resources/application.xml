@@ -5,5 +5,5 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 http://blog.csdn.net/cutesource/schema/people http://blog.csdn.net/cutesource/schema/people.xsd">
-    <cutesource:people id="cutesource" name="袁志俊" age="27"/>
+    <cutesource:people id="cutesource" name="yk" age="27"/>
 </beans>

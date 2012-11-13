@@ -13,12 +13,8 @@ abstract class InterruptSupport implements InterruptAble {
 
     private volatile boolean interrupted = false;
     private Interruptible interruptor = new Interruptible() {
-<<<<<<< HEAD
-        public void interrupt(Thread thread) {
-=======
         @Override
         public void interrupt() {
->>>>>>> 8e1a9339994054d4b9b34fddd3168f0d9e3edfb4
             interrupted = true;
             //定义了Interruptible事件钩子的处理方法，回调InterruptSupport.this.interrupt()方法，
             // 子类可以集成实现自己的业务逻辑，比如sock流关闭等等。
@@ -31,7 +27,7 @@ abstract class InterruptSupport implements InterruptAble {
             //利用sun提供的blockedOn方法，绑定对应的Interruptible事件处理钩子到指定的Thread上。
             blockedOn(interruptor); // 位置1
             if (Thread.currentThread().isInterrupted()) { // 立马被interrupted
-                interruptor.interrupt(Thread.currentThread());
+                interruptor.interrupt();
             }
             // 执行业务代码
             bussiness();
