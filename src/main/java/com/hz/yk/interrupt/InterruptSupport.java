@@ -13,7 +13,12 @@ abstract class InterruptSupport implements InterruptAble {
 
     private volatile boolean interrupted = false;
     private Interruptible interruptor = new Interruptible() {
+<<<<<<< HEAD
         public void interrupt(Thread thread) {
+=======
+        @Override
+        public void interrupt() {
+>>>>>>> 8e1a9339994054d4b9b34fddd3168f0d9e3edfb4
             interrupted = true;
             //定义了Interruptible事件钩子的处理方法，回调InterruptSupport.this.interrupt()方法，
             // 子类可以集成实现自己的业务逻辑，比如sock流关闭等等。
