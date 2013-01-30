@@ -21,9 +21,9 @@ public class TestAtomicInteger {
     public static void main(String[] agrs) throws InterruptedException{
         final TestAtomicInteger ti=new TestAtomicInteger(100000);
         //搞10个线程去更新
-        ExecutorService es= Executors.newFixedThreadPool(10);
+        ExecutorService es= Executors.newFixedThreadPool(100);
         List<Callable<String>> tasks=new ArrayList<Callable<String>>();
-        for(int i=0;i<10;i++){
+        for(int i=0;i<100;i++){
             tasks.add(new Callable<String>() {
                 public String call() throws Exception{
                     ti.incerment();
@@ -36,6 +36,11 @@ public class TestAtomicInteger {
         es.shutdown();
     }
 
+    /**
+     * 为了确保正常更新，可能得将CAS操作放到for循环里，从语法结构上来看，使用CAS比使用锁更加复杂，得考虑失败的情况
+     * （锁会挂起线程，直到恢复）；但是基于CAS的原子操作，在性能上基本超过了基于锁的计数器，即使只有很小的竞争或者不存在竞争！
+     * @return
+     */
     String incerment(){
         int aii=ai.get();
         Thread.yield();

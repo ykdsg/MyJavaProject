@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * @author yangke
  *         Date: 12-8-30
- *         Time: ÏÂÎç5:18
+ *         Time: ï¿½ï¿½ï¿½ï¿½5:18
  */
 public class Message implements Serializable {
 
@@ -14,6 +14,7 @@ public class Message implements Serializable {
     private long id;
     private String Content;
     private Date date;
+
 
     public String getContent() {
         return Content;
@@ -37,5 +38,16 @@ public class Message implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public static MessageDO toDO(Message message) {
+        if (message == null) {
+            return null;
+        }
+        MessageDO messageDO = new MessageDO();
+        messageDO.setId(message.getId());
+        messageDO.setContent(message.getContent());
+        messageDO.setDate(message.getDate());
+        return messageDO;
     }
 }
