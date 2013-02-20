@@ -40,14 +40,4 @@ public class Message implements Serializable {
         this.id = id;
     }
 
-    public static MessageDO toDO(Message message) {
-        if (message == null) {
-            return null;
-        }
-        MessageDO messageDO = new MessageDO();
-        messageDO.setId(message.getId());
-        messageDO.setContent(message.getContent());
-        messageDO.setDate(message.getDate());
-        return messageDO;
-    }
 }
