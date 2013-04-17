@@ -1,14 +1,18 @@
 package com.hz.yk.concurrent.aqs;
 
+import com.hz.yk.doclet.annotation.DocAPIResource;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 
+
 /**
+ * test
  * @author wuzheng.yk
  *         Date: 13-1-8
  *         Time: обнГ3:41
  */
+@DocAPIResource
 public class BooleanMutex {
     private Sync sync;
 

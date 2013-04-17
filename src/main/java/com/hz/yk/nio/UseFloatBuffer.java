@@ -1,5 +1,6 @@
 package com.hz.yk.nio;
 
+import com.hz.yk.doclet.annotation.DocAPIResource;
 import java.nio.FloatBuffer;
 
 /**
@@ -7,6 +8,7 @@ import java.nio.FloatBuffer;
  *         Date: 11-12-23
  *         Time: обнГ8:49
  */
+@DocAPIResource
 public class UseFloatBuffer {
     static public void main(String args[]) throws Exception {
         FloatBuffer buffer = FloatBuffer.allocate(10);

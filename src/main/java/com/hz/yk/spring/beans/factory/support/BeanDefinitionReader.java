@@ -1,6 +1,5 @@
 package com.hz.yk.spring.beans.factory.support;
 
-import com.hz.yk.spring.core.io.Resource;
 import com.hz.yk.spring.core.io.ResourceLoader;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
 
@@ -12,20 +11,6 @@ import org.springframework.beans.factory.BeanDefinitionStoreException;
 public interface BeanDefinitionReader {
 
 
-    /**
-     * Return the bean factory to register the bean definitions with.
-     * <p>The factory is exposed through the BeanDefinitionRegistry interface,
-     * encapsulating the methods that are relevant for bean definition handling.
-     * @deprecated in favor of the uniformly named {@link #getRegistry()}
-     */
-    BeanDefinitionRegistry getBeanFactory();
-
-    /**
-     * Return the bean factory to register the bean definitions with.
-     * <p>The factory is exposed through the BeanDefinitionRegistry interface,
-     * encapsulating the methods that are relevant for bean definition handling.
-     */
-    BeanDefinitionRegistry getRegistry();
 
     /**
      * Return the resource loader to use for resource locations.
@@ -46,36 +31,8 @@ public interface BeanDefinitionReader {
      */
     ResourceLoader getResourceLoader();
 
-    /**
-     * Return the class loader to use for bean classes.
-     * <p><code>null</code> suggests to not load bean classes eagerly
-     * but rather to just register bean definitions with class names,
-     * with the corresponding Classes to be resolved later (or never).
-     */
-    ClassLoader getBeanClassLoader();
-
-    /**
-     * Return the BeanNameGenerator to use for anonymous beans
-     * (without explicit bean name specified).
-     */
-    BeanNameGenerator getBeanNameGenerator();
 
 
-    /**
-     * Load bean definitions from the specified resource.
-     * @param resource the resource descriptor
-     * @return the number of bean definitions found
-     * @throws BeanDefinitionStoreException in case of loading or parsing errors
-     */
-    int loadBeanDefinitions(Resource resource) throws BeanDefinitionStoreException;
-
-    /**
-     * Load bean definitions from the specified resources.
-     * @param resources the resource descriptors
-     * @return the number of bean definitions found
-     * @throws BeanDefinitionStoreException in case of loading or parsing errors
-     */
-    int loadBeanDefinitions(Resource[] resources) throws BeanDefinitionStoreException;
 
     /**
      * Load bean definitions from the specified resource location.
@@ -89,14 +46,6 @@ public interface BeanDefinitionReader {
      */
     int loadBeanDefinitions(String location) throws BeanDefinitionStoreException;
 
-    /**
-     * Load bean definitions from the specified resource locations.
-     * @param locations the resource locations, to be loaded with the ResourceLoader
-     * (or ResourcePatternResolver) of this bean definition reader
-     * @return the number of bean definitions found
-     * @throws BeanDefinitionStoreException in case of loading or parsing errors
-     */
-    int loadBeanDefinitions(String[] locations) throws BeanDefinitionStoreException;
 
 
 }

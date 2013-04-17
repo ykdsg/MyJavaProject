@@ -156,7 +156,7 @@ public class UrlResource extends AbstractResource{
      * relative to the path of the underlying URL of this resource descriptor.
      * @see java.net.URL#URL(java.net.URL, String)
      */
-    @Override
+//    @Override
     public Resource createRelative(String relativePath) throws MalformedURLException {
         if (relativePath.startsWith("/")) {
             relativePath = relativePath.substring(1);
@@ -169,7 +169,7 @@ public class UrlResource extends AbstractResource{
      * @see java.net.URL#getFile()
      * @see java.io.File#getName()
      */
-    @Override
+//    @Override
     public String getFilename() {
         return new File(this.url.getFile()).getName();
     }

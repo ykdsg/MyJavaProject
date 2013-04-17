@@ -1,5 +1,6 @@
 package com.hz.yk.nio;
 
+import com.hz.yk.doclet.annotation.DocAPIResource;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -11,10 +12,14 @@ import java.nio.charset.Charset;
  *         Date: 11-12-15
  *         Time: 下午9:40
  */
+@DocAPIResource
 public class BaiduReader {
     private Charset charset = Charset.forName("GBK");// 创建GBK字符集
     private SocketChannel channel;
 
+    /**
+     * readHTMLContent
+     */
     public void readHTMLContent() {
         try {
             InetSocketAddress socketAddress = new InetSocketAddress(

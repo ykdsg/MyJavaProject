@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ObjectUtils;
 
 /**
+ * 就是为resource 多加了一个encode
  * @author wuzheng.yk
  *         Date: 13-2-8
  *         Time: 下午11:09

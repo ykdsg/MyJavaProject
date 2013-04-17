@@ -42,23 +42,6 @@ public abstract class AbstractResource implements Resource{
     }
 
     /**
-     * This implementation always returns <code>true</code>.
-     * @return
-     */
-    @Override
-    public boolean isReadable() {
-        return true;
-    }
-
-    /**
-     * This implementation always returns <code>false</code>.
-     */
-    @Override
-    public boolean isOpen() {
-        return false;
-    }
-
-    /**
      * This implementation throws a FileNotFoundException, assuming
      * that the resource cannot be resolved to a URL.
      */
@@ -92,39 +75,6 @@ public abstract class AbstractResource implements Resource{
     }
 
     /**
-     * This implementation checks the timestamp of the underlying File,
-     * if available.
-     * @see #getFileForLastModifiedCheck()
-     */
-    @Override
-    public long lastModified() throws IOException {
-        long lastModified = getFileForLastModifiedCheck().lastModified();
-        if (lastModified == 0L) {
-            throw new FileNotFoundException(getDescription() +
-                    " cannot be resolved in the file system for resolving its last-modified timestamp");
-        }
-        return lastModified;
-    }
-
-    /**
-     * This implementation throws a FileNotFoundException, assuming
-     * that relative resources cannot be created for this resource.
-     */
-    @Override
-    public Resource createRelative(String relativePath) throws IOException {
-        throw new FileNotFoundException("Cannot create a relative resource for " + getDescription());
-    }
-
-    /**
-     * This implementation always throws IllegalStateException,
-     * assuming that the resource does not carry a filename.
-     */
-    @Override
-    public String getFilename() {
-        throw new IllegalStateException(getDescription() + " does not carry a filename");
-    }
-
-    /**
      * This implementation returns the description of this resource.
      * @see #getDescription()
      */
@@ -152,5 +102,12 @@ public abstract class AbstractResource implements Resource{
      */
     protected File getFileForLastModifiedCheck() throws IOException {
         return getFile();
+    }
+
+    /**
+     * This implementation always returns <code>false</code>.
+     */
+    public boolean isOpen() {
+        return false;
     }
 }

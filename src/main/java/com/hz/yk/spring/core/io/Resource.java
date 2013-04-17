@@ -20,23 +20,6 @@ public interface Resource extends InputStreamSource  {
      */
     boolean exists();
 
-    /**
-     * Return whether the contents of this resource can be read,
-     * e.g. via {@link #getInputStream()} or {@link #getFile()}.
-     * <p>Will be <code>true</code> for typical resource descriptors;
-     * note that actual content reading may still fail when attempted.
-     * However, a value of <code>false</code> is a definitive indication
-     * that the resource content cannot be read.
-     */
-    boolean isReadable();
-
-    /**
-     * Return whether this resource represents a handle with an open
-     * stream. If true, the InputStream cannot be read multiple times,
-     * and must be read and closed to avoid resource leaks.
-     * <p>Will be <code>false</code> for typical resource descriptors.
-     */
-    boolean isOpen();
 
     /**
      * Return a URL handle for this resource.
@@ -59,26 +42,6 @@ public interface Resource extends InputStreamSource  {
      */
     File getFile() throws IOException;
 
-    /**
-     * Determine the last-modified timestamp for this resource.
-     * @throws IOException if the resource cannot be resolved
-     * (in the file system or as some other known physical resource type)
-     */
-    long lastModified() throws IOException;
-
-    /**
-     * Create a resource relative to this resource.
-     * @param relativePath the relative path (relative to this resource)
-     * @return the resource handle for the relative resource
-     * @throws IOException if the relative resource cannot be determined
-     */
-    Resource createRelative(String relativePath) throws IOException;
-
-    /**
-     * Return a filename for this resource, i.e. typically the last
-     * part of the path: for example, "myfile.txt".
-     */
-    String getFilename();
 
     /**
      * Return a description for this resource,
@@ -89,6 +52,12 @@ public interface Resource extends InputStreamSource  {
      */
     String getDescription();
 
-
+    /**
+     * Return whether this resource represents a handle with an open
+     * stream. If true, the InputStream cannot be read multiple times,
+     * and must be read and closed to avoid resource leaks.
+     * <p>Will be <code>false</code> for typical resource descriptors.
+     */
+    boolean isOpen();
 
 }

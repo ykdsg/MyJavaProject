@@ -12,5 +12,6 @@ http://blog.csdn.net/cutesource/schema/people http://blog.csdn.net/cutesource/sc
             </list>
         </property>
     </bean>
+
     <bean id="customPropertyEditorRegistrar" class="com.hz.yk.spring.propertyeditor.CustomPropertyEditorRegistrar"/>
 </beans>

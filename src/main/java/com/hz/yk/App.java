@@ -1,6 +1,5 @@
 package com.hz.yk;
 
-import com.sun.istack.internal.Nullable;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -17,7 +16,7 @@ public class App {
         System.out.println(str.hashCode());
     }
 
-    static void testNotNull(@Nullable Map from,String s,Long l) {
+    static void testNotNull(Map from,String s,Long l) {
         checkNotNull(s, "firstName");
         checkNotNull(l, "firstName");
         System.out.println(from.get("s"));

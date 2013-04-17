@@ -1,5 +1,6 @@
 package com.hz.yk.concurrent.aqs;
 
+import com.hz.yk.doclet.annotation.DocAPIResource;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -10,6 +11,7 @@ import java.util.concurrent.locks.LockSupport;
  *         Date: 13-1-13
  *         Time: обнГ8:49
  */
+@DocAPIResource
 public class FIFOMutex {
     private AtomicBoolean locked = new AtomicBoolean(false);
     private Queue<Thread> waiters = new ConcurrentLinkedQueue<Thread>();
