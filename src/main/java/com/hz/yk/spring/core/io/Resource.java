@@ -1,17 +1,18 @@
 package com.hz.yk.spring.core.io;
 
+import org.springframework.core.io.InputStreamSource;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import org.springframework.core.io.InputStreamSource;
 
 /**
  * @author wuzheng.yk
  *         Date: 13-2-8
  *         Time: обнГ10:35
  */
-public interface Resource extends InputStreamSource  {
+public interface Resource extends InputStreamSource,org.springframework.core.io.Resource  {
     /**
      * Return whether this resource actually exists in physical form.
      * <p>This method performs a definitive existence check, whereas the

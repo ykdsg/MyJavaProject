@@ -5,25 +5,27 @@ import com.hz.yk.spring.beans.factory.support.BeanDefinitionRegistry;
 import com.hz.yk.spring.core.io.Resource;
 import com.hz.yk.spring.core.io.ResourceLoader;
 import com.hz.yk.spring.core.io.support.EncodedResource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashSet;
-import java.util.Set;
-import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.BeanDefinitionStoreException;
+import org.springframework.beans.factory.parsing.*;
+import org.springframework.beans.factory.xml.DefaultNamespaceHandlerResolver;
+import org.springframework.beans.factory.xml.NamespaceHandlerResolver;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionStoreException;
+import org.springframework.beans.factory.xml.XmlReaderContext;
 import org.springframework.core.NamedThreadLocal;
 import org.springframework.util.Assert;
 import org.springframework.util.xml.SimpleSaxErrorHandler;
 import org.springframework.util.xml.XmlValidationModeDetector;
 import org.w3c.dom.Document;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import org.xml.sax.*;
+
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author wuzheng.yk
@@ -31,6 +33,17 @@ import org.xml.sax.SAXParseException;
  *         Time: 下午11:26
  */
 public class XmlBeanDefinitionReader  {
+    private final BeanDefinitionRegistry registry;
+
+    private Class documentReaderClass = DefaultBeanDefinitionDocumentReader.class;
+
+    private NamespaceHandlerResolver namespaceHandlerResolver;
+
+    private ReaderEventListener eventListener = new EmptyReaderEventListener();
+
+    private ProblemReporter problemReporter = new FailFastProblemReporter();
+
+    private SourceExtractor sourceExtractor = new NullSourceExtractor();
 
     private final ThreadLocal<Set> resourcesCurrentlyBeingLoaded =
             new NamedThreadLocal("XML bean definition resources currently being loaded");
@@ -63,7 +76,7 @@ public class XmlBeanDefinitionReader  {
      * in the form of a BeanDefinitionRegistry
      */
     public XmlBeanDefinitionReader(BeanDefinitionRegistry registry) {
-//        super(registry);
+        this.registry = registry;
     }
 
 
@@ -271,17 +284,46 @@ public class XmlBeanDefinitionReader  {
 
     public int registerBeanDefinitions(Document doc, Resource resource) throws BeanDefinitionStoreException {
         // Support old XmlBeanDefinitionParser SPI for backwards-compatibility.
-//        if (this.parserClass != null) {
-//            XmlBeanDefinitionParser parser =
-//                    (XmlBeanDefinitionParser) BeanUtils.instantiateClass(this.parserClass);
-//            return parser.registerBeanDefinitions(this, doc, resource);
-//        }
-//        // Read document based on new BeanDefinitionDocumentReader SPI.
-//        BeanDefinitionDocumentReader documentReader = createBeanDefinitionDocumentReader();
-//        int countBefore = getRegistry().getBeanDefinitionCount();
-//        documentReader.registerBeanDefinitions(doc, createReaderContext(resource));
-//        return getRegistry().getBeanDefinitionCount() - countBefore;
-        return 0;
+
+        // Read document based on new BeanDefinitionDocumentReader SPI.
+        BeanDefinitionDocumentReader documentReader = createBeanDefinitionDocumentReader();
+        int countBefore = getRegistry().getBeanDefinitionCount();
+        documentReader.registerBeanDefinitions(doc, createReaderContext(resource));
+        return getRegistry().getBeanDefinitionCount() - countBefore;
+    }
+
+
+    /**
+     * 就是返回DefaultBeanDefinitionDocumentReader 对象，不知道这样搞有啥好处，难道紧紧为了可配置
+     * Create the {@link org.springframework.beans.factory.xml.BeanDefinitionDocumentReader} to use for actually
+     * reading bean definitions from an XML document.
+     * <p>Default implementation instantiates the specified "documentReaderClass".
+     */
+    protected BeanDefinitionDocumentReader createBeanDefinitionDocumentReader() {
+        return (BeanDefinitionDocumentReader) BeanUtils.instantiateClass(this.documentReaderClass);
+    }
+
+    public final BeanDefinitionRegistry getRegistry() {
+        return this.registry;
+    }
+
+    /**
+     * Create the {@link XmlReaderContext} to pass over to the document reader.
+     */
+    protected XmlReaderContext createReaderContext(Resource resource) {
+        if (this.namespaceHandlerResolver == null) {
+            this.namespaceHandlerResolver = createDefaultNamespaceHandlerResolver();
+        }
+        return new XmlReaderContext(resource, this.problemReporter, this.eventListener,
+                this.sourceExtractor, this, this.namespaceHandlerResolver);
+    }
+
+    /**
+     * Create the default implementation of {@link NamespaceHandlerResolver} used if none is specified.
+     * Default implementation returns an instance of {@link DefaultNamespaceHandlerResolver}.
+     */
+    protected NamespaceHandlerResolver createDefaultNamespaceHandlerResolver() {
+        return new DefaultNamespaceHandlerResolver(getResourceLoader().getClassLoader());
     }
 
 }
