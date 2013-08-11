@@ -1,6 +1,5 @@
 package com.hz.yk.spring.beans.factory.xml;
 
-import com.hz.yk.spring.beans.factory.BeanDefinitionStoreException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.config.BeanDefinitionHolder;
@@ -63,6 +62,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
         parseBeanDefinitions(root, delegate);
         postProcessXml(root);
     }
+
 
     protected BeanDefinitionParserDelegate createHelper(org.springframework.beans.factory.xml.XmlReaderContext readerContext, Element root) {
         BeanDefinitionParserDelegate delegate = new BeanDefinitionParserDelegate(readerContext);

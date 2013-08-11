@@ -314,8 +314,9 @@ public class XmlBeanDefinitionReader  {
         if (this.namespaceHandlerResolver == null) {
             this.namespaceHandlerResolver = createDefaultNamespaceHandlerResolver();
         }
-        return new XmlReaderContext(resource, this.problemReporter, this.eventListener,
-                this.sourceExtractor, this, this.namespaceHandlerResolver);
+//        return new XmlReaderContext(resource, this.problemReporter, this.eventListener,
+//                this.sourceExtractor, this, this.namespaceHandlerResolver);
+        return null;
     }
 
     /**

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="customEditorConfigurer" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="com.hz.yk.propedit.Address"> <!-- 属性类型 -->
+                    <bean class="com.hz.yk.propedit.AddressPropertyEditor"/>
+                    <!--对应Address的编辑器 -->
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="person" class="com.hz.yk.propedit.Person">
+        <property name="name" value="Tom"/>
+        <property name="address" value="朝阳区,Soho 1601,010101"/>
+    </bean>
+</beans>
