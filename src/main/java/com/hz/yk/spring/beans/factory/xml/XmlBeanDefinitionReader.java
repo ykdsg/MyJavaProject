@@ -39,6 +39,8 @@ public class XmlBeanDefinitionReader  {
 
     private NamespaceHandlerResolver namespaceHandlerResolver;
 
+    private ClassLoader beanClassLoader;
+
     private ReaderEventListener eventListener = new EmptyReaderEventListener();
 
     private ProblemReporter problemReporter = new FailFastProblemReporter();
@@ -189,8 +191,8 @@ public class XmlBeanDefinitionReader  {
      * if none specified.
      */
     protected EntityResolver getEntityResolver() {
-//        if (this.entityResolver == null) {
-//            // Determine default EntityResolver to use.
+        if (this.entityResolver == null) {
+            // Determine default EntityResolver to use.
 //            ResourceLoader resourceLoader = getResourceLoader();
 //            if (resourceLoader != null) {
 //                this.entityResolver = new ResourceEntityResolver(resourceLoader);
@@ -198,7 +200,9 @@ public class XmlBeanDefinitionReader  {
 //            else {
 //                this.entityResolver = new DelegatingEntityResolver(getBeanClassLoader());
 //            }
-//        }
+            this.entityResolver = new DelegatingEntityResolver(getBeanClassLoader());
+        }
+
         return this.entityResolver;
     }
 
@@ -327,4 +331,11 @@ public class XmlBeanDefinitionReader  {
         return new DefaultNamespaceHandlerResolver(getResourceLoader().getClassLoader());
     }
 
+    public ClassLoader getBeanClassLoader() {
+        return beanClassLoader;
+    }
+
+    public void setBeanClassLoader(ClassLoader beanClassLoader) {
+        this.beanClassLoader = beanClassLoader;
+    }
 }
