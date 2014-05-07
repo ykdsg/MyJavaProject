@@ -12,7 +12,7 @@ public class ErrHandler implements Thread.UncaughtExceptionHandler {
      */
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        System.out.println("This is:" + t.getName() + ",Message:"
+        System.out.println("handler 处理到了，This is:" + t.getName() + ",Message:"
                                    + e.getMessage());
         e.printStackTrace();
     }

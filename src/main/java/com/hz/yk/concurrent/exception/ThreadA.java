@@ -12,7 +12,6 @@ public class ThreadA extends Thread {
     }
 
     public void run() {
-
         double i = 12 / 0;// 抛出异常的地方
     }
 }

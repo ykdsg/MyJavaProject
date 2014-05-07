@@ -13,7 +13,14 @@ public class Main {
         //这里设置全局的 UncaughtExceptionHandler
         Thread.setDefaultUncaughtExceptionHandler(handle);
 //        a.setUncaughtExceptionHandler(handle);// 加入定义的ErrHandler
-        a.start();
+
+        try {  //对线程的try没有用
+            a.start();
+        } catch (Exception e) {
+            System.out.println("能catch到嘛？");
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
 
     }
 }
