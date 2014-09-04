@@ -9,11 +9,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
  */
 public class App {
     public static void main(String[] args) {
-        String str="ab06e715bea9f99c0abcd3d3ac9a161401e8507448c3da0d17c455890551e2fe";
-        String s="hello";
-        s=null;
-        testNotNull(null,null,null);
-        System.out.println(str.hashCode());
+//        String str="ab06e715bea9f99c0abcd3d3ac9a161401e8507448c3da0d17c455890551e2fe";
+//        String s="hello";
+//        s=null;
+//        testNotNull(null,null,null);
+//        System.out.println(str.hashCode());
+
+        Runtime runtime = Runtime.getRuntime();
+        //显示java虚拟机可用的处理器个数
+        int nrOfProcessors = runtime.availableProcessors();
+        System.out.println("Number of processors available to the Java Virtual Machine: " + nrOfProcessors);
+
     }
 
     static void testNotNull(Map from,String s,Long l) {

@@ -132,5 +132,10 @@
             <artifactId>javassist</artifactId>
             <version>3.18.2-GA</version>
         </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty</artifactId>
+            <version>3.7.0.Final</version>
+        </dependency>
     </dependencies>
 </project>
