@@ -1,5 +1,7 @@
 package com.hz.yk;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -19,6 +21,12 @@ public class App {
         //显示java虚拟机可用的处理器个数
         int nrOfProcessors = runtime.availableProcessors();
         System.out.println("Number of processors available to the Java Virtual Machine: " + nrOfProcessors);
+
+
+        List testList = Arrays.asList("A B C D E F G H I J K L".split(" "));
+        testList.add("M");
+
+        System.out.println(testList);
 
     }
 
