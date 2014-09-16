@@ -1,6 +1,7 @@
 package com.hz.yk.netty;
 
 import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
 import java.util.concurrent.Executors;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -33,6 +34,7 @@ class Server {
     Channel parentChannel;
     InetSocketAddress localAddress;
     MyChannelHandler channelHandler = new MyChannelHandler();
+    ServerBufferHandler serverBufferHandler = new ServerBufferHandler();
 
     Server() {
         /*
@@ -45,6 +47,7 @@ class Server {
         bootstrap.setOption("child.soLinger", 2);
         //向ChannelPipline中添加处理器（ChannelHandler），用于处理连接和消息。
         bootstrap.getPipeline().addLast("servercnfactory", channelHandler);
+        bootstrap.getPipeline().addLast("messageHandler",serverBufferHandler);
     }
 
     void config(int port) {
@@ -69,9 +72,10 @@ class MyChannelHandler extends SimpleChannelHandler {
         Channel ch = e.getChannel();
         ChannelBuffer cb = ChannelBuffers.wrappedBuffer("success".getBytes());
         ch.write(cb);
+        super.channelConnected(ctx,e);
+
     }
 
-    @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         try {
             System.out.println("New message " + e.toString() + " from " + ctx.getChannel());
@@ -80,12 +84,36 @@ class MyChannelHandler extends SimpleChannelHandler {
             ex.printStackTrace();
             throw ex;
         }
+        super.messageReceived(ctx,e);
     }
 
     private void processMessage(MessageEvent e) {
         Channel ch = e.getChannel();
         ch.write(e.getMessage());
     }
+}
+
+class ServerBufferHandler extends SimpleChannelHandler {
+
+    /**
+     * 用户接受客户端发来的消息，在有客户端消息到达时触发
+     *
+     * @author lihzh
+     * @alia OneCoder
+     */
+    @Override
+    public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
+        ChannelBuffer buffer = (ChannelBuffer) e.getMessage();
+        // 五位读取
+        while (buffer.readableBytes() >= 5) {
+            ChannelBuffer tempBuffer = buffer.readBytes(5);
+            System.out.println(tempBuffer.toString(Charset.defaultCharset()));
+        }
+        // 读取剩下的信息
+        System.out.println(buffer.toString(Charset.defaultCharset()));
+        super.messageReceived(ctx,e);
+    }
+
 }
 
 
