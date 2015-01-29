@@ -30,7 +30,7 @@ public class App {
 
     }
 
-    static void testNotNull(Map from,String s,Long l) {
+    static void testNotNull(Map from,String s, Long l) {
         checkNotNull(s, "firstName");
         checkNotNull(l, "firstName");
         System.out.println(from.get("s"));

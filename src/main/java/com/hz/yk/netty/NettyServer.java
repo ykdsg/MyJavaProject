@@ -76,6 +76,7 @@ class MyChannelHandler extends SimpleChannelHandler {
 
     }
 
+    @Override
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         try {
             System.out.println("New message " + e.toString() + " from " + ctx.getChannel());
