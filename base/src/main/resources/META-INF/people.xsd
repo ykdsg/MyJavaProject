@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+    xmlns="http://hz.yk/spring/schema/people"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    targetNamespace="http://hz.yk/spring/schema/people"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
+    <!--
+    xmlns  指出默认的命名空间是"..."
+    xmlns:xsd 显示schema 中用到的元素和数据类型来自命名空间"...",同时它还规定了来自命名空间 "..." 的元素和数据类型应该使用前缀 xsd
+    targetNamespace 显示被此 schema 定义的元素 来自命名空间"..."
+    elementFormDefault="qualified" 指出任何 XML 实例文档所使用的且在此 schema 中声明过的元素必须被命名空间限定。
+    -->
+    <xsd:import namespace="http://www.springframework.org/schema/beans" />
+    <xsd:element name="people">
+        <xsd:complexType>
+            <xsd:complexContent>
+                <xsd:extension base="beans:identifiedType">
+                    <xsd:attribute name="name" type="xsd:string" />
+                    <xsd:attribute name="age" type="xsd:int" />
+                </xsd:extension>
+            </xsd:complexContent>
+        </xsd:complexType>
+    </xsd:element>
+</xsd:schema>
