@@ -10,11 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
  *         Time: 10:11
  */
 public class ArrangePluginImpl implements ArrangePlugin {
-    @Autowired
     TestService testService;
     @Override
     public void arrange() {
         testService.sayHi();
         System.out.println("qing arrange");
+    }
+
+    public void setTestService(TestService testService) {
+        this.testService = testService;
     }
 }

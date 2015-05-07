@@ -42,7 +42,6 @@ public class AdapterInvokerFactory implements ApplicationContextAware {
             return instance;
         } catch (ClassNotFoundException e) {
             System.out.println("class not found,className = " + classFullName + "; will load default class");
-            e.printStackTrace();
             String defaultBeanName = "default" + interfaceName;
             T defaultInstance = context.getBean(defaultBeanName, clazz);
             return defaultInstance;

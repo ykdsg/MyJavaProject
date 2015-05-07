@@ -9,6 +9,10 @@ public class RouterInfo {
     public static final String PLUGIN_PACKAGE = "com.hz.yk.module.extension.";
 
     public static final String DEFAULT_CLASS_POSTFIX = "Impl";
+
+    public RouterInfo() {
+        setClassPostfix(DEFAULT_CLASS_POSTFIX);
+    }
     /**
      * package ǰ׺
      */

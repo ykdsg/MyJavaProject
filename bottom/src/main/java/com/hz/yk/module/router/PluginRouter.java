@@ -15,7 +15,8 @@ public class PluginRouter {
             ItemDO itemDO = (ItemDO) obj;
             if (itemDO.getSalesSite() == 1) {
                 info.setPackagePrefix(RouterInfo.PLUGIN_PACKAGE+"ju.");
-                info.setClassPostfix(RouterInfo.DEFAULT_CLASS_POSTFIX);
+            }else if (itemDO.getSalesSite() == 2) {
+                info.setPackagePrefix(RouterInfo.PLUGIN_PACKAGE+"qing.");
             }
             return info;
         }

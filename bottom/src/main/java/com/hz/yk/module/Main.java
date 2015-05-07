@@ -28,5 +28,8 @@ public class Main {
         itemDO.setSalesSite(1);
         ArrangeModule arrangeModule = (ArrangeModule) applicationContext.getBean("arrangeModule");
         arrangeModule.publish(itemDO);
+        System.out.println("----------------222222-------------------");
+        itemDO.setSalesSite(2);
+        arrangeModule.publish(itemDO);
     }
 }
