@@ -1,9 +1,7 @@
 package com.hz.yk.module.extension.ju;
 
-import com.hz.yk.module.TestService;
+import com.hz.yk.module.IcService;
 import com.hz.yk.module.plugin.ArrangePlugin;
-import com.hz.yk.module.plugin.PromotionPlugin;
-import com.hz.yk.module.util.PluginUtil;
 
 /**
  * @author wuzheng.yk
@@ -11,15 +9,15 @@ import com.hz.yk.module.util.PluginUtil;
  *         Time: 10:11
  */
 public class ArrangePluginImpl implements ArrangePlugin {
-    TestService testService;
+    IcService icService;
 
     @Override
     public void arrange() {
-        testService.sayHi();
+        icService.doPublish();
         System.out.println("ju arrange");
     }
 
-    public void setTestService(TestService testService) {
-        this.testService = testService;
+    public void setIcService(IcService icService) {
+        this.icService = icService;
     }
 }

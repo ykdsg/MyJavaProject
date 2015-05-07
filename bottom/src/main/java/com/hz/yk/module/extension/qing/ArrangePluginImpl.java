@@ -1,8 +1,7 @@
 package com.hz.yk.module.extension.qing;
 
-import com.hz.yk.module.TestService;
+import com.hz.yk.module.IcService;
 import com.hz.yk.module.plugin.ArrangePlugin;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author wuzheng.yk
@@ -10,14 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
  *         Time: 10:11
  */
 public class ArrangePluginImpl implements ArrangePlugin {
-    TestService testService;
+    IcService icService;
     @Override
     public void arrange() {
-        testService.sayHi();
+        icService.doPublish();
         System.out.println("qing arrange");
     }
 
-    public void setTestService(TestService testService) {
-        this.testService = testService;
+    public void setIcService(IcService icService) {
+        this.icService = icService;
     }
 }

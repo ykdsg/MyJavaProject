@@ -5,9 +5,9 @@ package com.hz.yk.module;
  *         Date: 15/5/7
  *         Time: 10:02
  */
-public class TestService {
+public class IcService {
 
-    public void sayHi(){
-        System.out.println("hi I'm testService");
+    public void doPublish(){
+        System.out.println("ic has published.");
     }
 }

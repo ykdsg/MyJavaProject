@@ -1,7 +1,7 @@
 package com.hz.yk.module.modules;
 
+import com.hz.yk.module.IcService;
 import com.hz.yk.module.ItemDO;
-import com.hz.yk.module.TestService;
 import com.hz.yk.module.plugin.ArrangePlugin;
 import com.hz.yk.module.plugin.PromotionPlugin;
 import com.hz.yk.module.router.PluginRouter;
@@ -14,14 +14,13 @@ import com.hz.yk.module.util.PluginUtil;
  *         Time: 14:47
  */
 public class ArrangeModuleImpl implements ArrangeModule{
-    TestService testService;
-
+    IcService icService;
 
     @Override
     public void publish(ItemDO itemDO) {
         RouterInfo routerInfo =PluginRouter.getInfo(itemDO);
         System.out.println("start publish ,,,,");
-        testService.sayHi();
+        icService.doPublish();
         //À©Õ¹µã
         PromotionPlugin promotionPlugin = PluginUtil.getInstance(PromotionPlugin.class,routerInfo);
         promotionPlugin.promotion();
@@ -31,7 +30,7 @@ public class ArrangeModuleImpl implements ArrangeModule{
         System.out.println("publish success,,,,");
     }
 
-    public void setTestService(TestService testService) {
-        this.testService = testService;
+    public void setIcService(IcService icService) {
+        this.icService = icService;
     }
 }

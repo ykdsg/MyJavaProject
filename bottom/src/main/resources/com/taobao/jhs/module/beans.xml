@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" default-autowire="byName" default-lazy-init="false">
-    <bean id="testService" class="com.hz.yk.module.TestService"/>
+    <bean id="icService" class="com.hz.yk.module.IcService"/>
     <bean id="adapterInvokerFactory" class="com.hz.yk.module.adapter.AdapterInvokerFactory"/>
     <bean id="moduleUtil" class="com.hz.yk.module.util.PluginUtil"  lazy-init="false"/>
     <bean id="arrangeModule" class="com.hz.yk.module.modules.ArrangeModuleImpl" />
