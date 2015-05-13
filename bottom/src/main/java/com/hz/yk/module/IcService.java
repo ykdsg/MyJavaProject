@@ -10,4 +10,7 @@ public class IcService {
     public void doPublish(){
         System.out.println("ic has published.");
     }
+    public void doTag(){
+        System.out.println("ic has taged.");
+    }
 }

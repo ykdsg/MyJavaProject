@@ -1,6 +1,6 @@
 package com.hz.yk.module.util;
 
-import com.hz.yk.module.adapter.AdapterInvokerFactory;
+import com.hz.yk.module.adapter.PluginAdapter;
 import com.hz.yk.module.router.RouterInfo;
 
 /**
@@ -9,16 +9,15 @@ import com.hz.yk.module.router.RouterInfo;
  *         Time: 14:21
  */
 public class PluginUtil {
-    private static AdapterInvokerFactory adapterInvokerFactory;
+    private static PluginAdapter pluginAdapter;
 
 
     public static  <T> T getInstance(Class<T> clazz,RouterInfo routerInfo) {
-        return adapterInvokerFactory.getInstance(clazz,routerInfo);
+        return pluginAdapter.getInstance(clazz,routerInfo);
     }
 
 
-
-    public  void setAdapterInvokerFactory(AdapterInvokerFactory adapterInvokerFactory) {
-        PluginUtil.adapterInvokerFactory = adapterInvokerFactory;
+    public void setPluginAdapter(PluginAdapter pluginAdapter) {
+        PluginUtil.pluginAdapter = pluginAdapter;
     }
 }

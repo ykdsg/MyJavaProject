@@ -5,7 +5,7 @@ package com.hz.yk.module.plugin;
  *         Date: 15/5/7
  *         Time: 10:12
  */
-public interface ArrangePlugin extends Plugin {
+public interface TagPlugin extends Plugin {
 
-    void arrange();
+    void tag();
 }

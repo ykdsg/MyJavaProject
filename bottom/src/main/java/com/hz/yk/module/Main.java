@@ -1,8 +1,6 @@
 package com.hz.yk.module;
 
 import com.hz.yk.module.modules.ArrangeModule;
-import com.hz.yk.module.plugin.ArrangePlugin;
-import com.hz.yk.module.util.PluginUtil;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

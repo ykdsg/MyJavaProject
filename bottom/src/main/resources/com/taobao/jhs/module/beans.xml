@@ -4,9 +4,9 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd" default-autowire="byName" default-lazy-init="false">
     <bean id="icService" class="com.hz.yk.module.IcService"/>
-    <bean id="adapterInvokerFactory" class="com.hz.yk.module.adapter.AdapterInvokerFactory"/>
+    <bean id="pluginAdapter" class="com.hz.yk.module.adapter.PluginAdapter"/>
     <bean id="moduleUtil" class="com.hz.yk.module.util.PluginUtil"  lazy-init="false"/>
     <bean id="arrangeModule" class="com.hz.yk.module.modules.ArrangeModuleImpl" />
-    <bean id="defaultArrangePlugin" class="com.hz.yk.module.plugin.DefaultArrangePlugin" />
+    <bean id="defaultArrangePlugin" class="com.hz.yk.module.plugin.DefaultTagPlugin" />
     <bean id="defaultPromotionPlugin" class="com.hz.yk.module.plugin.DefaultPromotionPlugin" />
 </beans>

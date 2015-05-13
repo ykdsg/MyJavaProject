@@ -1,23 +1,19 @@
 package com.hz.yk.module.adapter;
 
 
-import com.hz.yk.module.plugin.ArrangePlugin;
 import com.hz.yk.module.plugin.Plugin;
 import com.hz.yk.module.router.RouterInfo;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * @author wuzheng.yk
  *         Date: 15/5/7
  *         Time: 10:08
  */
-public class AdapterInvokerFactory implements ApplicationContextAware {
+public class PluginAdapter implements ApplicationContextAware {
     private ApplicationContext context;
 
     @Override
