@@ -1,11 +1,9 @@
 package com.hz.yk.module.plugin;
 
 /**
- * @author wuzheng.yk
- *         Date: 15/5/7
- *         Time: 10:12
+ * Created by wuzheng.yk on 15/7/1.
  */
-public interface TagPlugin extends Plugin {
+public interface TagPlugin {
 
     void tag();
 }

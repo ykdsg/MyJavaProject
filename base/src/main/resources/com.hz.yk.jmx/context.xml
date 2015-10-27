@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <!-- 暴露监控设备 -->
+    <bean id="exporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+        <property name="beans">
+            <map>
+                <entry key="bean:name=HusbandLocal" value-ref="HusbandLocal"/>
+            </map>
+        </property>
+    </bean>
+    <!-- mbean -->
+    <bean id="HusbandLocal" class="com.hz.yk.yk.jmx.HusbandLocal"/>
+</beans>

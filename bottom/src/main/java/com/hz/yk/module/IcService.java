@@ -1,16 +1,12 @@
 package com.hz.yk.module;
 
 /**
- * @author wuzheng.yk
- *         Date: 15/5/7
- *         Time: 10:02
+ * Created by wuzheng.yk on 15/7/1.
  */
-public class IcService {
+public interface IcService {
 
-    public void doPublish(){
-        System.out.println("ic has published.");
-    }
-    public void doTag(){
-        System.out.println("ic has taged.");
-    }
+    void doTag();
+
+    void doPublish();
+
 }

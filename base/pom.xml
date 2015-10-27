@@ -83,10 +83,10 @@
             <groupId>net.sourceforge.findbugs</groupId>
             <artifactId>findbugs</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.h2database</groupId>-->
+            <!--<artifactId>h2</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.hz.yk</groupId>
             <artifactId>bottom</artifactId>
@@ -99,6 +99,13 @@
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.alibaba.trade.proxy</groupId>
+            <artifactId>method-invoke-proxy</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * @author wuzheng.yk
  *         Date: 13-3-22
- *         Time: ÉÏÎç10:18
+ *         Time: ä¸Šåˆ10:18
  */
 public class MyFrameOutputWriter extends HtmlDocletWriter {
 
@@ -56,9 +56,9 @@ public class MyFrameOutputWriter extends HtmlDocletWriter {
      */
     protected void generateFrameFile() {
         if (configuration.windowtitle.length() > 0) {
-            printFramesetHeader(configuration.windowtitle, configuration.notimestamp);
+//            printFramesetHeader(configuration.windowtitle, configuration.notimestamp);
         } else {
-            printFramesetHeader(configuration.getText("doclet.Generated_Docs_Untitled"), configuration.notimestamp);
+//            printFramesetHeader(configuration.getText("doclet.Generated_Docs_Untitled"), configuration.notimestamp);
         }
         printFrameDetails();
         printFrameFooter();
@@ -77,7 +77,7 @@ public class MyFrameOutputWriter extends HtmlDocletWriter {
         printText("doclet.Frame_Warning_Message");
         br();
         printText("doclet.Link_To");
-        printHyperLink(configuration.topFile, configuration.getText("doclet.Non_Frame_Version"));
+//        printHyperLink(configuration.topFile, configuration.getText("doclet.Non_Frame_Version"));
         println("");
         noFramesEnd();
     }

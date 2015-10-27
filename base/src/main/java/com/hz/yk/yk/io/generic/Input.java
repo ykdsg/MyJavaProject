@@ -3,7 +3,6 @@ package com.hz.yk.yk.io.generic;
 /**
  * @author wuzheng.yk
  *         Date: 13-4-3
- *         Time: ����12:23
  */
 public interface Input<T, SenderThrowableType extends Throwable> {
     <ReceiverThrowableType extends Throwable>

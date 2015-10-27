@@ -133,11 +133,11 @@
             <artifactId>findbugs</artifactId>
             <version>1.3.7</version>
         </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.4.184</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.h2database</groupId>-->
+            <!--<artifactId>h2</artifactId>-->
+            <!--<version>1.4.184</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.hz.yk</groupId>
             <artifactId>bottom</artifactId>
@@ -153,7 +153,16 @@
             <artifactId>guice</artifactId>
             <version>4.0</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.alibaba.trade.proxy</groupId>
+            <artifactId>method-invoke-proxy</artifactId>
+            <version>1.0.2-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
     </dependencies>
     </dependencyManagement>
 </project>

@@ -1,10 +1,8 @@
 package com.hz.yk.module.plugin;
 
 /**
- * @author wuzheng.yk
- *         Date: 15/5/7
- *         Time: 14:24
+ * Created by wuzheng.yk on 15/7/1.
  */
-public interface PromotionPlugin extends Plugin{
+public interface PromotionPlugin {
     void promotion();
 }
