@@ -18,9 +18,10 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <java.version>1.6</java.version>
+        <java.version>1.8</java.version>
         <java.encoding>GBK</java.encoding>
-        <springframework_version>3.2.4.RELEASE</springframework_version>
+        <springframework_version>4.1.5.RELEASE</springframework_version>
+        <drools.version>6.3.0.Final</drools.version>
     </properties>
     <build>
         <plugins>
@@ -42,10 +43,64 @@
                     </archive>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>3+</version>
+                                </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>1.8</version>
+                                </requireJavaVersion>
+                                <bannedDependencies>
+                                    <searchTransitive>true</searchTransitive>
+                                    <excludes>
+                                        <!--<exclude>commons-logging</exclude>-->
+                                        <exclude>log4j:log4j</exclude>
+                                        <exclude>org.slf4j:slf4j-log4j:*</exclude>
+                                        <exclude>org.springframework:2.*</exclude>
+                                        <exclude>org.springframework:3.0.*</exclude>
+                                    </excludes>
+                                </bannedDependencies>
+                                <!-- 确保每一个（可传递的）依赖性被解析为它指定的版本或更高版本-->
+                                <requireUpperBoundDeps />
+                                <!-- 确保所有依赖关系收敛到同一个版本-->
+                                <dependencyConvergence>
+                                    <uniqueVersions>false</uniqueVersions>
+                                </dependencyConvergence>
+
+                                <banDuplicateClasses>
+                                    <ignoreClasses>
+                                        <ignoreClass>org.slf4j.*</ignoreClass>
+                                        <ignoreClass>org.apache.commons.logging.*</ignoreClass>
+                                        <ignoreClass>org.xmlpull.v1.*</ignoreClass>
+                                    </ignoreClasses>
+                                    <findAllDuplicates>true</findAllDuplicates>
+                                </banDuplicateClasses>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>extra-enforcer-rules</artifactId>
+                        <version>1.0-beta-3</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
     </build>
     <dependencyManagement>
-
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -55,7 +110,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aop</artifactId>
-            <version>2.5.6</version>
+            <version>${springframework_version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.lucene</groupId>
@@ -162,6 +217,21 @@
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
             <version>1.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-core</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.drools</groupId>
+            <artifactId>drools-compiler</artifactId>
+            <version>${drools.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-api</artifactId>
+            <version>${drools.version}</version>
         </dependency>
     </dependencies>
     </dependencyManagement>

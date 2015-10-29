@@ -1,0 +1,29 @@
+package com.hz.yk.yk.drools.fact
+
+import com.hz.yk.yk.drools.fact.OrderItem;
+import com.hz.yk.yk.drools.fact.OrderItem.PromotionType;
+
+rule 'Ordinary'
+    when
+        $orderItem : OrderItem(promotionType == PromotionType.ORDINARY, $qty : qty)
+    then
+        $orderItem.setRewardQty($qty / 10);
+end
+rule 'Stair1'
+    when
+        $orderItem : OrderItem(promotionType == PromotionType.STAIR && qty > 0 && qty < 10)
+    then
+        $orderItem.setRewardQty(2);
+end
+rule 'Stair2'
+    when
+        $orderItem : OrderItem(promotionType == PromotionType.STAIR && qty >= 10 && qty < 20)
+    then
+        $orderItem.setRewardQty(4);
+end
+rule 'Stair3'
+    when
+        $orderItem : OrderItem(promotionType == PromotionType.STAIR && qty >= 20)
+    then
+        $orderItem.setRewardQty(8);
+end
