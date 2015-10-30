@@ -119,5 +119,9 @@
             <groupId>org.kie</groupId>
             <artifactId>kie-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.squirrelframework</groupId>
+            <artifactId>squirrel-foundation</artifactId>
+        </dependency>
     </dependencies>
 </project>
