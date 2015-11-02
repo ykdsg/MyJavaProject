@@ -1,4 +1,4 @@
-package com.hz.yk.yk.state;
+package com.hz.yk.yk.state.squirrelframework;
 
 import org.squirrelframework.foundation.fsm.StateMachineBuilderFactory;
 import org.squirrelframework.foundation.fsm.UntypedStateMachine;
