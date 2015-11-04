@@ -3,3 +3,4 @@ bin
 *.class
 *.iml
 Idea14Key.java
+*.ssh.**.java

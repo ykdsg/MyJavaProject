@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Agent-Class: com.hz.yk.instrument.MonitorAgent
+Can-Redefine-Classes: true
+Can-Retransform-Classes: true
+Boot-Class-Path: javassist-3.20.0-GA.jar
