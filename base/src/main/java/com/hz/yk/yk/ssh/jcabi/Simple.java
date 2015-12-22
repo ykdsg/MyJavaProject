@@ -18,7 +18,7 @@ import org.apache.commons.io.input.NullInputStream;
 public class Simple {
     public static void main(String[] args) throws IOException {
         SSHByPassword sshByPassword = new SSHByPassword(
-                "test.ssh", 22,
+                "112.124.123.117", 22,
                 "admin", "Yangtuojia001"
         );
         Shell.Plain plain = new Shell.Plain(
