@@ -13,6 +13,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
+ * 这种和sping的方式一样都需要javac 开启generate debug info
+ *
  * 通过javassit获取方法参数的名称
  * Created by wuzheng.yk on 16/1/29.
  */
@@ -32,6 +34,7 @@ public class GetParamNamesByJavassist {
                 (LocalVariableAttribute) codeAttribute.getAttribute(LocalVariableAttribute.tag);
         if (attr == null) {
             System.out.println("params is null");
+            return;
         }
         String[] paramNames = new String[cm.getParameterTypes().length];
         int pos = Modifier.isStatic(cm.getModifiers()) ? 0 : 1;
