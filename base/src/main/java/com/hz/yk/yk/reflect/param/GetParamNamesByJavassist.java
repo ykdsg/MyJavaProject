@@ -13,7 +13,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- * 这种和sping的方式一样都需要javac 开启generate debug info
+ * 这种和sping的方式一样都需要javac 开启generate debug info,
+ * 通过maven 的话默认是debug=true 的,所以不会有问题
  *
  * 通过javassit获取方法参数的名称
  * Created by wuzheng.yk on 16/1/29.
