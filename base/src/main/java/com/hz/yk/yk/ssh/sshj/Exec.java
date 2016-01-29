@@ -36,6 +36,7 @@ public class Exec {
         //ssh.addHostKeyVerifier(new PromiscuousVerifier());
         try {
             ssh.connect(host);
+            //配置了公钥可以直接访问
             ssh.authPublickey("root");
             //ssh.authPassword(user,password);
             try (Session session = ssh.startSession()) {
