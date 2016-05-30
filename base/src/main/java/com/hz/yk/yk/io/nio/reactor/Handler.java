@@ -1,4 +1,4 @@
-package com.hz.yk.yk.nio.reactor;
+package com.hz.yk.yk.io.nio.reactor;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -9,7 +9,7 @@ import java.nio.channels.SocketChannel;
 /**
  * @author wuzheng.yk
  *         Date: 14-8-9
- *         Time: обнГ5:09
+ *         Time: О©╫О©╫О©╫О©╫5:09
  */
 public class Handler implements Runnable {
     final SocketChannel socketChannel;

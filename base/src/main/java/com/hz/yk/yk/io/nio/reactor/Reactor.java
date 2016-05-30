@@ -1,4 +1,4 @@
-package com.hz.yk.yk.nio.reactor;
+package com.hz.yk.yk.io.nio.reactor;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * @author wuzheng.yk
  *         Date: 14-8-9
- *         Time: обнГ4:31
+ *         Time: О©╫О©╫О©╫О©╫4:31
  */
 public class Reactor implements Runnable {
     final Selector selector;
