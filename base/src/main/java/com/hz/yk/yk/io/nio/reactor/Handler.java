@@ -9,7 +9,6 @@ import java.nio.channels.SocketChannel;
 /**
  * @author wuzheng.yk
  *         Date: 14-8-9
- *         Time: ����5:09
  */
 public class Handler implements Runnable {
     final SocketChannel socketChannel;

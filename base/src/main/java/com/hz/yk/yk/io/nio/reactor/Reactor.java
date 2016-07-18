@@ -12,7 +12,6 @@ import java.util.Set;
 /**
  * @author wuzheng.yk
  *         Date: 14-8-9
- *         Time: ����4:31
  */
 public class Reactor implements Runnable {
     final Selector selector;
