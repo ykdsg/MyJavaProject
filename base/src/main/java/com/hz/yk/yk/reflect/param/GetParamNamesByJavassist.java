@@ -21,8 +21,7 @@ import java.lang.reflect.Modifier;
  */
 public class GetParamNamesByJavassist {
     public static void main(String[] args) throws NotFoundException {
-        Demo demo = new Demo();
-        Method[] methods = demo.getClass().getDeclaredMethods();
+        Method[] methods = Demo.class.getDeclaredMethods();
         Class clazz = methods[0].getDeclaringClass();
         String methodName = methods[0].getName();
         ClassPool pool = ClassPool.getDefault();
