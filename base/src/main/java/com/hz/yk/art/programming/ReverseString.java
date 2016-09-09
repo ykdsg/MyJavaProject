@@ -65,9 +65,9 @@ public class ReverseString {
     public void testLeftRotateString(){
         String test = "abcdefg";
         int m = 3;
-        resverString(test, 0, m - 1);
-        resverString(test, m, test.length() - 1);
-        resverString(test, 0, test.length() - 1);
+        System.out.println(resverString(test, 0, m - 1));
+        System.out.println(resverString(test, m, test.length() - 1));
+        System.out.println(resverString(test, 0, test.length() - 1));
 
     }
 

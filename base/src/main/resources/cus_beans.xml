@@ -4,7 +4,8 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean id="beanFactory" class="com.hz.yk.spring.source.BeanFactoryTest">
-        <property name="name" value="testName"/>
+    <bean  class="com.hz.yk.spring.custom.CustomBeanDefinitionRegistryPostProcessor">
+        <property name="packageName" value="com.hz.yk.spring.custom.service"/>
     </bean>
+
 </beans>

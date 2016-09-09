@@ -17,5 +17,6 @@ public class DefaultListableBeanFactoryTest {
         DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
         reader.loadBeanDefinitions(res);
+
     }
 }
