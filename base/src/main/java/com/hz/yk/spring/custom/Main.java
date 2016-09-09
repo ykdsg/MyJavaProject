@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.hz.yk.spring.custom.service.UserService;
 
 /**
+ * 自定义动态装载的bean
  * Created by wuzheng.yk on 16/9/9.
  */
 public class Main {
