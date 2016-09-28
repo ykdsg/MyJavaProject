@@ -11,6 +11,7 @@
         <module>bottom</module>
         <module>client</module>
         <module>base</module>
+        <module>antlr</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
@@ -24,6 +25,11 @@
 
     <dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.5.3</version>
+        </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
