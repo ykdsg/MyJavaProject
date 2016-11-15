@@ -17,13 +17,13 @@ public class Reactor implements Runnable {
     final Selector selector;
     final ServerSocketChannel serverSocketChannel;
 
-    public Reactor(int port) throws IOException {
+    public Reactor(int port) throws IOException {//Reactor初始化
         selector = Selector.open();
         serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.socket().bind(new InetSocketAddress(port));
         serverSocketChannel.configureBlocking(false);
-        SelectionKey sk = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
-        sk.attach(new Acceptor());
+        SelectionKey sk = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);//分步处理,第一步,接收accept事件
+        sk.attach(new Acceptor()); //attach callback object, Acceptor
 
     }
 
@@ -35,7 +35,7 @@ public class Reactor implements Runnable {
                 Set<SelectionKey> selectKeySet = selector.selectedKeys();
                 Iterator<SelectionKey> it = selectKeySet.iterator();
                 while (it.hasNext()) {
-                    dispatch(it.next());
+                    dispatch(it.next());//Reactor负责dispatch收到的事件
                 }
                 selectKeySet.clear();
             } catch (IOException e) {
@@ -45,7 +45,7 @@ public class Reactor implements Runnable {
     }
 
     void dispatch(SelectionKey key) {
-        Runnable r = (Runnable) key.attachment();
+        Runnable r = (Runnable) key.attachment();//调用之前注册的callback对象
         if (r != null) {
             r.run();
         }

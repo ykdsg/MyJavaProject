@@ -23,9 +23,10 @@ public class Handler implements Runnable {
     Handler(Selector se1, SocketChannel c) throws IOException {
         socketChannel = c;
         c.configureBlocking(false);
+        // Optionally try first read now
         selectionKey = socketChannel.register(se1, 0);
-        selectionKey.attach(this);
-        selectionKey.interestOps(SelectionKey.OP_READ);
+        selectionKey.attach(this);  //将Handler作为callback对象
+        selectionKey.interestOps(SelectionKey.OP_READ); //第二步,接收Read事件
         se1.wakeup();
     }
 
@@ -54,13 +55,26 @@ public class Handler implements Runnable {
         if (inputIsComplete()) {
             process();
             state = SENDING;
-            // Normally also do first write now sk.interestOps(SelectionKey.OP_WRITE);
+            // Normally also do first write now
+            selectionKey.interestOps(SelectionKey.OP_WRITE);//第三步,接收write事件
         }
     }
 
     void send() throws IOException {
         socketChannel.write(output);
-        if (outputIsComplete())
-            selectionKey.cancel();
+        if (outputIsComplete()) {
+            selectionKey.cancel();//write完就结束了, 关闭select key
+        }
+    }
+
+    class Sender implements Runnable {
+        public void run(){ // ...
+            try {
+                socketChannel.write(output);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            if (outputIsComplete()) selectionKey.cancel();
+        }
     }
 }

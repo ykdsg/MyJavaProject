@@ -2,6 +2,7 @@ package com.hz.yk.netty.example.idle;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.timeout.IdleState;
@@ -11,6 +12,7 @@ import io.netty.util.CharsetUtil;
 /**
  * Created by wuzheng.yk on 16/11/3.
  */
+@ChannelHandler.Sharable
 public class ConnectorIdleStateTrigger extends ChannelInboundHandlerAdapter {
 
     private static final ByteBuf HEARTBEAT_SEQUENCE = Unpooled.unreleasableBuffer(Unpooled.copiedBuffer("Heartbeat",

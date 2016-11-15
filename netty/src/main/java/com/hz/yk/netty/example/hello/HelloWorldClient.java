@@ -17,7 +17,7 @@ import io.netty.handler.codec.string.StringEncoder;
  */
 public class HelloWorldClient {
     static final String HOST = System.getProperty("host", "127.0.0.1");
-    static final int PORT = Integer.parseInt(System.getProperty("port", "8080"));
+    static final int PORT = Integer.parseInt(System.getProperty("port", "8787"));
     static final int SIZE = Integer.parseInt(System.getProperty("size", "256"));
 
     public static void main(String[] args) throws Exception {
