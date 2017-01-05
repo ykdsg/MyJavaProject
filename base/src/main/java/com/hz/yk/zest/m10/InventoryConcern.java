@@ -5,7 +5,11 @@ import org.qi4j.api.injection.scope.Service;
 
 import com.hz.yk.zest.m10.elsewhere.inventory.InventoryService;
 
-// START SNIPPET: allClass
+/**
+ * Extending the ConcernOf is a convenience mechanism, instead of an explicit @ConcernFor annotation on a private field,
+ * which can be used in rare occasions when you are not able to extend. This base class defines the next field, which is
+ * set up by the Zest™ runtime and points to the next fragment in the call stack.
+ */
 public class InventoryConcern extends ConcernOf<Order> implements Order {
 
     @Service
@@ -27,4 +31,3 @@ public class InventoryConcern extends ConcernOf<Order> implements Order {
         next.removeLineItem(item);
     }
 }
-// END SNIPPET: allClass

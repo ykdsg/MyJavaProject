@@ -38,4 +38,9 @@ public class ObservableTest {
 
         integerObservable.subscribe(integerSubscriber);
     }
+
+    public static void main(String[] args) {
+        String test = "{userID=111111,LOGIN_ROLE=ssdd}";
+        System.out.println(test.contains("LOGIN_ROLE"));
+    }
 }

@@ -22,35 +22,36 @@ import org.qi4j.api.sideeffect.SideEffectOf;
 
 import com.hz.yk.zest.m10.elsewhere.mail.MailService;
 
-// START SNIPPET: allClass
-public abstract class MailNotifySideEffect extends SideEffectOf<Confirmable>
-    implements Confirmable
-{
-    @Service
-    private MailService mailer;
+/**
+ * By not referencing the aggregated interface OrderEntity, we reduce the coupling of this SideEffect and it can be used
+ * in any other Composite where the HasCustomer and HasLineItems combination is used, for instance in an InvoiceEntity.
+ */
+public abstract class MailNotifySideEffect extends SideEffectOf<Confirmable> implements Confirmable {
 
+    @Service
+    private MailService  mailer;
+
+    // @This is telling Zest™ that the SideEffect needs a reference to the Composite instance that it belongs to.
+    // @This 告诉zest SideEffect 需要组合实例的引用
     @This
     private HasLineItems hasItems;
 
     @This
-    private HasCustomer hasCustomer;
+    private HasCustomer  hasCustomer;
 
     @Override
-    public void confirm()
-    {
+    public void confirm() {
         StringBuilder builder = new StringBuilder();
-        builder.append( "An Order has been made.\n\n\n" );
-        builder.append( "Customer:" );
-        builder.append( hasCustomer.name().get() );
-        builder.append( "\n\nItems ordered:\n" );
-        for( LineItem item : hasItems.lineItems().get() )
-        {
-            builder.append( item.name().get() );
-            builder.append( " : " );
-            builder.append( item.quantity().get() );
-            builder.append( "\n" );
+        builder.append("An Order has been made.\n\n\n");
+        builder.append("Customer:");
+        builder.append(hasCustomer.name().get());
+        builder.append("\n\nItems ordered:\n");
+        for (LineItem item : hasItems.lineItems().get()) {
+            builder.append(item.name().get());
+            builder.append(" : ");
+            builder.append(item.quantity().get());
+            builder.append("\n");
         }
-        mailer.send( "sales@mycompany.com", builder.toString() );
+        mailer.send("sales@mycompany.com", builder.toString());
     }
 }
-// END SNIPPET: allClass
