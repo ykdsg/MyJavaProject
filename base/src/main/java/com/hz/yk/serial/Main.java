@@ -27,6 +27,36 @@ public class Main {
         Person newPerson = (Person) oin.readObject(); // 没有强制转换到Person类型
         oin.close();
         System.out.println(newPerson);
+        //new B();
     }
+
+    static class A {
+        static {
+            System.out.println("s-a");
+        }
+        {
+            System.out.println("a-1");
+        }
+
+        public A() {
+            System.out.println("a");
+        }
+    }
+
+    static class B extends A {
+        static {
+            System.out.println("s-b");
+        }
+        {
+            System.out.println("b-1");
+        }
+
+        public B() {
+            System.out.println("b");
+        }
+    }
+
+
+
 
 }

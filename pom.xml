@@ -13,6 +13,7 @@
         <module>base</module>
         <module>antlr</module>
         <module>netty</module>
+        <module>jstormdemo</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
@@ -26,6 +27,39 @@
 
     <dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>com.alibaba.jstorm</groupId>
+            <artifactId>jstorm-core</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <!-- velocity -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>commons-lang</groupId>
+                    <artifactId>commons-lang</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts-taglib</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts-taglib</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.struts</groupId>
+                    <artifactId>struts-tiles</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <dependency>
             <groupId>org.qi4j.core</groupId>
             <artifactId>org.qi4j.core.bootstrap</artifactId>
@@ -72,7 +106,7 @@
         <dependency>
             <groupId>org.javassist</groupId>
             <artifactId>javassist</artifactId>
-            <version>3.20.0-GA</version>
+            <version>3.21.0-GA</version>
         </dependency>
         <dependency>
             <groupId>com.jcabi</groupId>
@@ -82,7 +116,7 @@
         <dependency>
             <groupId>com.hierynomus</groupId>
             <artifactId>sshj</artifactId>
-            <version>0.15.0</version>
+            <version>0.20.0</version>
         </dependency>
         <dependency>
             <groupId>ch.ethz.ganymed</groupId>
@@ -194,7 +228,7 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
-            <version>4.0.31.Final</version>
+            <version>4.1.6.Final</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.findbugs</groupId>

@@ -1,10 +1,10 @@
-package com.hz.yk.netty.example.hello;
+package com.hz.yk.netty.study.hello;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
 /**
- * Created by wuzheng.yk on 16/11/2.
+ * Created by wuzheng.yk on 17/3/9.
  */
 public class HelloWorldServerHandler extends ChannelInboundHandlerAdapter {
 

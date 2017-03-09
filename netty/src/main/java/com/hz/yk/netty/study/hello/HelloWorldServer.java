@@ -1,4 +1,4 @@
-package com.hz.yk.netty.example.hello;
+package com.hz.yk.netty.study.hello;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -14,10 +14,9 @@ import io.netty.handler.codec.string.StringEncoder;
 import java.net.InetSocketAddress;
 
 /**
- * Created by wuzheng.yk on 16/11/2.
+ * Created by wuzheng.yk on 17/3/9.
  */
 public class HelloWorldServer {
-
     private int port;
 
     public HelloWorldServer(int port) {

@@ -1,4 +1,4 @@
-package com.hz.yk.netty.example.hello;
+package com.hz.yk.netty.study.hello;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -35,9 +35,9 @@ public class HelloWorldClient {
                             ChannelPipeline p = ch.pipeline();
                             p.addLast("decoder", new StringDecoder());
                             p.addLast("encoder", new StringEncoder());
-                            //p.addLast(new HelloWorldClientHandler());
-                            p.addLast(new BaseClient1Handler());
-                            p.addLast(new BaseClient2Handler());
+                            p.addLast(new HelloWorldClientHandler());
+                            //p.addLast(new BaseClient1Handler());
+                            //p.addLast(new BaseClient2Handler());
                         }
                     });
 
