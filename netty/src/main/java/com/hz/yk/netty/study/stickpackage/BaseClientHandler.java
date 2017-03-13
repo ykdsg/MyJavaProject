@@ -1,4 +1,4 @@
-package com.hz.yk.netty.example.stickpackage;
+package com.hz.yk.netty.study.stickpackage;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

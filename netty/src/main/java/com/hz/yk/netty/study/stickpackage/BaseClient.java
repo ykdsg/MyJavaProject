@@ -1,4 +1,4 @@
-package com.hz.yk.netty.example.stickpackage;
+package com.hz.yk.netty.study.stickpackage;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;

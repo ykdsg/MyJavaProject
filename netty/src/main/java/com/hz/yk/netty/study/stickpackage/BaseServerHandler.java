@@ -1,4 +1,4 @@
-package com.hz.yk.netty.example.stickpackage;
+package com.hz.yk.netty.study.stickpackage;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
