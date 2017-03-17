@@ -4,6 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
+ * 通过Master类创建5个Worker工作进程和Worker工作实例PlusWorker。在提交了100个子任务后，便开始子任务的计算。这些子任务，由生成的5个Worker进程共同完成。Master并不等待所有的Worker执行完毕，就开始访问子结果集进行最终结果的计算，直到子结果集中所有的数据都被处理，并且5个活跃的Worker进程全部终止，才给出最终计算结果。
  * Created by wuzheng.yk on 17/3/13.
  */
 public class Main {

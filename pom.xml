@@ -14,6 +14,7 @@
         <module>antlr</module>
         <module>netty</module>
         <module>jstormdemo</module>
+        <module>canal</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
@@ -27,6 +28,11 @@
 
     <dependencyManagement>
     <dependencies>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>15.0</version>
+        </dependency>
         <dependency>
             <groupId>com.alibaba.jstorm</groupId>
             <artifactId>jstorm-core</artifactId>
