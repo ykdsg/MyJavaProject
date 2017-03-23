@@ -57,6 +57,9 @@ public class CountTask extends RecursiveTask<Integer> {
         CountTask task = new CountTask(1, 4);
         // 执行一个任务
         Future<Integer> result = forkJoinPool.submit(task);
+        if(task.isCompletedAbnormally()){
+            System.out.println(task.getException());
+        }
         System.out.println(result.get());
 
     }
