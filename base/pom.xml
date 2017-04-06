@@ -156,10 +156,6 @@
             <artifactId>bottom</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.hz.yk</groupId>
-            <artifactId>client</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
         </dependency>

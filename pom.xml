@@ -9,12 +9,12 @@
     <modules>
         <module>instrument</module>
         <module>bottom</module>
-        <module>client</module>
         <module>base</module>
         <module>antlr</module>
         <module>netty</module>
         <module>jstormdemo</module>
         <module>canal</module>
+        <module>avro</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>

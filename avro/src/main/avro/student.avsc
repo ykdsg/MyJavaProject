@@ -1,0 +1,21 @@
+[{
+  "namespace": "com.hz.avro.yk",
+  "type": "record",
+  "name": "Base",
+  "fields": [
+    {"name": "name","type": "string"},
+    {"name": "age","type": ["int","null"],"default": null},
+    {"name": "phone","type": ["string", "null"],"default": null}
+  ]
+},
+{
+  "namespace": "com.hz.avro.yk",
+  "type": "record",
+  "name": "Student",
+  "fields": [
+//    看下注释有没问题
+    {"name": "num","type": "int"},
+    {"name": "user","type": "Base"}
+  ]
+}]
+

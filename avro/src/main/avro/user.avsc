@@ -1,0 +1,10 @@
+{
+  "namespace": "com.hz.avro.yk",
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {"name": "name","type": "string"},
+    {"name": "age","type": ["null","int"],"default": null},
+    {"name": "phone","type": ["string", "null"],"default": null}
+  ]
+}

@@ -1,0 +1,13 @@
+protocol Userservice {
+  record Address {
+    string city;
+    string postcode;
+    string street;
+  }
+  record UserInfo {
+    string name;
+    int userid;
+    array<Address> address = [];
+  Address currentAddress;
+  }
+}

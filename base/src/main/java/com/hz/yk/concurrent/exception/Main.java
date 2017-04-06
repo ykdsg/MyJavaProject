@@ -1,11 +1,15 @@
 package com.hz.yk.concurrent.exception;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * @author wuzheng.yk
  *         Date: 14-5-7
  *         Time: ����10:34
  */
 public class Main {
+    private static final Logger log = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         ThreadA a  = new ThreadA();
@@ -17,9 +21,11 @@ public class Main {
         try {  //���̵߳�tryû����
             a.start();
         } catch (Exception e) {
+            log.error("[Main-main]error", e);
             System.out.println("��catch���");
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        String s = null;
+        System.out.println(s.chars());
 
 
     }
