@@ -15,6 +15,7 @@
         <module>jstormdemo</module>
         <module>canal</module>
         <module>avro</module>
+        <module>express</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
