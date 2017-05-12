@@ -16,6 +16,7 @@
         <module>canal</module>
         <module>avro</module>
         <module>express</module>
+        <module>asm5</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
