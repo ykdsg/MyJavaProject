@@ -1,55 +1,74 @@
 package com.hz.yk.concurrent.lock;
 
-import java.lang.reflect.Field;
+import org.junit.Test;
+
 import java.util.concurrent.locks.LockSupport;
 
 /**
- * @author wuzheng.yk
- *         Date: 13-11-9
- *         Time: ����3:54
+ * Created by wuzheng.yk on 17/3/21.
  */
 public class LockSupportTest {
-    private static LockSupportTest blocker = new LockSupportTest();
-
-    public static void main(String args[]) throws Exception {
-        lockSupportTest();
+    @Test
+    public void testLockSupport() {
+        LockSupport.park();
+        System.out.println("block.");//阻塞在这里证明 默认许可时不可用的
+    }
+    @Test
+    public void testUnpark() {
+        Thread thread = Thread.currentThread();
+        LockSupport.unpark(thread);//释放许可
+        LockSupport.park();// 获取许可
+        System.out.println("b");//正常执行 一对一使用
     }
 
-    /**
-     * LockSupport.park����󣬳��Ի�ȡThread.blocker���󣬵�����single����
-     *
-     * @throws Exception
-     */
-    private static void lockSupportTest() throws Exception {
-        Thread t = ThreadFactory.createThread(new TestCallBack() {
-            @Override
-            public void callback() throws Exception {
-                // ����sleep 5s
-                System.out.println("blocker");
-                LockSupport.park(blocker);
-                System.out.println("wakeup now!");
-            }
+    @Test
+    public void testReentrantUnpark() {
+        Thread thread = Thread.currentThread();
+
+        LockSupport.unpark(thread);
+
+        System.out.println("a");
+        LockSupport.park();
+        System.out.println("b");
+        LockSupport.park();
+        System.out.println("c");//阻塞在这里 ，说明非可重入的
+    }
+    @Test
+    public void testInterrupt() throws Exception {
+        Thread t = new Thread(new Runnable()
+        {
+            private int count = 0;
 
             @Override
-            public String getName() {
-                return "lockSupportTest";
-            }
+            public void run()
+            {
+                long start = System.currentTimeMillis();
+                long end = 0;
 
+                while ((end - start) <= 1000)
+                {
+                    count++;
+                    end = System.currentTimeMillis();
+                }
+
+                System.out.println("after 1 second.count=" + count);
+
+                //等待或许许可
+                LockSupport.park();
+                System.out.println("thread over." + Thread.currentThread().isInterrupted());
+
+            }
         });
-        t.start(); // ������ȡ�߳�
 
-        Thread.sleep(150);
-        synchronized (blocker) {
-            Field field = Thread.class.getDeclaredField("parkBlocker");
-            field.setAccessible(true);
-            Object fBlocker = field.get(t);
-            System.out.println(blocker == fBlocker);
-            Thread.sleep(100);
-            System.out.println("notifyAll");
-            blocker.notifyAll();//object.notifyAll()���ܻ���LockSupport������Thread.
-            //�����ܻ����߳�
-//            LockSupport.unpark(t);
-        }
+        t.start();
+
+        Thread.sleep(2000);
+
+        // 中断线程
+        t.interrupt(); //不会抛出InterruptException 不影响主线程
+
+        Thread.sleep(1000);
+
+        System.out.println("main over");
     }
-
 }
