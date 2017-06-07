@@ -13,7 +13,7 @@ public class ExclusiveRule implements Rule{
     }
 
     @Override
-    public boolean apply(RuleContext facts, Variant result){
+    public boolean apply(RuleContext facts, VariantResult result){
         for(Rule rule: rules){
             if(rule.apply(facts, result))
                 return true;

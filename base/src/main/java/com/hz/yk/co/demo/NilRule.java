@@ -6,7 +6,7 @@ package com.hz.yk.co.demo;
  */
 public class NilRule implements Rule{
     @Override
-    public boolean apply(RuleContext facts, Variant result) {
+    public boolean apply(RuleContext facts, VariantResult result) {
         return false;
     }
 }

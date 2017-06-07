@@ -15,7 +15,7 @@ public class AndRule implements Rule{
     }
 
     @Override
-    public boolean apply(RuleContext facts, Variant result) {
+    public boolean apply(RuleContext facts, VariantResult result) {
         if (!rule1.apply(facts, result)) {
             return false;
         }

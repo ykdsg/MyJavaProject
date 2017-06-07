@@ -46,7 +46,7 @@ public class SimpleTestCase {
     @Test
     public void test0() {
         final RuleContext mrc = new RuleContext();
-        final Variant result = new Variant();
+        final VariantResult result = new VariantResult();
         assertFalse(getRule().apply(mrc, result));
     }
 
@@ -58,7 +58,7 @@ public class SimpleTestCase {
         final RuleContext mrc = new RuleContext();
         mrc.setMemberType("gold");
 
-        final Variant result = new Variant();
+        final VariantResult result = new VariantResult();
         assertTrue(getRule().apply(mrc, result));
         assertEquals(10, result.getDiscount());
     }
@@ -73,7 +73,7 @@ public class SimpleTestCase {
         mrc.setMemberType("platinum");
         mrc.setGender("female");
 
-        final Variant result = new Variant();
+        final VariantResult result = new VariantResult();
         assertTrue(getRule().apply(mrc, result));
         assertEquals(20, result.getDiscount());
     }
@@ -93,7 +93,7 @@ public class SimpleTestCase {
         calendar.set(Calendar.DAY_OF_MONTH, 8);
         mrc.setCreateDate(calendar);
 
-        final Variant result = new Variant();
+        final VariantResult result = new VariantResult();
         assertTrue(getRule().apply(mrc, result));
         assertEquals(20*5, result.getDiscount());
     }
@@ -113,7 +113,7 @@ public class SimpleTestCase {
         mrc.setCreateDate(calendar);
 
         mrc.setItemList(Lists.newArrayList("tv","speaker"));
-        final Variant result = new Variant();
+        final VariantResult result = new VariantResult();
         assertTrue(getRule().apply(mrc, result));
         assertEquals(20*5*5, result.getDiscount());
 

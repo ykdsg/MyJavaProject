@@ -13,7 +13,7 @@ public class MyRules {
     public static Rule discountByMember(String memberType, int discount) {
         return new Rule() {
             @Override
-            public boolean apply(RuleContext facts, Variant result) {
+            public boolean apply(RuleContext facts, VariantResult result) {
                 if (Objects.equals(facts.getMemberType(), memberType)) {
                     result.setDiscount(discount);
                     return true;
@@ -39,7 +39,7 @@ public class MyRules {
     public static Rule discount(int discount) {
         return new Rule() {
             @Override
-            public boolean apply(RuleContext facts, Variant result) {
+            public boolean apply(RuleContext facts, VariantResult result) {
                 result.setDiscount(discount);
                 return true;
             }
@@ -53,7 +53,7 @@ public class MyRules {
     public static Rule isGender(String gender) {
         return new Rule() {
             @Override
-            public boolean apply(RuleContext facts, Variant result) {
+            public boolean apply(RuleContext facts, VariantResult result) {
                 if (Objects.equals(facts.getGender(), gender)) {
                     return true;
                 }
@@ -65,7 +65,7 @@ public class MyRules {
     public static Rule isMonth(int month) {
         return new Rule() {
             @Override
-            public boolean apply(RuleContext facts, Variant result) {
+            public boolean apply(RuleContext facts, VariantResult result) {
                 if (facts.getCreateDate() != null && facts.getCreateDate().get(Calendar.MONTH) == month) {
                     return true;
                 }
@@ -77,7 +77,7 @@ public class MyRules {
     public static Rule isDay(int day) {
         return new Rule() {
             @Override
-            public boolean apply(RuleContext facts, Variant result) {
+            public boolean apply(RuleContext facts, VariantResult result) {
                 if (facts.getCreateDate() != null && facts.getCreateDate().get(Calendar.DAY_OF_MONTH) == day) {
                     return true;
                 }
@@ -94,7 +94,7 @@ public class MyRules {
     public static Rule purchased(String... items) {
         return new Rule() {
             @Override
-            public boolean apply(RuleContext facts, Variant result) {
+            public boolean apply(RuleContext facts, VariantResult result) {
                 if (CollectionUtils.isEmpty(facts.getItemList())) {
                     return false;
                 }

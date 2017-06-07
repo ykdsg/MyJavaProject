@@ -11,7 +11,7 @@ public interface Rule {
      * @param result rule 产生的结果
      * @return
      */
-    boolean apply(RuleContext facts, Variant result);
+    boolean apply(RuleContext facts, VariantResult result);
 
     default Rule and(Rule rule) {
         return new AndRule(this, rule);

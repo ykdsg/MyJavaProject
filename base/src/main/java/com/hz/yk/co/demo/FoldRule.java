@@ -12,7 +12,7 @@ public class FoldRule implements Rule {
     }
 
     @Override
-    public boolean apply(RuleContext facts, Variant result) {
+    public boolean apply(RuleContext facts, VariantResult result) {
         int discount = 1;
         boolean isApply = false;
         for (Rule rule : rules) {

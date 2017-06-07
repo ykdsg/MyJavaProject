@@ -15,7 +15,7 @@ public class IfElseRule implements Rule {
     }
 
     @Override
-    public boolean apply(RuleContext facts, Variant result) {
+    public boolean apply(RuleContext facts, VariantResult result) {
         if (cond.apply(facts, result)) {
             return consequence.apply(facts, result);
         } else {

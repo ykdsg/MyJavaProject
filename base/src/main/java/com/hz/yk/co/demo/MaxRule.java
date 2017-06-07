@@ -12,7 +12,7 @@ public class MaxRule implements Rule {
     }
 
     @Override
-    public boolean apply(RuleContext facts, Variant result) {
+    public boolean apply(RuleContext facts, VariantResult result) {
         int maxDiscount = 0;
         Rule maxRule = null;
         for (Rule rule : rules) {
