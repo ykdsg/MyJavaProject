@@ -17,10 +17,10 @@ import static com.hz.yk.co.LoggerFacade.writer;
  * Created by wuzheng.yk on 16/12/2.
  */
 public class Main {
-    //代码特定的文件
-    private static PrintWriter err_writer = new PrintWriter(System.err);
-    private static PrintWriter warning_writer = new PrintWriter(System.out);
-    private static PrintWriter info_writer = new PrintWriter(System.out);
+    //代表特定的文件
+    private static PrintWriter err_writer = new PrintWriter(System.err,true);
+    private static PrintWriter warning_writer = new PrintWriter(System.out,true);
+    private static PrintWriter info_writer = new PrintWriter(System.out,true);
 
     public static void main(String[] args) {
         //表示不同的log文件
@@ -48,5 +48,6 @@ public class Main {
         PrintWriter out = new PrintWriter(System.err);
         std_logger = new ErrorMessageLogger(out, writer(out));
         std_logger = ignore(ERROR, std_logger);
+
     }
 }

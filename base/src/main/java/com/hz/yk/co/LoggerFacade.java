@@ -2,7 +2,7 @@ package com.hz.yk.co;
 
 import com.hz.yk.co.combinator.NopLogger;
 import com.hz.yk.co.combinator.WriterLogger;
-import com.hz.yk.co.rule.EqualLogger;
+import com.hz.yk.co.rule.FilterLogger;
 import com.hz.yk.co.rule.IgnoringLogger;
 import com.hz.yk.co.rule.SequenceLogger;
 import com.hz.yk.co.rule.TimestampLogger;
@@ -23,7 +23,7 @@ public class LoggerFacade {
         return writer(new PrintWriter(out, true));
     }
     public static Logger filter(int lvl, Logger l1, Logger l2){
-        return new EqualLogger(lvl,l1, l2);
+        return new FilterLogger(lvl,l1, l2);
     }
 
     public static Logger ignore(int lvl, Logger l1) {
