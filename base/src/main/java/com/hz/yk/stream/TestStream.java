@@ -4,12 +4,49 @@ import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * Created by wuzheng.yk on 17/5/11.
  */
 public class TestStream {
+
+    @Test
+    public void testGroup() {
+        class User {
+            String name;
+            int code;
+
+            public User(String name,int code) {
+                this.name = name;
+                this.code = code;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public int getCode() {
+                return code;
+            }
+
+            public void setCode(int code) {
+                this.code = code;
+            }
+        }
+
+        List<User> userList = Lists.newArrayList(new User("1", 1), new User("1", 2)
+                , new User("2", 2));
+        Map<String, List<User>> userGroupMap = userList.stream().collect(Collectors.groupingBy(user -> user.getName()));
+
+        System.out.println(userGroupMap);
+
+    }
 
     @Test
     public void testMap() {
