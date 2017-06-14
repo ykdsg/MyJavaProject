@@ -22,12 +22,12 @@ public class TASTest {
     // 计数
     private static volatile int count   = 0;
     // 最大计数
-    private final static int    MAX     = 10000000;
+    private final static int    MAX     = 1000000;
     // TAS锁
-    // private static TASLock lock = new TASLock();
+     private static TASLock lock = new TASLock();
 
     // TTAS锁
-    private static TTASLock     lock    = new TTASLock();
+    //private static TTASLock     lock    = new TTASLock();
 
     @Before
     public void setUp() {
