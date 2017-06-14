@@ -1,4 +1,4 @@
-package com.hz.yk.concurrent.atomic;
+package com.hz.yk.concurrent.spin;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 

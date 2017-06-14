@@ -92,6 +92,7 @@ public class LoggerTest {
     public void testLogLevel() {
         Logger logger = sequence(err_log, warning_log, info_log);
         logger = ignore(WARNING, logger);
+        logger = timestamp(logger);
 
         logger.println(INFO, "我是info******");
         logger.println(WARNING, "我是warning&&&&&& ");
