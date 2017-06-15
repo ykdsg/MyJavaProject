@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicReferenceFieldUpdater;
  * 状态的改变只会影响到后续的节点，不同点是MCS队列锁是在本地cache自旋等待。
  * Created by wuzheng.yk on 17/3/21.
  */
-public class MCSLock {
+public class MCSLock implements SpinLock{
 
     public static class MCSNode {
 
@@ -26,6 +26,7 @@ public class MCSLock {
                                                                                                                         MCSNode.class,
                                                                                                                         "queue");
 
+    @Override
     public void lock() {
         MCSNode currentNode = new MCSNode();
         NODE.set(currentNode);
@@ -38,7 +39,8 @@ public class MCSLock {
         }
     }
 
-    public void unlock() {
+    @Override
+    public void unLock() {
         MCSNode currentNode = NODE.get();
         if (currentNode.next == null) {
             if (UPDATER.compareAndSet(this, currentNode, null)) {

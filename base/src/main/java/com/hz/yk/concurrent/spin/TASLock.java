@@ -8,9 +8,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * 缺点是getAndSet底层使用CAS来实现，一直在修改共享变量的值，会引发缓存一致性流量风暴
  * Created by wuzheng.yk on 17/3/21.
  */
-public class TASLock { //test and set lock 尝试去set 锁
+public class TASLock  implements SpinLock{ //test and set lock 尝试去set 锁
     AtomicBoolean state = new AtomicBoolean(false);
-    void lock() {
+    @Override
+    public void lock() {
         // getAndSet方法会设置mutex变量为true，并返回mutex之前的值
         // 当mutex之前是false时才返回，表示获取锁
         // getAndSet方法是原子操作，mutex原子变量的改动对所有线程可见
@@ -20,8 +21,8 @@ public class TASLock { //test and set lock 尝试去set 锁
         System.out.println("get lock---" + Thread.currentThread());
     }
 
-
-    void unLock() {
+    @Override
+    public void unLock() {
         state.set(false);
     }
 }
