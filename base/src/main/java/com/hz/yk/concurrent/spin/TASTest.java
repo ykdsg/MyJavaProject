@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 public class TASTest {
 
     // 并发线程数
-    private final static int    NTHREAD = 10;
+    private final static int    NTHREAD = 100;
     // 计数
     private static volatile int count   = 0;
     // 最大计数
