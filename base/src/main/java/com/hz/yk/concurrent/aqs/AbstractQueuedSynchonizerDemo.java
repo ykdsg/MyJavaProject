@@ -23,7 +23,7 @@ public class AbstractQueuedSynchonizerDemo {
             lock.lock();
             System.out.println(Thread.currentThread() +"after lock");
             try {
-                Thread.sleep(10000);
+                Thread.sleep(50000);
                 System.out.println(Thread.currentThread() + " running");
             } catch (InterruptedException e) {
                 e.printStackTrace();
