@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 路由类。路由就好比是Camel中怎样将消息从一端传递到另一端的一个指令定义，每隔一秒向处理器发送一个消息，简单打印出来
  * Created by wuzheng.yk on 15/11/2.
  */
 public class TimerRouteBuilder extends RouteBuilder {
