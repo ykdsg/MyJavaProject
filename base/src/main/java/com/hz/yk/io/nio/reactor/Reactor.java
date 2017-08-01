@@ -1,69 +1,121 @@
 package com.hz.yk.io.nio.reactor;
 
+import com.hz.yk.io.nio.reactor.connection.Connection;
+import com.hz.yk.io.nio.reactor.handler.Handler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
-import java.nio.channels.ServerSocketChannel;
-import java.nio.channels.SocketChannel;
-import java.util.Iterator;
+import java.util.Queue;
 import java.util.Set;
+import java.util.concurrent.ConcurrentLinkedQueue;
+
 
 /**
- * @author wuzheng.yk
- *         Date: 14-8-9
+ * 
+ * @author seaboat
+ * @date 2016-08-25
+ * @version 1.0
+ * <pre><b>email: </b>849586227@qq.com</pre>
+ * <pre><b>blog: </b>http://blog.csdn.net/wangyangzhizhou</pre>
+ * <p>Reactor reacts all sockets.</p>
  */
-public class Reactor implements Runnable {
-    final Selector selector;
-    final ServerSocketChannel serverSocketChannel;
+public final class Reactor extends Thread {
+	private static final Logger LOGGER = LoggerFactory.getLogger(Reactor.class);
+	private final Selector                          selector;
+	private final ConcurrentLinkedQueue<Connection> queue;
+	private       long                              doCount;
+	private       Handler                           handler;
+	private       ReactorPool                       reactorPool;
 
-    public Reactor(int port) throws IOException {//Reactor初始化
-        selector = Selector.open();
-        serverSocketChannel = ServerSocketChannel.open();
-        serverSocketChannel.socket().bind(new InetSocketAddress(port));
-        serverSocketChannel.configureBlocking(false);
-        SelectionKey sk = serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);//分步处理,第一步,接收accept事件
-        sk.attach(new Acceptor()); //attach callback object, Acceptor
+	public Reactor(String name, Handler handler, ReactorPool reactorPool)
+			throws IOException {
+		this.selector = Selector.open();
+		this.queue = new ConcurrentLinkedQueue<Connection>();
+		this.handler = handler;
+		this.reactorPool = reactorPool;
+	}
 
-    }
+	final void postRegister(Connection frontendConnection) {
+		queue.offer(frontendConnection);
+		this.selector.wakeup();
+	}
 
-    @Override
-    public void run() {
-        while (!Thread.interrupted()) {
-            try {
-                selector.select();
-                Set<SelectionKey> selectKeySet = selector.selectedKeys();
-                Iterator<SelectionKey> it = selectKeySet.iterator();
-                while (it.hasNext()) {
-                    dispatch(it.next());//Reactor负责dispatch收到的事件
-                }
-                selectKeySet.clear();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+	@Override
+	public void run() {
+		final Selector selector = this.selector;
+		Set<SelectionKey> keys = null;
+		for (;;) {
+			++doCount;
+			try {
+				selector.select(500L);
+				register(selector);
+				keys = selector.selectedKeys();
+				for (SelectionKey key : keys) {
+					Connection connection = null;
+					Object attach = key.attachment();
+					if (attach != null && key.isValid()) {
+						connection = (Connection) attach;
+						if (key.isReadable()) {
+							try {
+								// must be ready to read
+								connection.read();
+								// judge connection hasn't been closed.
+								if (connection.isClose())
+									continue;
+								handler.handle(connection);
+							} catch (IOException e) {
+								connection.close();
+								LOGGER.warn("IOException happens : ", e);
+								continue;
+							} catch (Throwable e) {
+								LOGGER.warn("Throwable happens : ", e);
+								continue;
+							}
+						}
+						if (key.isValid() && key.isWritable()) {
+							connection.write();
+						}
+					} else {
+						key.cancel();
+					}
+				}
+			} catch (Throwable e) {
+				LOGGER.warn("exception happens selecting : ", e);
+			} finally {
+				if (keys != null) {
+					keys.clear();
+				}
+			}
+		}
+	}
 
-    void dispatch(SelectionKey key) {
-        Runnable r = (Runnable) key.attachment();//调用之前注册的callback对象
-        if (r != null) {
-            r.run();
-        }
-    }
+	private void register(Selector selector) {
+		Connection c = null;
+		if (queue.isEmpty()) {
+			return;
+		}
+		while ((c = queue.poll()) != null) {
+			try {
+				c.register(selector);
+			} catch (Throwable e) {
+				LOGGER.warn("ClosedChannelException happens : ", e);
+			}
+		}
+	}
 
-    class Acceptor implements Runnable {
+	final Queue<Connection> getRegisterQueue() {
+		return queue;
+	}
 
-        @Override
-        public void run() {
-            try {
-                SocketChannel c = serverSocketChannel.accept();
-                if (c != null) {
-                    new Handler(selector, c);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+	final long getReactCount() {
+		return doCount;
+	}
+
+	public ReactorPool getReactorPool() {
+		return reactorPool;
+	}
+
 }
-

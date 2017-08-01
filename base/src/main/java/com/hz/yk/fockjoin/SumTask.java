@@ -1,4 +1,4 @@
-package com.hz.yk.fork;
+package com.hz.yk.fockjoin;
 
 import java.util.concurrent.RecursiveTask;
 
@@ -6,7 +6,7 @@ import java.util.concurrent.RecursiveTask;
  * Created by wuzheng.yk on 2017/6/28.
  */
 public class SumTask extends RecursiveTask<Integer> {
-    // 每个"小任务"最多只打印50个数
+    // 每个"小任务"最多只打印20个数
     private static final int MAX = 20;
     private int arr[];
     private int start;
@@ -23,13 +23,6 @@ public class SumTask extends RecursiveTask<Integer> {
         int sum = 0;
         // 当end-start的值小于MAX时候，开始打印
         if ((end - start) < MAX) {
-            try {
-                System.out.println(Thread.currentThread()+" sleep");
-                Thread.sleep(3000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
             for (int i = start; i < end; i++) {
                 sum += arr[i];
             }

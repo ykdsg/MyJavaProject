@@ -1,4 +1,4 @@
-package com.hz.yk.fork;
+package com.hz.yk.fockjoin;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -24,8 +24,9 @@ public class ForkJoinPoolTest {
         forkJoinPool.shutdown();
     }
 
+
     @Test public void testSum() throws ExecutionException, InterruptedException {
-        int arr[] = new int[100];
+        int arr[] = new int[10000];
         Random random = new Random();
         int total = 0;
         // 初始化100个数字元素
@@ -37,13 +38,16 @@ public class ForkJoinPoolTest {
         System.out.println("初始化时的总和=" + total);
         // 创建包含Runtime.getRuntime().availableProcessors()返回值作为个数的并行线程的ForkJoinPool
         ForkJoinPool forkJoinPool = new ForkJoinPool();
+        long start = System.currentTimeMillis();
         // 提交可分解的PrintTask任务
-        Future<Integer> future = forkJoinPool.submit(new SumTask(arr, 0, arr.length));
+        //Future<Integer> future = forkJoinPool.submit(new SumTask(arr, 0, arr.length));
+        Future<Integer> future = forkJoinPool.submit(new SumTask2(arr, 0, arr.length));
         System.out.println("计算出来的总和=" + future.get());
         int sum = future.get();
         Assert.assertEquals(total, sum);
         // 关闭线程池
         forkJoinPool.shutdown();
+        System.out.println("cost :" + (System.currentTimeMillis() - start));
     }
 
     @Test public void testMix() throws ExecutionException, InterruptedException {

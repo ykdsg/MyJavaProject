@@ -1,7 +1,6 @@
 package com.hz.yk.io.nio.channel;
 
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectableChannel;
 import java.nio.channels.SelectionKey;
@@ -27,17 +26,18 @@ public class SelectSockets {
         }
         System.out.println("Listening on port " + port);
         // Allocate an unbound server socket channel
-        ServerSocketChannel serverChannel = ServerSocketChannel.open();
+        ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         // Get the associated ServerSocket to bind it with
-        ServerSocket serverSocket = serverChannel.socket();
+        serverSocketChannel.bind(new InetSocketAddress(port));
+        //ServerSocket serverSocket = serverSocketChannel.socket();
         // Create a new Selector for use below
         Selector selector = Selector.open();
         // Set the port the server channel will listen to
-        serverSocket.bind(new InetSocketAddress(port));
+        //serverSocket.bind(new InetSocketAddress(port));
         // Set nonblocking mode for the listening socket
-        serverChannel.configureBlocking(false);
+        serverSocketChannel.configureBlocking(false);
         // Register the ServerSocketChannel with the Selector
-        serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+        serverSocketChannel.register(selector, SelectionKey.OP_ACCEPT);
         while (true) {
             // This may block for a long time. Upon returning, the
             // selected set contains keys of the ready channels.
