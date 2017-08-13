@@ -1,25 +1,33 @@
 package com.hz.yk.rxjava;
 
-import rx.Observable;
-import rx.Observer;
-import rx.Subscriber;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 /**
  * Created by wuzheng.yk on 16/12/17.
  */
 public class Example2 {
+
     public static void main(String[] args) {
         //创建一个观察者
         Observer<String> observer = new Observer<String>() {
 
             @Override
-            public void onCompleted() {
+            public void onError(Throwable e) {
+                System.out.println("Error");
+            }
+
+            @Override
+            public void onComplete() {
                 System.out.println("Completed");
             }
 
             @Override
-            public void onError(Throwable e) {
-                System.out.println("Error");
+            public void onSubscribe(Disposable disposable) {
+
             }
 
             @Override
@@ -28,13 +36,15 @@ public class Example2 {
             }
         };
         //使用Observable.create()创建被观察者
-        Observable observable1 = Observable.create(new Observable.OnSubscribe<String>() {
+        Observable observable1 = Observable.create(new ObservableOnSubscribe<String>() {
+
             @Override
-            public void call(Subscriber<? super String> subscriber) {
-                subscriber.onNext("Hello");
-                subscriber.onNext("Wrold");
-                subscriber.onCompleted();
+            public void subscribe(ObservableEmitter<String> observableEmitter) throws Exception {
+                observableEmitter.onNext("Hello");
+                observableEmitter.onNext("Wrold");
+                observableEmitter.onComplete();
             }
+
         });
         //订阅
         observable1.subscribe(observer);
