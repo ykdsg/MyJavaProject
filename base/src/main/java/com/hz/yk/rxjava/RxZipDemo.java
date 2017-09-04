@@ -12,9 +12,10 @@ import static java.lang.System.out;
 
 /**
  * http://www.jianshu.com/p/bb58571cdb64
+ * zip的使用：比如一个界面需要展示用户的一些信息, 而这些信息分别要从两个服务器接口中获取, 而只有当两个都获取到了之后才能进行展示, 这个时候就可以用Zip了
  * Created by wuzheng.yk on 2017/8/22.
  */
-public class RxDemo3 {
+public class RxZipDemo {
 
     @Test
     public void testZip() {

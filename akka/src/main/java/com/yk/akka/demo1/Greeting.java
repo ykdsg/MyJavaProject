@@ -10,6 +10,7 @@ public class Greeting implements Serializable {
 
     private static final long serialVersionUID = -523594763318360726L;
     public final String message;
+
     public Greeting(String message) {
         this.message = message;
     }

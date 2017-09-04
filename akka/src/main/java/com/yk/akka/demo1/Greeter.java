@@ -12,13 +12,16 @@ public class Greeter extends UntypedAbstractActor {
 
     @Override
     public void onReceive(Object message) throws Exception {
-        if (message instanceof WhoToGreet)
+        if (message instanceof WhoToGreet) {
+            System.out.println("on receive WhoToGreet");
             greeting = "hello, " + ((WhoToGreet) message).who;
-        else if (message instanceof Greet)
+        } else if (message instanceof Greet) {
+            System.out.println("on receive Greet");
             // 发送招呼消息给发送消息给这个Actor的Actor
             getSender().tell(new Greeting(greeting), getSelf());
-
-        else unhandled(message);
+        } else {
+            unhandled(message);
+        }
     }
 
 }

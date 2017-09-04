@@ -26,12 +26,13 @@ public class ForkJoinPoolTest {
 
 
     @Test public void testSum() throws ExecutionException, InterruptedException {
-        int arr[] = new int[10000];
+        int arr[] = new int[1000000];
         Random random = new Random();
         int total = 0;
         // 初始化100个数字元素
         for (int i = 0; i < arr.length; i++) {
-            int temp = random.nextInt(100);
+            //int temp = random.nextInt(100);
+            int temp = i;
             // 对数组元素赋值,并将数组元素的值添加到total总和中
             total += (arr[i] = temp);
         }
