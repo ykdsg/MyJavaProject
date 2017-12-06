@@ -1,4 +1,4 @@
-package com.yk.antlr;
+package com.yk.antlr.prog;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -9,7 +9,7 @@ import com.yk.antlr.gen.javadoc.JavadocParser;
 /**
  * Created by wuzheng.yk on 16/10/17.
  */
-public class JavadocMain {
+public class JavadocVisitorMain {
 
     public static void main(String[] args) {
         String javaStr = "/**\n" +

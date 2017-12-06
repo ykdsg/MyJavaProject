@@ -1,4 +1,4 @@
-package com.yk.antlr;
+package com.yk.antlr.prog;
 
 import com.yk.antlr.gen.javadoc.JavadocParserBaseListener;
 

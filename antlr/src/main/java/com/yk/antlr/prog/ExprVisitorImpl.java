@@ -1,4 +1,4 @@
-package com.yk.antlr;
+package com.yk.antlr.prog;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
