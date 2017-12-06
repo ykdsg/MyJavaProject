@@ -1,13 +1,24 @@
 // Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/JavadocParser.g4 by ANTLR 4.7
 package com.yk.antlr.gen.javadoc;
-import org.antlr.v4.runtime.atn.*;
+import org.antlr.v4.runtime.NoViableAltException;
+import org.antlr.v4.runtime.Parser;
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.RuntimeMetaData;
+import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.TokenStream;
+import org.antlr.v4.runtime.Vocabulary;
+import org.antlr.v4.runtime.VocabularyImpl;
+import org.antlr.v4.runtime.atn.ATN;
+import org.antlr.v4.runtime.atn.ATNDeserializer;
+import org.antlr.v4.runtime.atn.ParserATNSimulator;
+import org.antlr.v4.runtime.atn.PredictionContextCache;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.runtime.tree.*;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
+import org.antlr.v4.runtime.tree.ParseTreeVisitor;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class JavadocParser extends Parser {
@@ -118,6 +129,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitDocumentation(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitDocumentation(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -242,6 +258,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitDocumentationContent(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitDocumentationContent(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -371,6 +392,11 @@ public class JavadocParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitSkipWhitespace(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitSkipWhitespace(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final SkipWhitespaceContext skipWhitespace() throws RecognitionException {
@@ -427,6 +453,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitDescription(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitDescription(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -507,6 +538,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitDescriptionLine(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitDescriptionLine(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -611,6 +647,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitDescriptionLineStart(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitDescriptionLineStart(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -725,6 +766,11 @@ public class JavadocParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitDescriptionLineNoSpaceNoAt(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitDescriptionLineNoSpaceNoAt(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final DescriptionLineNoSpaceNoAtContext descriptionLineNoSpaceNoAt() throws RecognitionException {
@@ -775,6 +821,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitDescriptionLineElement(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitDescriptionLineElement(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -847,6 +898,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitDescriptionLineText(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitDescriptionLineText(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -929,6 +985,11 @@ public class JavadocParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitDescriptionNewline(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitDescriptionNewline(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final DescriptionNewlineContext descriptionNewline() throws RecognitionException {
@@ -970,6 +1031,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitTagSection(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitTagSection(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1033,6 +1099,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitBlockTag(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitBlockTag(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1111,6 +1182,11 @@ public class JavadocParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitBlockTagName(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitBlockTagName(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final BlockTagNameContext blockTagName() throws RecognitionException {
@@ -1153,6 +1229,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitBlockTagContent(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitBlockTagContent(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1224,6 +1305,11 @@ public class JavadocParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitBlockTagText(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitBlockTagText(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final BlockTagTextContext blockTagText() throws RecognitionException {
@@ -1286,6 +1372,11 @@ public class JavadocParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitBlockTagTextElement(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitBlockTagTextElement(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final BlockTagTextElementContext blockTagTextElement() throws RecognitionException {
@@ -1342,6 +1433,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitInlineTag(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitInlineTag(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1412,6 +1508,11 @@ public class JavadocParser extends Parser {
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitInlineTagName(this);
 		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitInlineTagName(this);
+			else return visitor.visitChildren(this);
+		}
 	}
 
 	public final InlineTagNameContext inlineTagName() throws RecognitionException {
@@ -1453,6 +1554,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitInlineTagContent(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitInlineTagContent(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1510,6 +1616,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitBraceExpression(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitBraceExpression(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1576,6 +1687,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitBraceContent(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitBraceContent(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
@@ -1671,6 +1787,11 @@ public class JavadocParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof JavadocParserListener ) ((JavadocParserListener)listener).exitBraceText(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JavadocParserVisitor ) return ((JavadocParserVisitor<? extends T>)visitor).visitBraceText(this);
+			else return visitor.visitChildren(this);
 		}
 	}
 
