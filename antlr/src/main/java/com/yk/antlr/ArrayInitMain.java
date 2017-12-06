@@ -10,7 +10,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 /**
  * Created by wuzheng.yk on 16/9/23.
  */
-public class Main {
+public class ArrayInitMain {
 
     public static void main(String[] args) {
         String sentence = "{99,3,451}";

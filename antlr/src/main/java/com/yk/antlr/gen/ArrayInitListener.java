@@ -1,4 +1,4 @@
-// Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/ArrayInit.g4 by ANTLR 4.5.3
+// Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/ArrayInit.g4 by ANTLR 4.7
 package com.yk.antlr.gen;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 

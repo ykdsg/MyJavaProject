@@ -1,4 +1,4 @@
-// Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/Expr.g4 by ANTLR 4.5.3
+// Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/Expr.g4 by ANTLR 4.7
 package com.yk.antlr.gen.expr;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ExprParser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5.3", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.7", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -90,6 +90,14 @@ public class ExprParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_program; }
 		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterProgram(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitProgram(this);
+		}
+		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof ExprVisitor ) return ((ExprVisitor<? extends T>)visitor).visitProgram(this);
 			else return visitor.visitChildren(this);
@@ -126,6 +134,14 @@ public class ExprParser extends Parser {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_statement; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterStatement(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitStatement(this);
+		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof ExprVisitor ) return ((ExprVisitor<? extends T>)visitor).visitStatement(this);
@@ -168,6 +184,14 @@ public class ExprParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_expression; }
 		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitExpression(this);
+		}
+		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof ExprVisitor ) return ((ExprVisitor<? extends T>)visitor).visitExpression(this);
 			else return visitor.visitChildren(this);
@@ -193,7 +217,10 @@ public class ExprParser extends Parser {
 				_la = _input.LA(1);
 				if ( !(_la==T__0 || _la==T__1) ) {
 				_errHandler.recoverInline(this);
-				} else {
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
 					consume();
 				}
 				setState(17);
@@ -229,6 +256,14 @@ public class ExprParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_multExpr; }
 		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterMultExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitMultExpr(this);
+		}
+		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof ExprVisitor ) return ((ExprVisitor<? extends T>)visitor).visitMultExpr(this);
 			else return visitor.visitChildren(this);
@@ -254,7 +289,10 @@ public class ExprParser extends Parser {
 				_la = _input.LA(1);
 				if ( !(_la==T__2 || _la==T__3) ) {
 				_errHandler.recoverInline(this);
-				} else {
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
 					consume();
 				}
 				setState(25);
@@ -288,6 +326,14 @@ public class ExprParser extends Parser {
 		}
 		@Override public int getRuleIndex() { return RULE_atom; }
 		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).enterAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof ExprListener ) ((ExprListener)listener).exitAtom(this);
+		}
+		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof ExprVisitor ) return ((ExprVisitor<? extends T>)visitor).visitAtom(this);
 			else return visitor.visitChildren(this);
@@ -299,6 +345,7 @@ public class ExprParser extends Parser {
 		enterRule(_localctx, 8, RULE_atom);
 		try {
 			setState(36);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__4:
 				enterOuterAlt(_localctx, 1);
@@ -334,17 +381,17 @@ public class ExprParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\f)\4\2\t\2\4\3\t"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\f)\4\2\t\2\4\3\t"+
 		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\3\3\3\4\3\4\3\4\7\4\25\n\4"+
 		"\f\4\16\4\30\13\4\3\5\3\5\3\5\7\5\35\n\5\f\5\16\5 \13\5\3\6\3\6\3\6\3"+
-		"\6\3\6\5\6\'\n\6\3\6\2\2\7\2\4\6\b\n\2\4\3\2\3\4\3\2\5\6&\2\f\3\2\2\2"+
-		"\4\16\3\2\2\2\6\21\3\2\2\2\b\31\3\2\2\2\n&\3\2\2\2\f\r\5\4\3\2\r\3\3\2"+
-		"\2\2\16\17\5\6\4\2\17\20\7\13\2\2\20\5\3\2\2\2\21\26\5\b\5\2\22\23\t\2"+
-		"\2\2\23\25\5\b\5\2\24\22\3\2\2\2\25\30\3\2\2\2\26\24\3\2\2\2\26\27\3\2"+
-		"\2\2\27\7\3\2\2\2\30\26\3\2\2\2\31\36\5\n\6\2\32\33\t\3\2\2\33\35\5\n"+
-		"\6\2\34\32\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37\t\3\2\2"+
-		"\2 \36\3\2\2\2!\"\7\7\2\2\"#\5\6\4\2#$\7\b\2\2$\'\3\2\2\2%\'\7\n\2\2&"+
-		"!\3\2\2\2&%\3\2\2\2\'\13\3\2\2\2\5\26\36&";
+		"\6\3\6\5\6\'\n\6\3\6\2\2\7\2\4\6\b\n\2\4\3\2\3\4\3\2\5\6\2&\2\f\3\2\2"+
+		"\2\4\16\3\2\2\2\6\21\3\2\2\2\b\31\3\2\2\2\n&\3\2\2\2\f\r\5\4\3\2\r\3\3"+
+		"\2\2\2\16\17\5\6\4\2\17\20\7\13\2\2\20\5\3\2\2\2\21\26\5\b\5\2\22\23\t"+
+		"\2\2\2\23\25\5\b\5\2\24\22\3\2\2\2\25\30\3\2\2\2\26\24\3\2\2\2\26\27\3"+
+		"\2\2\2\27\7\3\2\2\2\30\26\3\2\2\2\31\36\5\n\6\2\32\33\t\3\2\2\33\35\5"+
+		"\n\6\2\34\32\3\2\2\2\35 \3\2\2\2\36\34\3\2\2\2\36\37\3\2\2\2\37\t\3\2"+
+		"\2\2 \36\3\2\2\2!\"\7\7\2\2\"#\5\6\4\2#$\7\b\2\2$\'\3\2\2\2%\'\7\n\2\2"+
+		"&!\3\2\2\2&%\3\2\2\2\'\13\3\2\2\2\5\26\36&";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -1,40 +1,28 @@
-// Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/ArrayInit.g4 by ANTLR 4.7
-package com.yk.antlr.gen;
+// Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/Hello.g4 by ANTLR 4.7
+package com.yk.antlr.gen.hello;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 /**
- * This class provides an empty implementation of {@link ArrayInitListener},
+ * This class provides an empty implementation of {@link HelloListener},
  * which can be extended to create a listener which only needs to handle a subset
  * of the available methods.
  */
-public class ArrayInitBaseListener implements ArrayInitListener {
+public class HelloBaseListener implements HelloListener {
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInit(ArrayInitParser.InitContext ctx) { }
+	@Override public void enterS(HelloParser.SContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitInit(ArrayInitParser.InitContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterValue(ArrayInitParser.ValueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitValue(ArrayInitParser.ValueContext ctx) { }
+	@Override public void exitS(HelloParser.SContext ctx) { }
 
 	/**
 	 * {@inheritDoc}
