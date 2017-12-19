@@ -106,15 +106,14 @@ public class XmlBeanDefinitionReader  {
         if (logger.isInfoEnabled()) {
             logger.info("Loading XML bean definitions from " + encodedResource.getResource());
         }
-        //�̰߳�ȫ �������� currentResourcesӦ�ñ��������̰߳�ȫ�ģ������Ʋⲻ��Ϊ���̰߳�ȫ
-        //Ӧ����Ϊ���߳���ʹ��ͬһ�� currentResources  ����������Կ������߶� ThreadLocal ��������
+        //应该是为了线程能使用同一个 currentResources  ，从这里可以看出作者对 ThreadLocal 的理解深刻
         Set<EncodedResource> currentResources = this.resourcesCurrentlyBeingLoaded.get();
         if (currentResources == null) {
             currentResources = new HashSet<EncodedResource>(4);
             this.resourcesCurrentlyBeingLoaded.set(currentResources);
         }
-        //������ʵ����Ϊ�˱���ѭ�����أ�����ظ���������ͬ���ļ��ͻ��׳��쳣
-        //���￴�˰�����������set����ͼ�����۰�
+        //这里其实就是为了避免循环加载，如果重复加载了相同的文件就会抛出异常
+        //这里看了半天才明白这个set的意图，蛋疼啊
         if (!currentResources.add(encodedResource)) {
             throw new BeanDefinitionStoreException(
                     "Detected recursive loading of " + encodedResource + " - check your import definitions!");
@@ -155,7 +154,7 @@ public class XmlBeanDefinitionReader  {
     protected int doLoadBeanDefinitions(InputSource inputSource,Resource resource)
             throws BeanDefinitionStoreException {
         try {
-            //�ж�xml�ļ���DTD����XSD��ʽ,���û���彫ʹ��XSD
+            //判断xml文件是DTD还是XSD样式,如果没定义将使用XSD
             int validationMode = getValidationModeForResource(resource);
             Document doc = this.documentLoader.loadDocument(
                     inputSource, getEntityResolver(), this.errorHandler, validationMode, isNamespaceAware());

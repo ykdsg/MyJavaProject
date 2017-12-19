@@ -1,0 +1,6 @@
+# Server settings (ServerProperties)
+server:
+  port: 7070
+  #address: 127.0.0.1
+  session.timeout: 30
+  contextPath: /
