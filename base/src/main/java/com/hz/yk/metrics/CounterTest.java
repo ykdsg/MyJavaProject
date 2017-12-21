@@ -10,6 +10,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Counter是一个简单64位的计数器，他可以增加和减少。
  * Counter 就是计数器，Counter 只是用 Gauge 封装了 AtomicLong 。我们可以使用如下的方法，使得获得队列大小更加高效
  * Created by wuzheng.yk on 2017/7/31.
  */

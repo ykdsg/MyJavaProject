@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * Meter是一种只能自增的计数器，通常用来度量一系列事件发生的比率
  * Meter度量一系列事件发生的速率(rate)，例如TPS。Meters会统计最近1分钟，5分钟，15分钟，还有全部时间的速率。
  * Created by wuzheng.yk on 2017/7/31.
  */
