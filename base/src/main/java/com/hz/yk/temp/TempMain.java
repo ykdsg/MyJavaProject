@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;
+import java.util.concurrent.locks.LockSupport;
 
 /**
  * Created by wuzheng.yk on 2017/12/25.
@@ -55,4 +56,8 @@ public class TempMain {
         }
     }
 
+    public static void main(String[] args) {
+        System.out.println("start");
+        LockSupport.park();
+    }
 }
