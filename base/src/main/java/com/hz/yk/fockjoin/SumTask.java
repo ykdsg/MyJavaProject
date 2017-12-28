@@ -26,6 +26,12 @@ public class SumTask extends RecursiveTask<Integer> {
             for (int i = start; i < end; i++) {
                 sum += arr[i];
             }
+            //故意放慢可以观察
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             return sum;
         } else {
             System.err.println(Thread.currentThread() + "=====任务分解======");

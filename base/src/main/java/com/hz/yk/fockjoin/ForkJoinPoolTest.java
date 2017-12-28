@@ -53,11 +53,11 @@ public class ForkJoinPoolTest {
 
     @Test public void testMix() throws ExecutionException, InterruptedException {
         // 创建包含Runtime.getRuntime().availableProcessors()返回值作为个数的并行线程的ForkJoinPool
-        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        ForkJoinPool forkJoinPool = new ForkJoinPool(5);
         // 提交可分解的PrintTask任务
-        forkJoinPool.invoke(new PrintTask(0, 2000));
+        //forkJoinPool.invoke(new PrintTask(0, 2000));
 
-        int arr[] = new int[100];
+        int arr[] = new int[10000];
         Random random = new Random();
         int total = 0;
         // 初始化100个数字元素
