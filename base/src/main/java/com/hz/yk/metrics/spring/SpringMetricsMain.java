@@ -20,6 +20,14 @@ public class SpringMetricsMain {
         }
 
         LockSupport.park();
+    }
+    private void test1() {
 
+        int c = test(1, 2);
+        int d = test(3, 4);
+
+    }
+    private  int test(int a,int b) {
+        return a + b;
     }
 }

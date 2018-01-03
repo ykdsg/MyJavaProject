@@ -14,6 +14,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.prometheus</groupId>
+            <artifactId>simpleclient_dropwizard</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.github.bruce-cloud</groupId>
             <artifactId>fastclone</artifactId>
         </dependency>
