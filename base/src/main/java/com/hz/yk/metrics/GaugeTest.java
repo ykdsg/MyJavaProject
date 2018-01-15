@@ -21,6 +21,7 @@ public class GaugeTest {
         reporter.start(2, TimeUnit.SECONDS);
         registry.register(MetricRegistry.name(GaugeTest.class, "queue", "size"),
                           new Gauge<Integer>() {
+                              @Override
                               public Integer getValue() {
                                   return q.size();
                               }

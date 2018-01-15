@@ -1,7 +1,7 @@
 package com.hz.yk.metrics.spring;
 
-import com.codahale.metrics.JmxReporter;
 import com.codahale.metrics.MetricRegistry;
+import com.codahale.metrics.jmx.JmxReporter;
 import com.codahale.metrics.jvm.FileDescriptorRatioGauge;
 import com.codahale.metrics.jvm.GarbageCollectorMetricSet;
 import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
