@@ -1,5 +1,6 @@
 package com.hz.yk.metrics;
 
+import com.codahale.metrics.ConsoleReporter;
 import com.codahale.metrics.MetricFilter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.ScheduledReporter;
@@ -21,8 +22,8 @@ public class TimerTest {
 
     public static void main(String[] args) throws Exception {
         MetricRegistry registry = new MetricRegistry();
-        //ConsoleReporter reporter = ConsoleReporter.forRegistry(registry).build();
-        ScheduledReporter reporter = influxdbReporter(registry);
+        ConsoleReporter reporter = ConsoleReporter.forRegistry(registry).build();
+        //ScheduledReporter reporter = influxdbReporter(registry);
         reporter.start(1, TimeUnit.SECONDS);
         Timer timer = registry.timer(MetricRegistry.name(TimerTest.class, "get-latency"));
         Timer.Context ctx;

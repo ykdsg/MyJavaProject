@@ -20,6 +20,7 @@ public class SpringPromeMetricsMain {
     public static void main(String[] args) throws Exception {
         ApplicationContext applicationContext = new AnnotationConfigApplicationContext(SpringMetricsPrometheusConfigure.class);
         TestBean testBean = applicationContext.getBean(TestBean.class);
+        testBean.timedMethod();
 
 
 

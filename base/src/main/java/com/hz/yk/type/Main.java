@@ -3,6 +3,7 @@ package com.hz.yk.type;
 import java.lang.reflect.Field;
 import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -17,6 +18,8 @@ public class Main {
         classGeneric();
         fieldGeneric();
         methodGeneric();
+
+        methodGeneric2();
 
     }
 
@@ -53,6 +56,31 @@ public class Main {
      * @throws Exception
      */
     private static void methodGeneric() throws Exception {
+        System.out.println("\n--------------------- methodGeneric2 ---------------------");
+        GenericClass gc = new GenericClass();
+        Method method3 = gc.getClass().getDeclaredMethod("method3", new Class[] { Object.class });
+
+        Type[] gpt3 = method3.getGenericParameterTypes();
+        Type[] get3 = method3.getGenericExceptionTypes();
+        Type gt3 = method3.getGenericReturnType();
+        System.out.println("============== getGenericParameterTypes");
+        for (Type t : gpt3) {
+            System.out.println(t + " : " + getClass(t, 0));
+        }
+        System.out.println("============== getGenericExceptionTypes");
+        for (Type t : get3) {
+            System.out.println(t + " : " + getClass(t, 0));
+        }
+        System.out.println("============== getType");
+        System.out.println(gt3 + " : " + getClass(gt3, 0));
+    }
+
+
+    /**
+     * 针对method的泛型接口使用
+     * @throws Exception
+     */
+    private static void methodGeneric2() throws Exception {
         System.out.println("\n--------------------- methodGeneric ---------------------");
         GenericClass gc = new GenericClass();
         Method method3 = gc.getClass().getDeclaredMethod("method3", new Class[] { Object.class });
@@ -60,6 +88,14 @@ public class Main {
         Type[] gpt3 = method3.getGenericParameterTypes();
         Type[] get3 = method3.getGenericExceptionTypes();
         Type gt3 = method3.getGenericReturnType();
+
+        Parameter[] parameters = method3.getParameters();
+        System.out.println("============== getParameterizedType:");
+        for (Parameter parameter : parameters) {
+            Type type = parameter.getParameterizedType();
+            System.out.println(type + " : " + getClass(type, 0));
+        }
+
         System.out.println("============== getGenericParameterTypes");
         for (Type t : gpt3) {
             System.out.println(t + " : " + getClass(t, 0));

@@ -26,7 +26,8 @@ public class TestBean {
     }
 
     @Timed
-    public void timedMethod() {
+    public void timedMethod() throws InterruptedException {
+        Thread.sleep(200L);
     }
 
     @Metered
