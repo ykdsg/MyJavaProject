@@ -7,7 +7,7 @@ import java.util.Map;
 /**
  * Created by wuzheng.yk on 2018/2/23.
  */
-public class Family {
+public class Family extends FamilySuper{
 
     private String fName;
     private Date createTime;

@@ -1,11 +1,14 @@
 package com.hz.yk.fastjson;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,7 +62,7 @@ public class ReflectObject2MapUtil {
         if (object.getClass().isArray()) {
             return doCovertForArray(object);
         }
-        Field[] fields = object.getClass().getDeclaredFields();
+        List<Field> fields = getDeclaredField(object);
         Map resultMap = new HashMap();
         try {
             for (Field field : fields) {
@@ -79,6 +82,26 @@ public class ReflectObject2MapUtil {
             e.printStackTrace();
         }
         return resultMap;
+    }
+
+
+    /**
+     * 循环向上转型, 获取对象的 DeclaredField
+     * @param object : 子类对象
+     * @return 所有的字段
+     */
+    public static List<Field> getDeclaredField(Object object){
+        Class<?> clazz = object.getClass() ;
+        List<Field> fieldList = Lists.newArrayList();
+
+        for(; clazz != Object.class ; clazz = clazz.getSuperclass()) {
+            Field[] fields = clazz.getDeclaredFields();
+            if (ArrayUtils.isEmpty(fields)) {
+                continue;
+            }
+            fieldList.addAll(Arrays.asList(fields));
+        }
+        return fieldList;
     }
 
     /**

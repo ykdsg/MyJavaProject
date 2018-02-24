@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Created by wuzheng.yk on 2018/2/23.
  */
-public class Student {
+public class Student extends StudentSuper{
 
 
     private String name;

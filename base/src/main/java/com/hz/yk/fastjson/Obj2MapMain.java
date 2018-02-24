@@ -13,9 +13,11 @@ public class Obj2MapMain {
     public static void main(String[] args) {
         Student stu = new Student();
         stu.setName("rr");
+        stu.setFather("fat");
         Family family = new Family();
         family.setCreateTime(new Date());
         family.setfList(Lists.newArrayList("5","6",null));
+        family.setSuperName("sname");
         stu.setFamily(family);
         stu.setsList(Lists.newArrayList("1","2",null));
 
