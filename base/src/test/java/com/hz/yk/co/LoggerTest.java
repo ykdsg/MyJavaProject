@@ -72,7 +72,7 @@ public class LoggerTest {
         logger.println(INFO, "我是info******");
         logger.println(WARNING, "我是warning&&&&&& ");
         logger.println(ERROR, "ERROR~~~");
-        logger.printException(new NullPointerException("空指针了"));
+        logger.printException(ERROR, new NullPointerException("空指针了"));
 
     }
 
@@ -82,7 +82,7 @@ public class LoggerTest {
         PrintWriter out = new PrintWriter(System.err,true);
         Logger std_logger = new ErrorMessageLogger(out, writer(out));
         std_logger = ignore(ERROR, std_logger);
-        std_logger.printException(new NullPointerException("空指针了"));
+        std_logger.printException(ERROR, new NullPointerException("空指针了"));
     }
 
     /**
@@ -97,6 +97,6 @@ public class LoggerTest {
         logger.println(INFO, "我是info******");
         logger.println(WARNING, "我是warning&&&&&& ");
         logger.println(ERROR, "ERROR~~~");
-        logger.printException(new NullPointerException("空指针了"));
+        logger.printException(ERROR, new NullPointerException("空指针了"));
     }
 }

@@ -23,7 +23,7 @@ public class WriterLogger implements Logger {
     }
 
     @Override
-    public void printException(Throwable e) {
+    public void printException(int level, Throwable e) {
         e.printStackTrace(writer);
     }
 

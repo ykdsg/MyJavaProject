@@ -29,8 +29,8 @@ public class TimestampLogger implements Logger {
     }
 
     @Override
-    public void printException(Throwable e) {
+    public void printException(int level, Throwable e) {
         logger.println(ERROR, new Date().toString() + ": ");
-        logger.printException(e);
+        logger.printException(level, e);
     }
 }

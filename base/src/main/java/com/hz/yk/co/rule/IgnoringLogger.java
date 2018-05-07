@@ -21,16 +21,27 @@ public class IgnoringLogger implements Logger{
 
     @Override
     public void print(int level, String msg) {
-        if(level>=lvl)logger1.print(level, msg);
-        else logger2.print(level, msg);
+        if(level>=lvl) {
+            logger1.print(level, msg);
+        } else {
+            logger2.print(level, msg);
+        }
     }
 
+    @Override
     public void println(int level, String msg){
-        if(level>=lvl)logger1.println(level, msg);
-        else logger2.println(level, msg);
+        if(level>=lvl) {
+            logger1.println(level, msg);
+        } else {
+            logger2.println(level, msg);
+        }
     }
-    public void printException(Throwable e){
-        if(lvl<=ERROR) logger1.printException(e);
-        else logger2.printException(e);
+    @Override
+    public void printException(int level, Throwable e){
+        if(lvl<=ERROR) {
+            logger1.printException(level, e);
+        } else {
+            logger2.printException(level, e);
+        }
     }
 }

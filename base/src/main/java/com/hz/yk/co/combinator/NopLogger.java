@@ -12,5 +12,5 @@ public class NopLogger implements Logger {
     }
 
     public void println(int level, String msg){}
-    public void printException(Throwable e){}
+    public void printException(int level, Throwable e){}
 }

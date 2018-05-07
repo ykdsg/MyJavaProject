@@ -7,7 +7,7 @@ public interface Logger {
 
     void print(int level, String msg);
     void println(int level, String msg);
-    void printException(Throwable e);
+    void printException(int level, Throwable e);
 
 
 }

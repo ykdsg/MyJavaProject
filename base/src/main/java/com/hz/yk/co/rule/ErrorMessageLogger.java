@@ -30,7 +30,7 @@ public class ErrorMessageLogger implements Logger {
     }
 
     @Override
-    public void printException(Throwable e) {
+    public void printException(int level, Throwable e) {
         out.println(e.getMessage());
     }
 }

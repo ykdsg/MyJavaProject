@@ -8,6 +8,7 @@ import static com.hz.yk.co.LogLevelConstant.ERROR;
 import static com.hz.yk.co.LogLevelConstant.INFO;
 import static com.hz.yk.co.LogLevelConstant.WARNING;
 import static com.hz.yk.co.LoggerFacade.ignore;
+import static com.hz.yk.co.LoggerFacade.myprefix;
 import static com.hz.yk.co.LoggerFacade.nop;
 import static com.hz.yk.co.LoggerFacade.sequence;
 import static com.hz.yk.co.LoggerFacade.timestamp;
@@ -44,10 +45,14 @@ public class Main {
         std_logger = ignore(ERROR, std_logger);
         logger = sequence(std_logger, logger);
 
+        logger = myprefix(logger);
+
+        logger.println(INFO,"-----------this is info");
+
         //标准输出上的东西只要通知我们出错了就行，不需要详细的stack trace
         PrintWriter out = new PrintWriter(System.err);
         std_logger = new ErrorMessageLogger(out, writer(out));
         std_logger = ignore(ERROR, std_logger);
-
+        std_logger.println(ERROR,"this is std error");
     }
 }

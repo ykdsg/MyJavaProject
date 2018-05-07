@@ -29,9 +29,9 @@ public class SequenceLogger implements Logger {
     }
 
     @Override
-    public void printException(Throwable e) {
+    public void printException(int level, Throwable e) {
         for (Logger l : loggers) {
-            l.printException(e);
+            l.printException(level, e);
         }
     }
 

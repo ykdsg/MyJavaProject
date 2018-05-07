@@ -35,12 +35,12 @@ public class FilterLogger implements Logger {
     }
 
     @Override
-    public void printException(Throwable e) {
+    public void printException(int level, Throwable e) {
         if (lvl == LogLevelConstant.ERROR) {
-            logger1.printException(e);
+            logger1.printException(level, e);
         }
         else {
-            logger2.printException(e);
+            logger2.printException(level, e);
         }
     }
 }
