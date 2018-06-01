@@ -21,6 +21,7 @@ public class Filters {
             this.specification = specification;
         }
 
+        @Override
         public <SenderThrowableType extends Throwable> void receiveFrom(Sender<T, SenderThrowableType> sender)
                 throws ReceiverThrowableType, SenderThrowableType {
             output.receiveFrom(new SpecificationSenderWrapper<T, SenderThrowableType>(sender, specification));
@@ -38,6 +39,7 @@ public class Filters {
             this.specification = specification;
         }
 
+        @Override
         public <ReceiverThrowableType extends Throwable> void sendTo(Receiver<T, ReceiverThrowableType> receiver)
                 throws ReceiverThrowableType, SenderThrowableType {
             sender.sendTo(new SpecificationReceiverWrapper<T, ReceiverThrowableType>(receiver, specification));
@@ -55,6 +57,7 @@ public class Filters {
             this.specification = specification;
         }
 
+        @Override
         public void receive(T item) throws ReceiverThrowableType {
             if(specification.test(item)) {
                 receiver.receive(item);

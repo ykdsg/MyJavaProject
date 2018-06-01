@@ -21,6 +21,7 @@ public  class FileInput implements Input<String,IOException> {
         reader = new FileReader(source);
     }
 
+    @Override
     public <ReceiverThrowableType extends Throwable> void transferTo(Output<String, ReceiverThrowableType> output)
             throws IOException, ReceiverThrowableType {
         final StringSender sender = new StringSender(reader);

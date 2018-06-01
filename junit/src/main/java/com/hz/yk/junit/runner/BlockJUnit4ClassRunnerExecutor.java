@@ -21,6 +21,7 @@ public class BlockJUnit4ClassRunnerExecutor {
     public static void main(String[] args) {
         RunNotifier notifier = new RunNotifier();
         Result result = new Result();
+        //当我们需要自己操作Runner实例是，Result的信息需要自己手动的注册Result中定义的Listener，不然Result中的信息并不会填写正确
         notifier.addFirstListener(result.createListener());
         notifier.addListener(new LogRunListener());
 

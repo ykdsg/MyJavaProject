@@ -24,6 +24,7 @@ public class FunctionFilter {
             this.function = function;
         }
 
+        @Override
         public <SenderThrowableType extends Throwable> void receiveFrom(Sender<From, SenderThrowableType> sender)
                 throws ReceiverThrowableType, SenderThrowableType {
             output.receiveFrom(new FunctionSenderWrapper<From, To, SenderThrowableType>(sender, function));
@@ -39,6 +40,7 @@ public class FunctionFilter {
             this.function = function;
         }
 
+        @Override
         public <ReceiverThrowableType extends Throwable> void sendTo(Receiver<To, ReceiverThrowableType> receiver)
                 throws ReceiverThrowableType, SenderThrowableType {
             sender.sendTo(new FunctionReceiverWrapper<From, To, ReceiverThrowableType>(receiver, function));
@@ -56,6 +58,7 @@ public class FunctionFilter {
             this.function = function;
         }
 
+        @Override
         public void receive(From item) throws ReceiverThrowableType {
             receiver.receive(function.map(item));
         }

@@ -19,6 +19,7 @@
         <module>asm5</module>
         <module>akka</module>
         <module>junit</module>
+        <module>lucence</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
@@ -28,10 +29,54 @@
         <java.encoding>UTF-8</java.encoding>
         <springframework_version>4.3.10.RELEASE</springframework_version>
         <drools.version>6.3.0.Final</drools.version>
+        <lucence.version>7.2.0</lucence.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--lucence start-->
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucence-core</artifactId>
+                <version>${lucence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-analyzers-common</artifactId>
+                <version>${lucence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-analyzers-smartcn</artifactId>
+                <version>${lucence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-highlighter</artifactId>
+                <version>${lucence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucence-queries</artifactId>
+                <version>${lucence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucence-queryparser</artifactId>
+                <version>${lucence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.lucene</groupId>
+                <artifactId>lucene-memory</artifactId>
+                <version>${lucence.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.janeluo</groupId>
+                <artifactId>ikanalyzer</artifactId>
+                <version>2012_u6</version>
+            </dependency>
+            <!--lucence end-->
+
             <dependency>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-servlet</artifactId>
@@ -315,16 +360,6 @@
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-aop</artifactId>
                 <version>${springframework_version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.lucene</groupId>
-                <artifactId>lucene-core</artifactId>
-                <version>5.4.1</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.lucene</groupId>
-                <artifactId>lucene-analyzers-common</artifactId>
-                <version>5.4.1</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>

@@ -22,6 +22,7 @@ public class FileOutput implements Output<String, IOException> {
         writer = new FileWriter(destination);
     }
 
+    @Override
     public <SenderThrowableType extends Throwable> void receiveFrom(Sender<String, SenderThrowableType> sender)
             throws IOException, SenderThrowableType {
         final StringReceiver receiver = new StringReceiver(writer);
