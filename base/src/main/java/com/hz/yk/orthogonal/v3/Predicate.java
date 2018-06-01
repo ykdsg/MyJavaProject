@@ -13,4 +13,8 @@ public interface Predicate<E> {
     default Predicate<E> and(Predicate<? super E> other) {
         return e -> test(e) && other.test(e);
     }
+
+    default Predicate<E> or(Predicate<? super E> other) {
+        return e -> test(e) || other.test(e);
+    }
 }

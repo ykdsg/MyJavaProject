@@ -19,6 +19,16 @@ public class Student {
         return sex == 1;
     }
 
+    public boolean male() {
+        return sex == 0;
+    }
+
+    public Student(int age, String name, int sex) {
+        this.age = age;
+        this.name = name;
+        this.sex = sex;
+    }
+
     public Student(int age, String name) {
         this.age = age;
         this.name = name;
