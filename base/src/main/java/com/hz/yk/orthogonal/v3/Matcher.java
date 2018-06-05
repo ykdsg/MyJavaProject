@@ -26,7 +26,7 @@ public interface Matcher<T> {
 
             @Override
             public boolean matches(T actual) {
-                return actual.equals(expected);
+                return expected.equals(actual);
             }
         };
     }

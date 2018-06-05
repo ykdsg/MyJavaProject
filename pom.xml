@@ -20,6 +20,7 @@
         <module>akka</module>
         <module>junit</module>
         <module>lucence</module>
+        <module>java8InAction</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
@@ -37,7 +38,7 @@
             <!--lucence start-->
             <dependency>
                 <groupId>org.apache.lucene</groupId>
-                <artifactId>lucence-core</artifactId>
+                <artifactId>lucene-core</artifactId>
                 <version>${lucence.version}</version>
             </dependency>
             <dependency>
@@ -57,12 +58,12 @@
             </dependency>
             <dependency>
                 <groupId>org.apache.lucene</groupId>
-                <artifactId>lucence-queries</artifactId>
+                <artifactId>lucene-queries</artifactId>
                 <version>${lucence.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.lucene</groupId>
-                <artifactId>lucence-queryparser</artifactId>
+                <artifactId>lucene-queryparser</artifactId>
                 <version>${lucence.version}</version>
             </dependency>
             <dependency>
