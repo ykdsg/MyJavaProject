@@ -2,16 +2,17 @@ package com.hz.yk.quartz;
 
 import java.util.HashMap;
 
-public class JobDetail {
-    private Class<? extends Job> clazz;
-    private String jobName;
+public class MyJobDetail {
+
+    private Class<? extends MyJob>  clazz;
+    private String                  jobName;
     private HashMap<String, String> jobData;
 
-    public JobDetail() {
+    public MyJobDetail() {
         jobData = new HashMap<String, String>();
     }
 
-    public JobDetail(String name, Class<? extends Job> clazz) {
+    public MyJobDetail(String name, Class<? extends MyJob> clazz) {
         this();
         this.jobName = name;
         this.clazz = clazz;
@@ -20,14 +21,14 @@ public class JobDetail {
     /**
      * @return the clazz
      */
-    public Class<? extends Job> getClazz() {
+    public Class<? extends MyJob> getClazz() {
         return clazz;
     }
 
     /**
      * @param clazz the clazz to set
      */
-    public void setClazz(Class<? extends Job> clazz) {
+    public void setClazz(Class<? extends MyJob> clazz) {
         this.clazz = clazz;
     }
 
@@ -83,7 +84,7 @@ public class JobDetail {
             return true;
         if (obj == null)
             return false;
-        JobDetail other = (JobDetail) obj;
+        MyJobDetail other = (MyJobDetail) obj;
         if (jobName == null) {
             if (other.jobName != null)
                 return false;

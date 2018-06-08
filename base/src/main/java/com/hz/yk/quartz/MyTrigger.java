@@ -1,11 +1,11 @@
 package com.hz.yk.quartz;
 
-public class Trigger implements Comparable<Trigger> {
+public class MyTrigger implements Comparable<MyTrigger> {
     private String jobKey;
     private long nextFireTime;
 
     @Override
-    public int compareTo(Trigger o) {// 在treemap中可以根据下次运行时间排序
+    public int compareTo(MyTrigger o) {// 在treemap中可以根据下次运行时间排序
         return (int) (this.nextFireTime - o.getNextFireTime());
     }
 

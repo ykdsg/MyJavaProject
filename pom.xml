@@ -33,6 +33,18 @@
         <lucence.version>7.2.0</lucence.version>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+    </dependencies>
+
+
     <dependencyManagement>
         <dependencies>
             <!--lucence start-->

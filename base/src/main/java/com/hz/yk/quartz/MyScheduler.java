@@ -5,13 +5,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.TreeSet;
 
-public class Scheduler {
-    private List<JobDetail> jobList = new ArrayList<JobDetail>();
-    private TreeSet<Trigger> triggerList = new TreeSet<Trigger>();
-    private final Object lockObj = new Object();
+public class MyScheduler {
+
+    private       List<MyJobDetail>  jobList     = new ArrayList<MyJobDetail>();
+    private       TreeSet<MyTrigger> triggerList = new TreeSet<MyTrigger>();
+    private final Object             lockObj     = new Object();
     SchedulerThread thread = new SchedulerThread();// 任务调度在本此线程执行
 
-    public void schedulerJob(JobDetail detail, Trigger trigger) {
+    public void schedulerJob(MyJobDetail detail, MyTrigger trigger) {
         synchronized (lockObj) {
             jobList.add(detail);
             trigger.setJobKey(detail.getJobName());
@@ -42,7 +43,7 @@ public class Scheduler {
             while (!shutDown)
                 synchronized (lockObj) {
                     try {
-                        final Trigger trigger = triggerList.pollFirst();//获取最近执行的作业
+                        final MyTrigger trigger = triggerList.pollFirst();//获取最近执行的作业
                         if (trigger == null) {
                             lockObj.wait(100);
                             continue;
@@ -55,9 +56,9 @@ public class Scheduler {
                                 lockObj.wait(nextTime - curr);
                             }
                             if (!shutDown) {
-                                int index = jobList.indexOf(new JobDetail(trigger.getJobKey(), null));
-                                JobDetail jobDetail = jobList.get(index);
-                                Job job = jobDetail.getClazz().newInstance();
+                                int index = jobList.indexOf(new MyJobDetail(trigger.getJobKey(), null));
+                                MyJobDetail jobDetail = jobList.get(index);
+                                MyJob job = jobDetail.getClazz().newInstance();
                                 job.execute(jobDetail.getJobData());
                                 trigger.resert();
                                 nextTime = trigger.getNextFireTime();

@@ -3,28 +3,28 @@ package com.hz.yk.quartz;
 public class ExampleScheduler {
 
     public static void main(String[] args) throws Exception {
-        final JobDetail detail1 = new JobDetail("job1", Job.class) {
+        final MyJobDetail detail1 = new MyJobDetail("job1", MyJob.class) {
             {
                 getJobData().put("type", "job1");
             }
         };
-        final JobDetail detail2 = new JobDetail("job2", Job.class) {
+        final MyJobDetail detail2 = new MyJobDetail("job2", MyJob.class) {
             {
                 getJobData().put("type", "job2");
             }
         };
-        final Trigger trigger1 = new Trigger() {
+        final MyTrigger trigger1 = new MyTrigger() {
             {
                 setNextFireTime(System.currentTimeMillis() + 3000L);
             }
         };
-        final Trigger trigger2 = new Trigger() {
+        final MyTrigger trigger2 = new MyTrigger() {
             {
                 setNextFireTime(System.currentTimeMillis() + 1000L);
             }
         };
 
-        Scheduler scheduler = new Scheduler();
+        MyScheduler scheduler = new MyScheduler();
         scheduler.schedulerJob(detail1, trigger1);
         scheduler.schedulerJob(detail2, trigger2);
 
