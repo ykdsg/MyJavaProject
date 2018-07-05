@@ -18,7 +18,7 @@ public class StdAnalyzer {
     public static void main(String[] args) throws IOException {
         System.out.println("StandardAnalyzer对中文分词:");
         stdAnalyzer(strCh);
-        SysSendertem.out.println("StandardAnalyzer对英文分词:");
+        System.out.println("StandardAnalyzer对英文分词:");
         stdAnalyzer(strEn);
 
     }

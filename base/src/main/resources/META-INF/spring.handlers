@@ -1,1 +1,1 @@
-http\://hz.yk/spring/schema/people=com.hz.yk.yk.schema.MyNamespaceHandler
+http\://hz.yk/spring/schema/people=com.hz.yk.schema.MyNamespaceHandler
