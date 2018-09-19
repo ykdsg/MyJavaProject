@@ -22,14 +22,6 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- 自动测试 -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
     <build>

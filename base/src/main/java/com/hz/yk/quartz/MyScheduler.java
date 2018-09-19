@@ -39,8 +39,9 @@ public class MyScheduler {
             }
         }
 
+        @Override
         public void run() {//运行
-            while (!shutDown)
+            while (!shutDown) {
                 synchronized (lockObj) {
                     try {
                         final MyTrigger trigger = triggerList.pollFirst();//获取最近执行的作业
@@ -73,6 +74,7 @@ public class MyScheduler {
                         e.printStackTrace();
                     }
                 }
+            }
         }
 
     }

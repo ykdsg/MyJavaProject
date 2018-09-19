@@ -22,6 +22,7 @@
         <module>lucence</module>
         <module>java8InAction</module>
         <module>spring-mvc</module>
+        <module>dubbo</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
@@ -43,6 +44,7 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
         </dependency>
+
     </dependencies>
 
 
