@@ -11,6 +11,9 @@ import com.alibaba.dubbo.common.extension.SPI;
 @SPI("dubbo")
 public interface AdaptiveExt2 {
 
-    @Adaptive({ "t" })
+    // 测试1，测试2，测试3的时候使用
+    @Adaptive
+    // 测试4的时候使用
+    //@Adaptive({ "t" })
     String echo(String msg, URL url);
 }
