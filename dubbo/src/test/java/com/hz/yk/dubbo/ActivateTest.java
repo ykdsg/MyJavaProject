@@ -46,7 +46,7 @@ public class ActivateTest {
         URL url = URL.valueOf("test://localhost/test");
         //根据   key = value1,group =  value
         //@Activate(value = {"value1"}, group = {"value"})来激活扩展
-        url = url.addParameter("value1", "value");
+        url = url.addParameter("value1", "value-test");
         List<ActivateExt1> list = ExtensionLoader.getExtensionLoader(ActivateExt1.class).getActivateExtension(url, new String[]{}, "value");
         System.out.println(list.size());
         System.out.println(list.get(0).getClass());
