@@ -1,5 +1,4 @@
-// Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/JavadocParser.g4 by ANTLR 4.7
-package com.yk.antlr.gen.javadoc;
+package com.yk.antlr.gen.javadoc;// Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/JavadocParser.g4 by ANTLR 4.7
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
