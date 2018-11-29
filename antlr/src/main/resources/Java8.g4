@@ -610,7 +610,7 @@ constantModifier
 	;
 
 interfaceMethodDeclaration
-	:	interfaceMethodModifier* methodHeader methodBody
+	:   interfaceMethodModifier* methodHeader methodBody
 	;
 
 interfaceMethodModifier
@@ -1773,3 +1773,8 @@ COMMENT
 LINE_COMMENT
     :   '//' ~[\r\n]* -> skip
     ;
+
+comments
+ : (COMMENT | LINE_COMMENT)*
+ ;
+

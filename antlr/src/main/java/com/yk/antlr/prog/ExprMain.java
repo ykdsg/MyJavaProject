@@ -11,7 +11,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 public class ExprMain {
 
     public static void main(String[] args) {
-        String sentence = "1+2*3/(4+5)\n";
+        String sentence = "1+2*3/(4+5)";
         //调用生成的ExprLexer进行词法分析
         ExprLexer lexer = new ExprLexer(CharStreams.fromString(sentence));
         CommonTokenStream tokens = new CommonTokenStream(lexer);

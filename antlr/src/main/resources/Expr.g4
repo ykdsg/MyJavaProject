@@ -1,7 +1,7 @@
 grammar Expr;
 
 program: statement;
-statement: expression NEWLINE;
+statement: expression NEWLINE*;
 expression : multExpr (('+' | '-') multExpr)*  ;
 multExpr : atom (('*' | '/') atom)* ;
 atom:  '(' expression ')' | INT;

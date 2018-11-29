@@ -1,12 +1,11 @@
 package com.yk.antlr.prog;
 
-import com.yk.antlr.gen.java8.Java8BaseListener;
+import com.yk.antlr.gen.java8.Java8BaseVisitor;
 import com.yk.antlr.gen.java8.Java8Lexer;
 import com.yk.antlr.gen.java8.Java8Parser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 /**
  * @author wuzheng.yk
@@ -29,18 +28,22 @@ public class Java8ListenerMain {
 
         ParseTree tree = parser.compilationUnit();
 
-        ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(new MyJava8Listener(), tree);
-        System.out.println();
+        MyJava8Visitor listener = new MyJava8Visitor();
+        listener.visit(tree);
+
     }
 
-    static class MyJava8Listener extends Java8BaseListener {
+    static class MyJava8Visitor extends Java8BaseVisitor {
 
         @Override
-        public void enterMethodName(Java8Parser.MethodNameContext ctx) {
-
+        public Object visitMethodDeclaration(Java8Parser.MethodDeclarationContext ctx) {
+            return visitChildren(ctx);
         }
 
+        @Override
+        public Object visitInterfaceMethodDeclaration(Java8Parser.InterfaceMethodDeclarationContext ctx) {
+            return visitChildren(ctx);
+        }
     }
 
 }
