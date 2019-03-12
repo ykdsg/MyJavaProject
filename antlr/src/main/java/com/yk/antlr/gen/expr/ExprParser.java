@@ -1,5 +1,6 @@
 // Generated from /Users/ykdsg/my_workspace/MyJavaProject/antlr/src/main/resources/Expr.g4 by ANTLR 4.7
 package com.yk.antlr.gen.expr;
+
 import org.antlr.v4.runtime.NoViableAltException;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -140,7 +141,9 @@ public class ExprParser extends Parser {
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
+
 		public List<TerminalNode> NEWLINE() { return getTokens(ExprParser.NEWLINE); }
+
 		public TerminalNode NEWLINE(int i) {
 			return getToken(ExprParser.NEWLINE, i);
 		}
@@ -172,20 +175,20 @@ public class ExprParser extends Parser {
 			{
 			setState(12);
 			expression();
-			setState(16);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while (_la==NEWLINE) {
-				{
-				{
-				setState(13);
-				match(NEWLINE);
-				}
-				}
-				setState(18);
+				setState(16);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
+				while (_la == NEWLINE) {
+					{
+						{
+							setState(13);
+							match(NEWLINE);
+						}
+					}
+					setState(18);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+				}
 			}
 		}
 		catch (RecognitionException re) {
@@ -232,15 +235,15 @@ public class ExprParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(19);
+				setState(19);
 			multExpr();
-			setState(24);
+				setState(24);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__0 || _la==T__1) {
 				{
 				{
-				setState(20);
+					setState(20);
 				_la = _input.LA(1);
 				if ( !(_la==T__0 || _la==T__1) ) {
 				_errHandler.recoverInline(this);
@@ -250,7 +253,7 @@ public class ExprParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(21);
+					setState(21);
 				multExpr();
 				}
 				}
@@ -304,15 +307,15 @@ public class ExprParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(27);
+				setState(27);
 			atom();
-			setState(32);
+				setState(32);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__2 || _la==T__3) {
 				{
 				{
-				setState(28);
+					setState(28);
 				_la = _input.LA(1);
 				if ( !(_la==T__2 || _la==T__3) ) {
 				_errHandler.recoverInline(this);
@@ -322,7 +325,7 @@ public class ExprParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(29);
+					setState(29);
 				atom();
 				}
 				}
@@ -377,18 +380,18 @@ public class ExprParser extends Parser {
 			case T__4:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(35);
+					setState(35);
 				match(T__4);
-				setState(36);
+					setState(36);
 				expression();
-				setState(37);
+					setState(37);
 				match(T__5);
 				}
 				break;
 			case INT:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(39);
+					setState(39);
 				match(INT);
 				}
 				break;
@@ -407,20 +410,19 @@ public class ExprParser extends Parser {
 		return _localctx;
 	}
 
-	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\f-\4\2\t\2\4\3\t"+
-		"\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\7\3\21\n\3\f\3\16\3\24\13\3"+
-		"\3\4\3\4\3\4\7\4\31\n\4\f\4\16\4\34\13\4\3\5\3\5\3\5\7\5!\n\5\f\5\16\5"+
-		"$\13\5\3\6\3\6\3\6\3\6\3\6\5\6+\n\6\3\6\2\2\7\2\4\6\b\n\2\4\3\2\3\4\3"+
-		"\2\5\6\2+\2\f\3\2\2\2\4\16\3\2\2\2\6\25\3\2\2\2\b\35\3\2\2\2\n*\3\2\2"+
-		"\2\f\r\5\4\3\2\r\3\3\2\2\2\16\22\5\6\4\2\17\21\7\13\2\2\20\17\3\2\2\2"+
-		"\21\24\3\2\2\2\22\20\3\2\2\2\22\23\3\2\2\2\23\5\3\2\2\2\24\22\3\2\2\2"+
-		"\25\32\5\b\5\2\26\27\t\2\2\2\27\31\5\b\5\2\30\26\3\2\2\2\31\34\3\2\2\2"+
-		"\32\30\3\2\2\2\32\33\3\2\2\2\33\7\3\2\2\2\34\32\3\2\2\2\35\"\5\n\6\2\36"+
-		"\37\t\3\2\2\37!\5\n\6\2 \36\3\2\2\2!$\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#\t"+
-		"\3\2\2\2$\"\3\2\2\2%&\7\7\2\2&\'\5\6\4\2\'(\7\b\2\2(+\3\2\2\2)+\7\n\2"+
-		"\2*%\3\2\2\2*)\3\2\2\2+\13\3\2\2\2\6\22\32\"*";
-	public static final ATN _ATN =
+	public static final String _serializedATN = "\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\f-\4\2\t\2\4\3\t"
+												+ "\3\4\4\t\4\4\5\t\5\4\6\t\6\3\2\3\2\3\3\3\3\7\3\21\n\3\f\3\16\3\24\13\3"
+												+ "\3\4\3\4\3\4\7\4\31\n\4\f\4\16\4\34\13\4\3\5\3\5\3\5\7\5!\n\5\f\5\16\5"
+												+ "$\13\5\3\6\3\6\3\6\3\6\3\6\5\6+\n\6\3\6\2\2\7\2\4\6\b\n\2\4\3\2\3\4\3"
+												+ "\2\5\6\2+\2\f\3\2\2\2\4\16\3\2\2\2\6\25\3\2\2\2\b\35\3\2\2\2\n*\3\2\2"
+												+ "\2\f\r\5\4\3\2\r\3\3\2\2\2\16\22\5\6\4\2\17\21\7\13\2\2\20\17\3\2\2\2"
+												+ "\21\24\3\2\2\2\22\20\3\2\2\2\22\23\3\2\2\2\23\5\3\2\2\2\24\22\3\2\2\2"
+												+ "\25\32\5\b\5\2\26\27\t\2\2\2\27\31\5\b\5\2\30\26\3\2\2\2\31\34\3\2\2\2"
+												+ "\32\30\3\2\2\2\32\33\3\2\2\2\33\7\3\2\2\2\34\32\3\2\2\2\35\"\5\n\6\2\36"
+												+ "\37\t\3\2\2\37!\5\n\6\2 \36\3\2\2\2!$\3\2\2\2\" \3\2\2\2\"#\3\2\2\2#\t"
+												+ "\3\2\2\2$\"\3\2\2\2%&\7\7\2\2&\'\5\6\4\2\'(\7\b\2\2(+\3\2\2\2)+\7\n\2"
+												+ "\2*%\3\2\2\2*)\3\2\2\2+\13\3\2\2\2\6\22\32\"*";
+	public static final ATN    _ATN           =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
 		_decisionToDFA = new DFA[_ATN.getNumberOfDecisions()];
