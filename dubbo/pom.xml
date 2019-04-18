@@ -15,6 +15,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.yangt.asd</groupId>
+            <artifactId>ytasd-tl-cache</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.13</version>

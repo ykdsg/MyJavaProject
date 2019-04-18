@@ -2,6 +2,8 @@ package com.hz.yk.reactor;
 
 import org.junit.Test;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.test.StepVerifier;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -34,4 +36,24 @@ public class FluxTest {
         }).subscribe(System.out::println);
     }
 
+    @Test
+    public void testBuffer() {
+        //5 个包含 20 个元素的数组
+        Flux.range(1, 100).buffer(20).subscribe(System.out::println);
+
+    }
+
+    private Flux<Integer> generateFluxFrom1To6() {
+        return Flux.just(1, 2, 3, 4, 5, 6);
+    }
+
+    private Mono<Integer> generateMonoWithError() {
+        return Mono.error(new Exception("some error"));
+    }
+
+    @Test
+    public void testViaStepVerifier() {
+        StepVerifier.create(generateFluxFrom1To6()).expectNext(1, 2, 3, 4, 5, 6).expectComplete().verify();
+        StepVerifier.create(generateMonoWithError()).expectErrorMessage("some error").verify();
+    }
 }
