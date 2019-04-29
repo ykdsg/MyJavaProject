@@ -24,6 +24,7 @@
         <module>dubbo</module>
         <module>algorithms</module>
         <module>springboot-demo</module>
+        <module>gatling</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
