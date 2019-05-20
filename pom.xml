@@ -25,6 +25,7 @@
         <module>algorithms</module>
         <module>springboot-demo</module>
         <module>gatling</module>
+        <module>leetcode</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>

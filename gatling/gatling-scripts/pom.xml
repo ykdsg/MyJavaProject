@@ -8,5 +8,54 @@
     <artifactId>gatling-scripts</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <!--        <dependency>-->
+        <!--            <groupId>io.gatling.highcharts</groupId>-->
+        <!--            <artifactId>gatling-charts-highcharts</artifactId>-->
+        <!--            <version>3.1.1</version>-->
+        <!--            <scope>test</scope>-->
+        <!--        </dependency>-->
+        <dependency>
+            <groupId>io.gatling.highcharts</groupId>
+            <artifactId>gatling-charts-highcharts</artifactId>
+            <version>2.3.1</version>
+            <scope>test</scope>
+        </dependency>
 
+        <dependency>
+            <groupId>io.gatling.dubbo</groupId>
+            <artifactId>gatling-dubbo-assembly</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.yangt.icp</groupId>
+            <artifactId>yticp-common</artifactId>
+            <version>3.1.5</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>log4j-over-slf4j</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>io.gatling</groupId>
+                <artifactId>gatling-maven-plugin</artifactId>
+                <version>2.2.4</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

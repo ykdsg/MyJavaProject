@@ -1,5 +1,7 @@
 package com.hz.yk;
 
+import org.junit.Test;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +24,7 @@ public class Main {
         //原始类型数组需要这么处理
         list = Arrays.stream(ints).boxed().collect(Collectors.toList());
         System.out.println("right array=" + list);
+        System.out.println(1 / 0);
     }
 
     //方法没有声明throws
@@ -32,6 +35,11 @@ public class Main {
     @SuppressWarnings("unchecked")
     static <E extends Exception> void doThrow0(Exception e) throws E {
         throw (E) e;
+    }
+
+    @Test
+    public void test1() {
+        System.out.println(1 / 0);
     }
 
 }
