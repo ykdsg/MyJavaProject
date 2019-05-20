@@ -3,6 +3,7 @@ package com.hz.yk.temp;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,15 +17,42 @@ public class TestArea {
 
     static Map<Integer, AreaX> areaXMap = new ConcurrentHashMap<>();
 
-    static AtomicInteger proviceInt = new AtomicInteger(1);
+    static AtomicInteger proviceInt = new AtomicInteger(0);
 
     static Map<Integer, AtomicInteger> proviceAutoMap = new ConcurrentHashMap<>();
     static Map<Integer, AtomicInteger> cityAutoMap    = new ConcurrentHashMap<>();
 
     public static void main(String[] args) {
-        List<AreaX> areaXList = getAreaX(";1;2:36;3:37;3:40;3:41;3:42;4:48;4:51;4:52;4:55;10:108;10:109;10:110;11:121;11:122;11:123;11:127;12:132;12:134;12:142;14:158;14:168;15:169;15:170;15:172;15:174;15:183;15:185;16;17:203;18:217;18:220;18:221;19:231;22;23:269;24:290;25:299;27:322;28:332;28:336:10089;");
+        List<AreaX> areaXList1 = getAreaX(";1;2:36;3:37;3:40;3:41;3:42;4:48;4:51;4:52;4:55;10:108;10:109;10:110;11:121;11:122;11:123;11:127;12:132;12:134;12:142;14:158;14:168;15:169;15:170;15:172;15:174;15:183;15:185;16;17:203;18:217;18:220;18:221;19:231;22;23:269;24:290;25:299;27:322;28:332;28:336:10089;");
 
-        System.out.println(areaXList);
+        List<AreaX> areaXList2 = getAreaX(";1;2;3:41;28:332;28:336:10089;");
+
+        System.out.println(areaXList1);
+
+        List<AreaX> interval = interval(areaXList1, areaXList2);
+        System.out.println(interval);
+    }
+
+    public static List<AreaX> interval(List<AreaX> aList, List<AreaX> bList) {
+        List<AreaX> resultList = Lists.newArrayList();
+        int i = 0, j = 0;
+        while (i < aList.size() && j < bList.size()) {
+
+            AreaX ax = aList.get(i);
+            AreaX bx = bList.get(j);
+            int left = Math.max(ax.left, bx.left);
+            int right = Math.min(ax.right, bx.right);
+            //如果命中，就说明a包含b或者b包含a
+            if (left <= right) {
+                resultList.add(right == ax.right ? ax : bx);
+            }
+            if (ax.right == right) {
+                i++;
+            } else {
+                j++;
+            }
+        }
+        return resultList;
     }
 
     public static List<AreaX> getAreaX(String areaStr) {
@@ -37,7 +65,7 @@ public class TestArea {
             String[] areaDetailArray = area.split(":");
             //省份
             String proviceStr = areaDetailArray[0];
-            if (areaDetailArray.length == 1) {
+            if (areaDetailArray.length == 1 && StringUtils.isNotBlank(areaDetailArray[0])) {
                 resultList.add(getProvice(proviceStr));
             }
 
@@ -50,6 +78,7 @@ public class TestArea {
             }
 
         }
+        Collections.sort(resultList);
         return resultList;
     }
 
@@ -60,11 +89,23 @@ public class TestArea {
             AtomicInteger cityAuto = cityAutoMap.computeIfAbsent(city.getId(), cityId -> new AtomicInteger(0));
             int nextInt = cityAuto.addAndGet(2);
             //这里需要补位
-            String countySerial = city.getSerial() + (nextInt < 10 ? "0" + nextInt : "" + nextInt);
+            String countySerial = city.getSerial() + getFillTwoNum(nextInt);
             Integer left = Integer.valueOf(countySerial) - 1;
             Integer right = Integer.valueOf(countySerial);
-            return new AreaX(countySerial, left, right, id);
+            AreaX areaX = new AreaX(countySerial, left, right, id);
+            areaX.setLevel(3);
+            return areaX;
         });
+    }
+
+    /**
+     * 不足2位的数组前面+0 补足
+     *
+     * @param value
+     * @return
+     */
+    private static String getFillTwoNum(int value) {
+        return value < 10 ? "0" + value : "" + value;
     }
 
     /**
@@ -79,11 +120,13 @@ public class TestArea {
         Integer cityId = Integer.valueOf(cityStr);
         return areaXMap.computeIfAbsent(cityId, id -> {
             AtomicInteger proviceAuto = proviceAutoMap
-                    .computeIfAbsent(provice.getId(), proviceId -> new AtomicInteger(1));
-            String citySerial = provice.getSerial() + proviceAuto.addAndGet(1);
+                    .computeIfAbsent(provice.getId(), proviceId -> new AtomicInteger(0));
+            String citySerial = provice.getSerial() + getFillTwoNum(proviceAuto.addAndGet(1));
             Integer left = Integer.valueOf(citySerial + "00");
             Integer right = Integer.valueOf(citySerial + "99");
-            return new AreaX(citySerial, left, right, id);
+            AreaX areaX = new AreaX(citySerial, left, right, id);
+            areaX.setLevel(2);
+            return areaX;
         });
     }
 
@@ -99,11 +142,13 @@ public class TestArea {
             String serial = String.valueOf(proviceInt.addAndGet(1));
             Integer left = Integer.valueOf(serial + "0000");
             Integer right = Integer.valueOf(serial + "9999");
-            return new AreaX(serial, left, right, id);
+            AreaX areaX = new AreaX(serial, left, right, id);
+            areaX.setLevel(1);
+            return areaX;
         });
     }
 
-    static class AreaX {
+    static class AreaX implements Comparable<AreaX> {
 
         /**
          * 序列
@@ -163,6 +208,14 @@ public class TestArea {
 
         public void setSerial(String serial) {
             this.serial = serial;
+        }
+
+        @Override
+        public int compareTo(AreaX obj) {
+            if (obj == null || obj.getLeft() == null) {
+                return 1;
+            }
+            return this.getLeft().compareTo(obj.getLeft());
         }
     }
 
