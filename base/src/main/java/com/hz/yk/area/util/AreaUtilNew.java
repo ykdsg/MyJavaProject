@@ -1,4 +1,4 @@
-package com.hz.yk.temp;
+package com.hz.yk.area.util;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang.StringUtils;
