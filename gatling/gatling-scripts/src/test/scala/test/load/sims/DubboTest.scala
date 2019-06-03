@@ -1,6 +1,7 @@
 package test.load.sims
 
 import com.alibaba.dubbo.config.{ApplicationConfig, ReferenceConfig}
+import com.yt.icp.domain.query.QueryBrandOptionsDO
 import com.yt.icp.facade.BrandQueryFacade
 import io.gatling.core.Predef._
 import io.gatling.core.session.Session
@@ -20,13 +21,13 @@ class DubboTest extends Simulation {
   application.setName("gatling-dubbo")
 
 
-  //  // 引用远程服务
+  // 引用远程服务
   val reference = new ReferenceConfig[BrandQueryFacade] // 此实例很重，封装了与注册中心的连接以及与提供者的连接，请自行缓存，否则可能造成内存和连接泄漏
   reference.setApplication(application)
   //  reference.setUrl("dubbo://ip:port/com.youzan.xxx.XxxService")  //设置服务地址、端口、全限定服务类名
-  reference.setUrl("dubbo://10.88.80.24:28889/com.yt.icp.facade.BrandQueryFacade") //设置服务地址、端口、全限定服务类名
+  reference.setUrl("dubbo://172.16.120.176:29650/com.yt.icp.facade.BrandQueryFacade") //设置服务地址、端口、全限定服务类名
   reference.setInterface(classOf[BrandQueryFacade])
-  reference.setGroup("dev_icp")
+  reference.setGroup("test_gz")
   //  reference.setVersion("1.0.0") //设置版本号，可以不设置
   //  reference.setTimeout(3000)        //设置超时时间，可以不设置
   //
@@ -62,6 +63,6 @@ class DubboTest extends Simulation {
   //接口调用逻辑，包括入参构造和设置. 注意参数类型需一致，不一致就做相应的转化
   def f(session: Session): Object = {
     //如果方法的入参是复杂对象, 必须在这里 new 对象和 set 字段
-    brandQueryFacade.getBrandById(session.attributes("kdtId").asInstanceOf[Integer].toLong, null)
+    brandQueryFacade.getBrandById(session.attributes("kdtId").asInstanceOf[Integer].toLong, new QueryBrandOptionsDO())
   }
 }
