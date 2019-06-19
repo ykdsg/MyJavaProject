@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd"
+       default-lazy-init="false">
+
+    <!-- H2数据源 -->
+    <jdbc:embedded-database id="dataSourceTarget" type="H2">
+        <!--        <jdbc:script location="classpath:sql/h2/user_structure.sql"/>-->
+    </jdbc:embedded-database>
+
+    <!--开启tcp和web控制台，maven跑单测的时候会重复打开端口，产生报错。本地调试单个用例的时候可以开启 -->
+    <!-- 可以通过 jdbc:h2:tcp://localhost:9092/mem:dataSourceTarget  -->
+    <!--可以通过 localhost:8888 来访问数据库，url:jdbc:h2:mem:dataSourceTarget  userName:sa -->
+    <bean id="h2Server" class="org.h2.tools.Server" factory-method="createTcpServer" init-method="start"
+          destroy-method="stop" depends-on="h2WebServer">
+        <constructor-arg value="-tcp,-tcpAllowOthers,-tcpPort,9092"/>
+    </bean>
+    <bean id="h2WebServer" class="org.h2.tools.Server" factory-method="createWebServer" init-method="start"
+          destroy-method="stop">
+        <constructor-arg value="-web,-webAllowOthers,-webPort,8888"/>
+    </bean>
+</beans>

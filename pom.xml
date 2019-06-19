@@ -26,6 +26,8 @@
         <module>springboot-demo</module>
         <module>gatling</module>
         <module>leetcode</module>
+        <module>h2db</module>
+        <module>cucumber-test</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>

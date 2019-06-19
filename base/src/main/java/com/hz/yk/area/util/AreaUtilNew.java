@@ -11,6 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
+ * 左右值法表示树状结构
  * @author wuzheng.yk
  * @date 2019-05-13
  */
