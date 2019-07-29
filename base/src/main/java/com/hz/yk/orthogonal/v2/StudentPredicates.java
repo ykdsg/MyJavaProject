@@ -18,7 +18,7 @@ public final class StudentPredicates {
      * @return
      */
     public static Predicate<Student> ageEq(int age) {
-        return s -> s.getAge() == age;
+        return s -> s.getAge() == age && s.getSex() == 1;
     }
 
     public static Predicate<Student> nameEq(String name) {

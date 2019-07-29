@@ -18,4 +18,8 @@ public final class StudentPredicates {
     public static Predicate<Student> nameEq(String name) {
         return s -> s.getName().equals(name);
     }
+
+    public static Predicate<Student> female() {
+        return s -> s.getSex() == 1;
+    }
 }

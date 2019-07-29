@@ -1,4 +1,4 @@
-package com.hz.yk.cucumber.test.glue;
+package com.hz.yk.cucumber.test.glue.case1;
 
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -38,33 +38,33 @@ public class TestSteps {
 
     static final class Entry {
 
-        private final Integer first;
-        private final Integer second;
-        private final String  operation;
+        private Integer first;
+        private Integer second;
+        private String  operation;
 
-        Entry(Integer first, Integer second, String operation) {
+        public Integer getFirst() {
+            return first;
+        }
+
+        public void setFirst(Integer first) {
             this.first = first;
+        }
+
+        public Integer getSecond() {
+            return second;
+        }
+
+        public void setSecond(Integer second) {
             this.second = second;
+        }
+
+        public String getOperation() {
+            return operation;
+        }
+
+        public void setOperation(String operation) {
             this.operation = operation;
         }
     }
 
-    public class MoneyConverter extends Transformer<Money> 
-
-    {
-
-        @Override
-
-        public Money transform(String amount) {
-
-        String[] numbers = amount.split("\\.");
-
-        int dollars = Integer.parseInt(numbers[0]);
-
-        int cents = Integer.parseInt(numbers[1]);
-
-        return new Money(dollars, cents);
-
-    }
-    」
-    }
+}

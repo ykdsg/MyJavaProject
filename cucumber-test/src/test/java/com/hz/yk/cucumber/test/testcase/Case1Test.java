@@ -1,4 +1,4 @@
-package com.hz.yk.cucumber.test;
+package com.hz.yk.cucumber.test.testcase;
 
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Cucumber.class)
 @CucumberOptions(features = { "classpath:features/test.feature" }, plugin = { "pretty" }, strict = true, glue = {
-        "com.hz.yk.cucumber.test.glue" })
-public class DemoTest {
+        "com.hz.yk.cucumber.test.glue.case1" })
+public class Case1Test {
 
 }

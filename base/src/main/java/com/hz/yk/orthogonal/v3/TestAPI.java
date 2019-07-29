@@ -10,6 +10,7 @@ import java.util.List;
 import static com.hz.yk.orthogonal.v3.API.find;
 import static com.hz.yk.orthogonal.v3.Matcher.ne;
 import static com.hz.yk.orthogonal.v3.StudentPredicates.age;
+import static com.hz.yk.orthogonal.v3.StudentPredicates.female;
 import static com.hz.yk.orthogonal.v3.StudentPredicates.nameEq;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -47,7 +48,7 @@ public class TestAPI {
         assertThat(find(students, age(ne(10))).get(), notNullValue());
 
         //查找年龄不等于18岁的女生，可以表述为：
-        assertThat(find(students, age(ne(18)).and(Student::female)).get(), notNullValue());
+        assertThat(find(students, age(ne(18)).and(female())).get(), notNullValue());
 
         //查找年龄不等于18岁的或者是男生的而且名字是20name 的学生
         Student femalNameAge = find(students, age(ne(18)).or(Student::male).and(nameEq("20name"))).get();
