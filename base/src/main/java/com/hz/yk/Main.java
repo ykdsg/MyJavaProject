@@ -48,4 +48,10 @@ public class Main {
         System.out.println(1 / 0);
     }
 
+    @Test
+    public void test2() {
+        Integer i = 1;
+        System.out.println(i.equals(1));
+    }
+
 }

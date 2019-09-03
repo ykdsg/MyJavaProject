@@ -123,4 +123,5 @@ public class FluxTest {
         Flux.first(a, b).toIterable().forEach(System.out::println);
         
     }
+
 }
