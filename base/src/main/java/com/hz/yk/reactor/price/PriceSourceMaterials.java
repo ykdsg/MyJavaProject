@@ -15,6 +15,11 @@ public class PriceSourceMaterials {
      */
     private long costTime;
 
+    /**
+     * 当前序号标识
+     */
+    private int tag;
+
     public String getItem() {
         return item;
     }
@@ -37,5 +42,13 @@ public class PriceSourceMaterials {
 
     public void setCostTime(long costTime) {
         this.costTime = costTime;
+    }
+
+    public int getTag() {
+        return tag;
+    }
+
+    public void setTag(int tag) {
+        this.tag = tag;
     }
 }

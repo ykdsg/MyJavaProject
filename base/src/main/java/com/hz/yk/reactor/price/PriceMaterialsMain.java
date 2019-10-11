@@ -35,6 +35,7 @@ public class PriceMaterialsMain {
         batchMono = batchMono.flatMap(
                 //依赖批次信息
                 (result) -> this.fillDependOnBatch1(priceSourceMaterials, provinceArea, mixItemPriceFactoryContract));
+        //fillDependOnBatch1 中调用过了一次block，会存在相互影响，实际使用中发现，如果itemMono 需要花费时间较长，就存在获取不到的情况
         Mono.zip(itemMono, itemPriceRule, batchMono).block();
         System.out.println("-------------cost:" + (System.currentTimeMillis() - startTime));
 
