@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd"
+       default-lazy-init="false">
+
+    <bean id="statFilter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <property name="slowSqlMillis" value="500"/>
+        <property name="logSlowSql" value="true"/>
+        <property name="mergeSql" value="true"/>
+    </bean>
+
+    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+        <property name="statementExecutableSqlLogEnable" value="true"/>
+    </bean>
+
+    <!-- ic独库 -->
+    <bean id="icDataSourceTarget" class="com.yangt.datasource.YtDataSource" init-method="init" destroy-method="close">
+        <property name="dataConifg" value="test-icpDBConfig"/>
+        <property name="maxActive" value="100"/>
+        <property name="minIdle" value="10"/>
+        <property name="initialSize" value="6"/>
+        <!-- 获取连接时最大等待时间，单位毫秒。
+        配置了maxWait之后，缺省启用公平锁，并发效率会有所下降，
+        如果需要可以通过配置useUnfairLock属性为true使用非公平锁。 -->
+        <property name="maxWait" value="60000"/>
+        <property name="filters" value="wall"/>
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxOpenPreparedStatements" value="50"/>
+        <property name="proxyFilters">
+            <list>
+                <ref bean="statFilter"/>
+                <ref bean="logFilter"/>
+            </list>
+        </property>
+    </bean>
+
+    <!-- 配置log4jdbc-->
+    <!-- ic新库读写账号-->
+    <bean id="icDataSource" class="net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy">
+        <constructor-arg ref="icDataSourceTarget"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="icDataSource"/>
+    </bean>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="icDataSource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value>
+                            reasonable=false
+                            offsetAsPageNum=true
+                            rowBoundsWithCount=true
+                            pageSizeZero=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+    <!-- 扫描mybatis映射接口类 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.yt.icp.biz.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="icDataSource"/>
+    </bean>
+
+    <!-- spring监控 begin -->
+    <!--<bean id="druid-stat-interceptor"-->
+    <!--class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">-->
+    <!--</bean>-->
+
+    <!--<bean id="statPointcut" class="org.springframework.aop.support.JdkRegexpMethodPointcut"-->
+    <!--scope="prototype">-->
+    <!--<property name="patterns">-->
+    <!--<list>-->
+    <!--<value>com.yt.icp.biz.mapper.*</value>-->
+    <!--</list>-->
+    <!--</property>-->
+    <!--</bean>-->
+
+    <!--<aop:config>-->
+    <!--<aop:advisor advice-ref="druid-stat-interceptor" pointcut-ref="statPointcut"/>-->
+    <!--</aop:config>-->
+    <!-- spring监控 end -->
+
+</beans>

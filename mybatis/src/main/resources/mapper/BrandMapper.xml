@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yt.icp.biz.mapper.BrandMapper" >
+    <resultMap id="BaseResultMap" type="com.yt.icp.biz.domain.entity.Brand" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="cn_name" property="cnName" jdbcType="VARCHAR" />
+        <result column="en_name" property="enName" jdbcType="VARCHAR" />
+        <result column="no" property="no" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+        <result column="picture" property="picture" jdbcType="VARCHAR" />
+        <result column="is_hide" property="isHide" jdbcType="BIT" />
+        <result column="tags" property="tags" jdbcType="VARCHAR" />
+        <result column="properties" property="properties" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="edit_time" property="editTime" jdbcType="TIMESTAMP" />
+        <result column="creator" property="creator" jdbcType="VARCHAR" />
+        <result column="editor" property="editor" jdbcType="VARCHAR" />
+        <result column="is_deleted" property="isDeleted" jdbcType="BIT" />
+        <result column="item_count" property="itemCount" javaType="INTEGER"/>
+        <result column="item_sale_count" property="itemSaleCount" javaType="INTEGER"/>
+        <result column="item_wxd_count" property="itemWxdCount" javaType="INTEGER"/>
+        <result column="brand_type" property="brandType" javaType="INTEGER"/>
+        <result column="brand_subtypes" property="brandSubtypes" javaType="INTEGER"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="shop_group_id" property="shopGroupId" jdbcType="VARCHAR"/>
+        <result column="black_shop_group_id" property="blackShopGroupId" jdbcType="VARCHAR"/>
+        <result column="restrict_area" property="restrictArea" jdbcType="VARCHAR" />
+        <result column="is_self_join" property="isSelfJoin" jdbcType="INTEGER" />
+        <result column="brand_selling_point" property="brandSellingPoint" jdbcType="VARCHAR" />
+        <result column="expand" property="expand" jdbcType="VARCHAR"/>
+        <result column="is_support_return" property="isSupportReturn" jdbcType="VARCHAR"/>
+        <result column="primary_sell_category_id" property="primarySellCategoryId" jdbcType="BIGINT"/>
+        <result column="primary_sell_category_edit_time" property="primarySellCategoryEditTime" jdbcType="TIMESTAMP"/>
+        <result column="layer_info_check_status" property="layerInfoCheckStatus" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, name,cn_name, en_name, no, sort, picture, is_hide, tags, properties, create_time, edit_time,
+        creator, editor, is_deleted,item_count,item_sale_count,item_wxd_count,
+        brand_type, brand_subtypes, remarks, shop_group_id ,black_shop_group_id,
+        <if test="needArea == 1">
+            restrict_area,
+        </if>
+        is_self_join,brand_selling_point,primary_sell_category_id,primary_sell_category_edit_time,layer_info_check_status,
+        expand, is_support_return
+    </sql>
+  
+    <sql id="Brand_Column_List" >
+        b.id, b.name, b.cn_name, b.en_name, b.no, b.sort, b.picture, b.is_hide, b.tags, b.properties, b.create_time, b.edit_time,
+        b.creator, b.editor, b.is_deleted,b.item_count,b.item_sale_count,b.item_wxd_count,
+        b.brand_type, brand_subtypes, b.remarks, b.shop_group_id,b.black_shop_group_id,
+        <if test="needArea == 1">
+            b.restrict_area,
+        </if>
+        b.is_self_join,b.brand_selling_point,b.primary_sell_category_id,b.primary_sell_category_edit_time,b.layer_info_check_status,b.expand,
+        b.is_support_return
+    </sql>
+
+    <insert id="insert" parameterType="com.yt.icp.biz.domain.entity.Brand" keyProperty="id" useGeneratedKeys="true" >
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_brand (name, cn_name, en_name, no,
+        sort, picture, is_hide,
+        tags, properties, create_time,
+        edit_time, creator, editor,
+        is_deleted,restrict_area,is_self_join,primary_sell_category_edit_time)
+        values (#{name,jdbcType=VARCHAR},#{cnName,jdbcType=VARCHAR},#{enName,jdbcType=VARCHAR}, #{no,jdbcType=VARCHAR},
+        #{sort,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, #{isHide,jdbcType=BIT},
+        #{tags,jdbcType=VARCHAR}, #{properties,jdbcType=VARCHAR}, now(),
+        now(), #{creator,jdbcType=VARCHAR}, #{editor,jdbcType=VARCHAR},
+        0,
+        #{restrictArea,jdbcType=VARCHAR}, #{isSelfJoin,jdbcType=INTEGER} , now()
+        )
+    </insert>
+    <update id="updateBrand" parameterType="com.yt.icp.biz.domain.entity.Brand" >
+        update t_brand
+        <set >
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="cnName != null" >
+                cn_name = #{cnName,jdbcType=VARCHAR},
+            </if>
+            <if test="enName != null" >
+                en_name = #{enName,jdbcType=VARCHAR},
+            </if>
+            <if test="no != null" >
+                no = #{no,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null" >
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="picture != null" >
+                picture = #{picture,jdbcType=VARCHAR},
+            </if>
+            <if test="isHide != null" >
+                is_hide = #{isHide,jdbcType=BIT},
+            </if>
+            <if test="tags != null" >
+                tags = #{tags,jdbcType=VARCHAR},
+            </if>
+            <if test="properties != null" >
+                properties = #{properties,jdbcType=VARCHAR},
+            </if>
+            <if test="editor != null" >
+                editor = #{editor,jdbcType=VARCHAR},
+            </if>
+            <if test="brandType != null" >
+                brand_type = #{brandType,jdbcType=INTEGER},
+            </if>
+            <if test="brandSubtypes != null">
+                brand_subtypes = #{brandSubtypes, jdbcType=INTEGER},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="shopGroupId != null" >
+                shop_group_id = #{shopGroupId,jdbcType=VARCHAR},
+            </if>
+            <if test="blackShopGroupId != null">
+                black_shop_group_id = #{blackShopGroupId,jdbcType=VARCHAR},
+            </if>
+            <if test="brandType != null" >
+                brand_type_edit_time = now(),
+            </if>
+            <if test="isSelfJoin != null" >
+                is_self_join = #{isSelfJoin,jdbcType=INTEGER},
+            </if>
+            <if test="restrictArea != null" >
+                restrict_area = #{restrictArea,jdbcType=VARCHAR},
+            </if>
+            <if test="brandSellingPoint != null" >
+                brand_selling_point = #{brandSellingPoint,jdbcType=VARCHAR},
+            </if>
+            <if test="expand != null">
+                expand = #{expand,jdbcType=VARCHAR},
+            </if>
+            <if test="isSupportReturn != null">
+                is_support_return = #{isSupportReturn,jdbcType=VARCHAR},
+            </if>
+            edit_time = now()
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="deleteBrand" parameterType="com.yt.icp.biz.domain.entity.Brand" >
+        update t_brand
+        set edit_time = now(),
+        name = #{name} ,
+        editor = #{editor,jdbcType=VARCHAR},
+        is_deleted = 1
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="batchUpdateBackflow" parameterType="list">
+        update t_brand set backflow_time=now(), item_count =
+        case id
+        <foreach collection="list" item="i" index="index">
+            when (#{i.id}) then #{i.itemCount}
+        </foreach>
+        end ,item_sale_count =
+        case id
+        <foreach collection="list" item="i" index="index">
+            when (#{i.id}) then #{i.itemSaleCount}
+        </foreach>
+        end, item_wxd_count =
+        case id
+        <foreach collection="list" item="i" index="index">
+            when (#{i.id}) then #{i.itemWxdCount}
+        </foreach>
+        end
+        where id in
+        <foreach item="i" index="index" collection="list" open="("
+                 separator="," close=")">
+            #{i.id}
+        </foreach>
+    </update>
+    
+    <select id="getBrandById" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from t_brand
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    
+    <select id="queryBrandByIdList" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from t_brand
+        where id in
+        <foreach collection="list" open="(" close=")" separator="," item="item" index="index" >
+            #{item,jdbcType=BIGINT}
+        </foreach>
+        AND is_deleted = 0;
+    </select>
+
+    <select id="queryBrandAll" resultMap="BaseResultMap"  >
+        select
+        <include refid="Brand_Column_List" />
+        from t_brand b
+        where b.is_deleted = 0
+        <if test="includeHide != null and includeHide == 0">
+            and b.is_hide = 0
+        </if>
+        order by b.sort,b.create_time desc
+    </select>
+
+    <select id="queryBrandByParam" resultMap="BaseResultMap"  >
+        select
+        DISTINCT <include refid="Brand_Column_List" />
+        from t_brand b
+        <if test="query.categoryList != null and query.categoryList.size() > 0">
+            left JOIN t_category_brand c on c.brand_id = b.id
+        </if>
+        where b.is_deleted = 0
+        <if test="query.name!=null and query.name!=''">
+            and b.name like CONCAT('%',#{query.name,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="query.no!=null and query.no!='' and query.brandType == null">
+            and b.no = #{query.no}
+        </if>
+        <if test="query.no!=null and query.no!='' and query.brandType == 1">
+            and b.no like CONCAT('%',#{query.no,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="query.categoryList != null and query.categoryList.size() > 0">
+            and c.category_id in
+            <foreach collection="query.categoryList" separator="," open="(" item="categoryId" index="index" close=")">
+                #{categoryId}
+            </foreach>
+            and c.is_deleted = 0
+        </if>
+        <if test="query.shopGroupIdList != null">
+            and b.shop_group_id in
+            <foreach collection="query.shopGroupIdList" separator="," open="(" item="shopGroupId" index="index" close=")">
+                #{shopGroupId}
+            </foreach>
+        </if>
+        <if test="query.areaNumList != null and query.areaNumList.size() > 0">
+            and (b.restrict_area =
+            ";11;32;33;34;35;36;37;41;42;43;44;12;45;46;50;51;52;53;54;61;62;63;13;64;65;81;82;71;14;15;21;22;23;31;"
+            <foreach collection="query.areaNumList" item="areaNum" index="index">
+                or b.restrict_area like CONCAT('%;',#{areaNum,jdbcType=VARCHAR},';%')
+            </foreach>
+            )
+        </if>
+        <if test="query.brandType != null">
+            and b.brand_type = #{query.brandType}
+        </if>
+        <if test="query.isHide != null">
+            and b.is_hide = #{query.isHide}
+        </if>
+        <if test="query.layerInfoCheckStatus != null  and query.layerInfoCheckStatus == 0">
+            and b.layer_info_check_status is null
+        </if>
+        <if test="query.layerInfoCheckStatus != null  and query.layerInfoCheckStatus != 0">
+            and b.layer_info_check_status = #{query.layerInfoCheckStatus}
+        </if>
+        <choose>
+            <when test="query.brandType != null and query.brandType == 1">
+                order by b.is_hide,b.brand_type_edit_time desc
+            </when>
+            <otherwise>
+                order by b.is_hide,b.sort,b.create_time desc
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getBrandByName" resultMap="BaseResultMap"  >
+        select
+        <include refid="Brand_Column_List" />
+        from t_brand b
+        where b.is_deleted = 0
+        and name = #{name} limit 1
+    </select>
+    <select id="queryMaxEditTime" resultType="java.util.Date">
+        select max(edit_time) from t_brand
+    </select>
+    <select id="queryBrandList" resultType="com.yt.icp.biz.domain.entity.Brand">
+        select
+        <include refid="Brand_Column_List" />
+        from t_brand b
+        where b.is_deleted = 0
+        limit #{param1}, #{param2}
+    </select>
+
+    <select id="queryBBrandList" resultType="com.yt.icp.biz.domain.entity.Brand">
+        select
+        <include refid="Brand_Column_List" />
+        from t_brand b
+        where b.is_deleted = 0  and b.brand_type = 1
+        <if test="query.name != null and query.name != '' ">
+            and b.name like concat('%' ,#{query.name} ,'%')
+        </if>
+        <if test="query.isHide != null">
+            and b.is_hide = #{query.isHide}
+        </if>
+    </select>
+
+    <update id="deleteBrandB">
+        update t_brand
+        set edit_time = now(),
+        editor = #{operator,jdbcType=VARCHAR},
+        brand_type = 0,
+        is_self_join = null ,
+        restrict_area = null 
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updatePrimarySellCategory">
+        update t_brand
+        set edit_time = now(),
+        editor = #{editor,jdbcType=VARCHAR},
+        primary_sell_category_id = #{categoryId,jdbcType=BIGINT}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="updateBrandLayerInfoCheckStatus">
+        update t_brand
+        <set>
+            edit_time = now(),
+            editor = #{editor,jdbcType=VARCHAR},
+            <if test="checkStatus != null and checkStatus  > 0">
+                layer_info_check_status = #{checkStatus,jdbcType=INTEGER},
+            </if>
+            <if test="checkStatus != null and checkStatus == 0">
+                layer_info_check_status = null ,
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="batchUpdatePrimaryCategoryEditTime">
+        update t_brand set
+        edit_tme = now(),
+        primary_sell_category_edit_time = now(),
+        editor=#{editor,jdbcType=VARCHAR}
+        where id IN
+        <foreach collection="idList" index="index" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="batchUpdatePrimaryCategory" parameterType="java.util.List">
+        update t_brand set primary_sell_category_edit_time=now(), primary_sell_category_id =
+        case id
+        <foreach collection="brandList" item="brand" index="index">
+            when (#{brand.id}) then #{brand.primarySellCategoryId}
+        </foreach>
+        end
+        where id in
+        <foreach item="brand" index="index" collection="brandList" open="("
+                 separator="," close=")">
+            #{brand.id}
+        </foreach>
+    </update>
+
+
+    <select id="queryBrandByNoList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_brand b
+        where b.no in
+        <foreach collection="brandNoList" open="(" close=")" separator="," item="item" index="index">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        AND b.is_deleted = 0;
+    </select>
+
+</mapper>

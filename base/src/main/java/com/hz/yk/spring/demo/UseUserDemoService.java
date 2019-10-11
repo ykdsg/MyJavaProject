@@ -1,5 +1,6 @@
 package com.hz.yk.spring.demo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,4 +16,10 @@ public class UseUserDemoService {
     @Resource
     UserDemoService userDemoService;
 
+    @Autowired
+    IAnimal dogImpl;
+
+    public void test() {
+        System.out.println(dogImpl);
+    }
 }

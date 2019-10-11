@@ -1,14 +1,39 @@
-[
-  {
-    "kdtId": 160,
-    "page": 1
-  },
-  {
-    "kdtId": 160,
-    "page": 2
-  },
-  {
-    "kdtId": 160,
-    "page": 3
-  }
-]
+{
+  "title": "TablePlus commond+r",
+  "rules": [
+    {
+      "description": "commond + r to Enter",
+      "manipulators": [
+        {
+          "type": "basic",
+          "from": {
+            "key_code": "r",
+            "modifiers": {
+              "mandatory": [
+                "left_command"
+              ]
+            }
+          },
+          "to": [
+            {
+              "key_code": "left_command",
+              "modifiers": {
+                "mandatory": [
+                  "return_or_enter"
+                ]
+              }
+            }
+          ],
+          "conditions": [
+            {
+              "type": "frontmost_application_if",
+              "bundle_identifiers": [
+                "^com\\\\.tinyapp\\\\.TablePlus$"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

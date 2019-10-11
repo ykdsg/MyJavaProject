@@ -10,6 +10,11 @@ public class PriceSourceMaterials {
 
     private String batch;
 
+    /**
+     * 耗时
+     */
+    private long costTime;
+
     public String getItem() {
         return item;
     }
@@ -24,5 +29,13 @@ public class PriceSourceMaterials {
 
     public void setBatch(String batch) {
         this.batch = batch;
+    }
+
+    public long getCostTime() {
+        return costTime;
+    }
+
+    public void setCostTime(long costTime) {
+        this.costTime = costTime;
     }
 }

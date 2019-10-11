@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">  
+<configuration>  
+    <settings>  
+        <setting name="cacheEnabled" value="true" />  
+        <setting name="lazyLoadingEnabled" value="true" />  
+        <setting name="multipleResultSetsEnabled" value="true" />  
+        <setting name="useColumnLabel" value="true" />  
+        <setting name="defaultExecutorType" value="REUSE" />  
+        <setting name="defaultStatementTimeout" value="25000" />
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>  
+      <!-- 给对象取别名 ,在调用session.selectList("listXxx(Xxxmapper.xml_id)",mapper使用时直接用别名)
+		
+
+	<typeAliases>
+		<typeAlias alias="shop" type="com.app.shop.dao.ShopDao" />
+		<typeAlias alias="customer" type="com.app.user.dao.CustomerDao" />
+		<typeAlias alias="linker" type="com.app.user.dao.LinkerDao" />
+	</typeAliases>
+	-->
+</configuration> 

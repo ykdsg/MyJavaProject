@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class PriceSourceMaterialFillerImpl {
 
     public void fillSourceMaterialsItem(PriceSourceMaterials priceSourceMaterials, List<Long> itemIdList) {
-        EchoMethod.echoAfterTime("fill-Item :" + Thread.currentThread().getName(), 10000, TimeUnit.MILLISECONDS);
+        EchoMethod.echoAfterTime("fill-Item :" + Thread.currentThread().getName(), 1000, TimeUnit.MILLISECONDS);
         priceSourceMaterials.setItem("fill item");
     }
 
@@ -48,7 +48,7 @@ public class PriceSourceMaterialFillerImpl {
 
     public void fillSourceMaterialsPreferenceFromUmp(PriceSourceMaterials priceSourceMaterials,
                                                      MixItemPriceFactoryContract mixItemPriceFactoryContract) {
-        EchoMethod.echoAfterTime(
-                "fill-PreferenceFromUmp:" + Thread.currentThread().getName(), 500, TimeUnit.MILLISECONDS);
+        EchoMethod.echoAfterTime("fill-PreferenceFromUmp:" + Thread.currentThread().getName(), 500,
+                                 TimeUnit.MILLISECONDS);
     }
 }

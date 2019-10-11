@@ -6,6 +6,7 @@
         <artifactId>MyjavaExperiment</artifactId>
         <groupId>com.hz.yk</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,6 +14,17 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
+        <dependency>
+            <groupId>com.yangt.tracker</groupId>
+            <artifactId>tracker-toolkit</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.groboutils</groupId>
+            <artifactId>groboutils-core</artifactId>
+            <version>5</version>
+        </dependency>
+
         <dependency>
             <groupId>com.huaban</groupId>
             <artifactId>jieba-analysis</artifactId>
@@ -295,8 +307,8 @@
             <artifactId>findbugs</artifactId>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>com.h2database</groupId>-->
-            <!--<artifactId>h2</artifactId>-->
+        <!--<groupId>com.h2database</groupId>-->
+        <!--<artifactId>h2</artifactId>-->
         <!--</dependency>-->
         <dependency>
             <groupId>com.hz.yk</groupId>
@@ -307,8 +319,8 @@
             <artifactId>guice</artifactId>
         </dependency>
         <!--<dependency>-->
-            <!--<groupId>com.alibaba.trade.proxy</groupId>-->
-            <!--<artifactId>method-invoke-proxy</artifactId>-->
+        <!--<groupId>com.alibaba.trade.proxy</groupId>-->
+        <!--<artifactId>method-invoke-proxy</artifactId>-->
         <!--</dependency>-->
         <dependency>
             <groupId>org.apache.shiro</groupId>

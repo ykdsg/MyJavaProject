@@ -14,6 +14,7 @@ public class SpringDemoMain {
         UseUserDemoService bean = context.getBean(UseUserDemoService.class);
         System.out.println(bean);
 
+        bean.test();
     }
 
 }
