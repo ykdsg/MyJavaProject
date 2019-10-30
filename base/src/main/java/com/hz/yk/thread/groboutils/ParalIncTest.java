@@ -21,7 +21,7 @@ public class ParalIncTest {
 
     @Test
     public void testInc() throws Throwable {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 15; i++) {
             final ParalInc target = new ParalInc();
 
             TestRunnable r = new TestRunnable() {

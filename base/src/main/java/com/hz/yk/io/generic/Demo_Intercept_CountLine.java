@@ -13,7 +13,10 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Created by wuzheng.yk on 16/11/1.
  */
 public class Demo_Intercept_CountLine {
+
     public static void main(String[] args) throws IOException {
+        //File f = new File("");
+        //System.out.println(f.getCanonicalPath());
         File source = new File("in");
         File destination = new File("out");
         final AtomicInteger count = new AtomicInteger();
@@ -23,6 +26,7 @@ public class Demo_Intercept_CountLine {
         Output<String, IOException> output = Outputs.text(destination);
 
         Function<String, String> function = new Function<String, String>() {
+
             public String map(String from) {
                 count.incrementAndGet();
                 return from;
