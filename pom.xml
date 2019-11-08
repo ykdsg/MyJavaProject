@@ -37,7 +37,7 @@
         <java.version>1.8</java.version>
         <java.encoding>UTF-8</java.encoding>
         <!--        <springframework.version>5.0.7.RELEASE</springframework.version>-->
-        <springframework.version>4.1.5.RELEASE</springframework.version>
+        <springframework.version>5.2.1.RELEASE</springframework.version>
         <drools.version>6.3.0.Final</drools.version>
         <lucence.version>7.2.0</lucence.version>
         <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
