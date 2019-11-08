@@ -9,7 +9,7 @@ public class Demo1 {
     int count = 0;
 
     /**
-     * 包含副作用的函数
+     * 包含副作用的函数 ,参考 {@link Tuple2} 纯函数
      *
      * @param x
      * @return
@@ -18,4 +18,5 @@ public class Demo1 {
         count++;
         return x + 1;
     }
+
 }
