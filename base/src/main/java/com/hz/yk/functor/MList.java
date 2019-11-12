@@ -1,9 +1,12 @@
 package com.hz.yk.functor;
 
 import com.google.common.collect.ImmutableList;
+import com.hz.yk.stack.T1;
+import com.hz.yk.stack.T2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -27,21 +30,21 @@ public class MList<T> implements Monad<T, MList<?>> {
         return new MList<>(result);
     }
 
-    public MList<?> flatMap2(Function<T, MList<?>> f) {
-        List<MList<?>> mResult = new ArrayList<>(list.size());
+    @Override
+    public <R> MList<R> flatMap(Function<T, MList<?>> f) {
+        List<MList<R>> mResult = new ArrayList<>(list.size());
         for (T t : list) {
-            mResult.add(f.apply(t));
+            mResult.add((MList<R>) f.apply(t));
         }
-        List result = new ArrayList<>(list.size());
-        for (MList<?> mList : mResult) {
+        List<R> result = new ArrayList<>(list.size());
+        for (MList<R> mList : mResult) {
             result.addAll(mList.list);
         }
         return new MList<>(result);
     }
 
-    @Override
-    public MList<?> flatMap(Function<T, MList<?>> f) {
-        return null;
+    <R> MList<R> liftM2(MList<T1> t1, MList<T2> t2, BiFunction<T1, T2, R> fun) {
+        return t1.flatMap((T1 tv1) -> t2.map((T2 tv2) -> fun.apply(tv1, tv2)));
     }
 
 }
