@@ -29,6 +29,7 @@
         <module>h2db</module>
         <module>cucumber-test</module>
         <module>mybatis</module>
+        <module>geektime</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
