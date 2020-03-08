@@ -2,6 +2,9 @@ package com.hz.yk;
 
 import org.junit.Test;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author wuzheng.yk
  * @date 2018/7/17
@@ -9,9 +12,13 @@ import org.junit.Test;
 public class Main {
 
     public static void main(String[] args) {
-        Integer test1 = new Integer(1);
-        Integer test2 = new Integer(1);
-        System.out.println(test1 == test2);
+        //Integer test1 = new Integer(1);
+        //Integer test2 = new Integer(1);
+        ////false
+        //System.out.println(test1 == test2);
+        List<String> emptyList = Collections.emptyList();
+        emptyList.add("test1");
+        System.out.println(emptyList);
         //
         //int[] ints = new int[] { 1, 2, 3, 4, 55 };
         ////原始类型会把整个array 当做list的一个元素

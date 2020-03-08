@@ -4,7 +4,7 @@
        xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean id="beanFactory" class="com.hz.yk.spring.source.BeanFactoryTest">
+    <bean id="beanFactory" class="com.hz.yk.my.spring.source.BeanFactoryTest">
         <property name="name" value="testName"/>
     </bean>
 </beans>
