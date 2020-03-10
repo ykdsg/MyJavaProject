@@ -32,6 +32,7 @@
         <module>geektime</module>
         <module>spring-mvc</module>
         <module>my-spring-mvc</module>
+        <module>practice</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
