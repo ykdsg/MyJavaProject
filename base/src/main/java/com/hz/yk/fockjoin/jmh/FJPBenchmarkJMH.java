@@ -32,7 +32,7 @@ import java.util.concurrent.TimeUnit;
 @Fork(1)
 @Threads(8)
 @State(Scope.Benchmark)
-public class FJPBenchmark {
+public class FJPBenchmarkJMH {
 
     @Param({ "200", "400", "800", "1600" })
     public int N;
@@ -68,7 +68,7 @@ public class FJPBenchmark {
         return sum;
     }
 
-    @Benchmark
+    //@Benchmark
     public double computeDirectly() {
         double sum = 0;
         for (RecursiveTask<Double> task : tasks) {
@@ -78,7 +78,7 @@ public class FJPBenchmark {
     }
 
     public static void main(String[] args) throws RunnerException {
-        Options options = new OptionsBuilder().include(FJPBenchmark.class.getSimpleName()).forks(2).build();
+        Options options = new OptionsBuilder().include(FJPBenchmarkJMH.class.getSimpleName()).forks(2).build();
         new Runner(options).run();
     }
 

@@ -15,10 +15,22 @@ public class LogServiceImpl implements LogService {
 
     @Override
     public Long create(LogReq logReq) {
+        sleep();
         if (logReq == null) {
             throw new IllegalArgumentException("logReq is null");
         }
         System.out.println("invoke provider create...");
         return i + logReq.getStatus();
+    }
+
+    /**
+     * 模拟耗时操作
+     */
+    private void sleep() {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

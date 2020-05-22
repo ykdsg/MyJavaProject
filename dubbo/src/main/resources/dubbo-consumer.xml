@@ -14,10 +14,10 @@ http://code.alibabatech.com/schema/dubbo/dubbo.xsd
                     timeout="20000"/>
     <!-- dubbo配置_协议 -->
     <dubbo:protocol name="dubbo" charset="UTF-8" serialization="hessian2" port="28889" threads="100"/>
-    <dubbo:consumer check="false" timeout="5000" retries="0"/>
+    <dubbo:consumer check="false" timeout="6000" retries="0"/>
 
     <dubbo:reference id="tradeSupplyQueryApi" interface="com.hz.yk.dubbo.provider.api.service.LogService"
-                     group="dev-wz"/>
+                     group="dev-wz" url="dubbo://localhost:20880"/>
 
     <dubbo:reference id="brandQueryFacade" interface="com.yt.icp.facade.BrandQueryFacade"
                      group="dev_wz"/>

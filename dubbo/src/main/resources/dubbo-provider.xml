@@ -11,9 +11,9 @@ http://code.alibabatech.com/schema/dubbo/dubbo.xsd
     <dubbo:application name="wz-test-provider" owner="wuzheng"/>
     <!-- dubbo配置_注册中心 -->
     <dubbo:registry address="zookeeper://test-zk.yangtuojia.com:2185?backup=test-zk.yangtuojia.com:2184"
-                    timeout="20000"/>
+                    timeout="20000" register="false"/>
     <!-- dubbo配置_协议 -->
-    <dubbo:protocol name="dubbo" charset="UTF-8" serialization="hessian2" port="28889" threads="100"/>
+    <dubbo:protocol name="dubbo" charset="UTF-8" serialization="hessian2" port="20880" threads="10"/>
     <!-- 服务发布全局配置 -->
     <dubbo:provider protocol="dubbo" delay="-1" executes="500" timeout="30000"
                     group="dev-wz" retries="0"/>
