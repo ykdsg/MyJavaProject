@@ -12,12 +12,10 @@ import java.util.concurrent.Future;
  */
 public class ExecutorServiceCalculator implements Calculator {
 
-    private int parallism;
     private ExecutorService pool;
 
     public ExecutorServiceCalculator(ExecutorService pool, int parallism) {
         this.pool = pool;
-        this.parallism = parallism;
     }
 
     @Override
@@ -35,34 +33,6 @@ public class ExecutorServiceCalculator implements Calculator {
             }
         }
         return total;
-    }
-
-    private static class SumTask implements Callable<Long> {
-
-        private long[] numbers;
-        private int from;
-        private int to;
-
-        public SumTask(long[] numbers, int from, int to) {
-            this.numbers = numbers;
-            this.from = from;
-            this.to = to;
-        }
-
-        @Override
-        public Long call() {
-            long total = 0;
-            for (int i = from; i <= to; i++) {
-                try {
-                    Thread.sleep(numbers[i]);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                total += numbers[i];
-            }
-            return total;
-        }
     }
 
     private static class SleepTask implements Callable<Long> {
