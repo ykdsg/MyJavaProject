@@ -30,19 +30,39 @@ import java.util.concurrent.TimeUnit;
  * @author wuzheng.yk
  * @date 2020/5/22
  * 线程数为16 的数据
- * Benchmark                   (N)  Mode  Cnt   Score   Error  Units
- * FjDemoJMH.executorTasks       8  avgt    6  20.959 ± 0.444  ms/op
- * FjDemoJMH.executorTasks      20  avgt    6  26.956 ± 0.762  ms/op
- * FjDemoJMH.executorTasks      40  avgt    6  42.734 ± 0.910  ms/op
- * FjDemoJMH.executorTasks      80  avgt    6  68.009 ± 0.874  ms/op
- * FjDemoJMH.forkJoinAllTasks    8  avgt    6  51.382 ± 2.322  ms/op
- * FjDemoJMH.forkJoinAllTasks   20  avgt    6  70.847 ± 1.657  ms/op
- * FjDemoJMH.forkJoinAllTasks   40  avgt    6  77.586 ± 2.670  ms/op
- * FjDemoJMH.forkJoinAllTasks   80  avgt    6  83.838 ± 1.591  ms/op
- * FjDemoJMH.forkJoinTasks       8  avgt    6  51.770 ± 1.724  ms/op
- * FjDemoJMH.forkJoinTasks      20  avgt    6  71.023 ± 1.646  ms/op
- * FjDemoJMH.forkJoinTasks      40  avgt    6  77.547 ± 1.286  ms/op
- * FjDemoJMH.forkJoinTasks      80  avgt    6  86.674 ± 1.385  ms/op
+ * Benchmark                   (N)  Mode  Cnt    Score   Error  Units
+ * FjDemoJMH.executorTasks       8  avgt    6   20.974 ± 0.389  ms/op
+ * FjDemoJMH.executorTasks      20  avgt    6   26.868 ± 0.725  ms/op
+ * FjDemoJMH.executorTasks      40  avgt    6   42.715 ± 1.170  ms/op
+ * FjDemoJMH.executorTasks      80  avgt    6   67.506 ± 0.925  ms/op
+ * FjDemoJMH.executorTasks     500  avgt    6  358.708 ± 3.993  ms/op
+ * FjDemoJMH.forkJoinAllTasks    8  avgt    6   32.068 ± 0.470  ms/op
+ * FjDemoJMH.forkJoinAllTasks   20  avgt    6   45.678 ± 0.442  ms/op
+ * FjDemoJMH.forkJoinAllTasks   40  avgt    6   50.168 ± 0.900  ms/op
+ * FjDemoJMH.forkJoinAllTasks   80  avgt    6   84.531 ± 1.507  ms/op
+ * FjDemoJMH.forkJoinAllTasks  500  avgt    6  424.916 ± 6.401  ms/op
+ * FjDemoJMH.forkJoinTasks       8  avgt    6   32.125 ± 0.598  ms/op
+ * FjDemoJMH.forkJoinTasks      20  avgt    6   46.008 ± 0.597  ms/op
+ * FjDemoJMH.forkJoinTasks      40  avgt    6   50.752 ± 0.603  ms/op
+ * FjDemoJMH.forkJoinTasks      80  avgt    6   83.274 ± 1.426  ms/op
+ * FjDemoJMH.forkJoinTasks     500  avgt    6  405.517 ± 2.145  ms/op
+ * 线程数为32的数据
+ * Benchmark                   (N)  Mode  Cnt    Score    Error  Units
+ * FjDemoJMH.executorTasks       8  avgt    6   21.041 ±  0.298  ms/op
+ * FjDemoJMH.executorTasks      20  avgt    6   21.683 ±  0.808  ms/op
+ * FjDemoJMH.executorTasks      40  avgt    6   23.055 ±  0.548  ms/op
+ * FjDemoJMH.executorTasks      80  avgt    6   42.649 ±  1.109  ms/op
+ * FjDemoJMH.executorTasks     500  avgt    6  189.430 ±  1.831  ms/op
+ * FjDemoJMH.forkJoinAllTasks    8  avgt    6   31.902 ±  0.634  ms/op
+ * FjDemoJMH.forkJoinAllTasks   20  avgt    6   45.909 ±  0.760  ms/op
+ * FjDemoJMH.forkJoinAllTasks   40  avgt    6   50.606 ±  1.032  ms/op
+ * FjDemoJMH.forkJoinAllTasks   80  avgt    6   55.146 ±  0.547  ms/op
+ * FjDemoJMH.forkJoinAllTasks  500  avgt    6  250.843 ± 10.557  ms/op
+ * FjDemoJMH.forkJoinTasks       8  avgt    6   31.784 ±  0.535  ms/op
+ * FjDemoJMH.forkJoinTasks      20  avgt    6   45.662 ±  0.667  ms/op
+ * FjDemoJMH.forkJoinTasks      40  avgt    6   50.577 ±  1.067  ms/op
+ * FjDemoJMH.forkJoinTasks      80  avgt    6   55.534 ±  0.597  ms/op
+ * FjDemoJMH.forkJoinTasks     500  avgt    6  245.678 ±  9.795  ms/op
  */
 @BenchmarkMode({ Mode.AverageTime })
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -54,7 +74,7 @@ import java.util.concurrent.TimeUnit;
 public class FjDemoJMH {
 
     //任务数，每个任务会随机sleep一段时间
-    @Param({ "8", "20", "40", "80" })
+    @Param({ "8", "20", "40", "80", "500" })
     public int N;
     long[] numbers;
 
@@ -74,7 +94,7 @@ public class FjDemoJMH {
             numbers[i] = r.nextInt(20);
         }
 
-        parallism = 16;
+        parallism = 32;
         pool = new ForkJoinPool(parallism);
         exPool = Executors.newFixedThreadPool(parallism);
     }
@@ -90,7 +110,7 @@ public class FjDemoJMH {
      */
     @Benchmark
     public long executorTasks() {
-        Calculator calculator = new ExecutorServiceCalculator(exPool, parallism);
+        Calculator calculator = new ExecutorServiceCalculator(exPool);
         long sum = calculator.sumUp(numbers);
         //System.out.println("executorTasks=" + sum);
         return sum;

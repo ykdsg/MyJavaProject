@@ -14,7 +14,7 @@ public class ExecutorServiceCalculator implements Calculator {
 
     private ExecutorService pool;
 
-    public ExecutorServiceCalculator(ExecutorService pool, int parallism) {
+    public ExecutorServiceCalculator(ExecutorService pool) {
         this.pool = pool;
     }
 

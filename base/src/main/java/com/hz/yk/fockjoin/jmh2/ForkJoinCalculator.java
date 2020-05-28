@@ -12,6 +12,19 @@ public class ForkJoinCalculator implements Calculator {
 
     private ForkJoinPool pool;
 
+    public ForkJoinCalculator(ForkJoinPool pool) {
+        // 也可以使用公用的线程池 ForkJoinPool.commonPool()：
+        //pool = ForkJoinPool.commonPool();
+        //pool = new ForkJoinPool();
+        this.pool = pool;
+    }
+
+    @Override
+    public long sumUp(long[] numbers) {
+        Long result = pool.invoke(new SumTask(numbers, 0, numbers.length - 1));
+        return result;
+    }
+
     //执行任务RecursiveTask：有返回值  RecursiveAction：无返回值
     private static class SumTask extends RecursiveTask<Long> {
 
@@ -31,8 +44,8 @@ public class ForkJoinCalculator implements Calculator {
         @Override
         protected Long compute() {
 
-            // 当需要计算的数字个数小于6时，直接采用for loop方式计算结果
-            if (to - from < 6) {
+            // 当需要计算的数字个数小于3时，直接采用for loop方式计算结果
+            if (to - from < 3) {
                 long total = 0;
                 for (int i = from; i <= to; i++) {
                     try {
@@ -52,18 +65,5 @@ public class ForkJoinCalculator implements Calculator {
                 return taskLeft.join() + taskRight.join();
             }
         }
-    }
-
-    public ForkJoinCalculator(ForkJoinPool pool) {
-        // 也可以使用公用的线程池 ForkJoinPool.commonPool()：
-        //pool = ForkJoinPool.commonPool();
-        //pool = new ForkJoinPool();
-        this.pool = pool;
-    }
-
-    @Override
-    public long sumUp(long[] numbers) {
-        Long result = pool.invoke(new SumTask(numbers, 0, numbers.length - 1));
-        return result;
     }
 }

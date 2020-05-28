@@ -31,8 +31,8 @@ public class ForkJoinInvokAllCalculator implements Calculator {
         @Override
         protected Long compute() {
 
-            // 当需要计算的数字个数小于6时，直接采用for loop方式计算结果
-            if (to - from < 6) {
+            // 当需要计算的数字个数小于3时，直接采用for loop方式计算结果
+            if (to - from < 3) {
                 long total = 0;
                 for (int i = from; i <= to; i++) {
                     try {
@@ -67,17 +67,4 @@ public class ForkJoinInvokAllCalculator implements Calculator {
         return result;
     }
 
-    public static void main(String[] args) {
-        Calculator calculator = new ForkJoinInvokAllCalculator(new ForkJoinPool());
-        Random r = new Random();
-        r.setSeed(0x32106234567L);
-        int N = 40000;
-        long[] numbers = new long[N];
-
-        for (int i = 0; i < N; i++) {
-            numbers[i] = r.nextInt();
-        }
-        long sum = calculator.sumUp(numbers);
-        System.out.println(sum);
-    }
 }
