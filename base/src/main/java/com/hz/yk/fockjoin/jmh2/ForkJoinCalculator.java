@@ -66,4 +66,10 @@ public class ForkJoinCalculator implements Calculator {
             }
         }
     }
+
+    public static void main(String[] args) {
+
+        System.out.println(ForkJoinPool.commonPool().getParallelism());
+
+    }
 }

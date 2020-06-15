@@ -63,8 +63,35 @@ import java.util.concurrent.TimeUnit;
  * FjDemoJMH.forkJoinTasks      40  avgt    6   50.577 ±  1.067  ms/op
  * FjDemoJMH.forkJoinTasks      80  avgt    6   55.534 ±  0.597  ms/op
  * FjDemoJMH.forkJoinTasks     500  avgt    6  245.678 ±  9.795  ms/op
+ * <p></>
+ * 不同线程数量和任务数量的对比
+ * Benchmark                 (N)  (parallism)   Mode  Cnt     Score    Error   Units
+ * FjDemoJMH.forkJoinTasks    40            8  thrpt    6     0.108 ±  0.002  ops/ms
+ * FjDemoJMH.forkJoinTasks    40           32  thrpt    6     0.158 ±  0.002  ops/ms
+ * FjDemoJMH.forkJoinTasks    40           64  thrpt    6     0.158 ±  0.005  ops/ms
+ * FjDemoJMH.forkJoinTasks    80            8  thrpt    6     0.061 ±  0.002  ops/ms
+ * FjDemoJMH.forkJoinTasks    80           32  thrpt    6     0.144 ±  0.003  ops/ms
+ * FjDemoJMH.forkJoinTasks    80           64  thrpt    6     0.145 ±  0.002  ops/ms
+ * FjDemoJMH.forkJoinTasks   500            8  thrpt    6     0.011 ±  0.001  ops/ms
+ * FjDemoJMH.forkJoinTasks   500           32  thrpt    6     0.033 ±  0.001  ops/ms
+ * FjDemoJMH.forkJoinTasks   500           64  thrpt    6     0.052 ±  0.009  ops/ms
+ * FjDemoJMH.forkJoinTasks  1000            8  thrpt    6     0.006 ±  0.001  ops/ms
+ * FjDemoJMH.forkJoinTasks  1000           32  thrpt    6     0.018 ±  0.001  ops/ms
+ * FjDemoJMH.forkJoinTasks  1000           64  thrpt    6     0.028 ±  0.003  ops/ms
+ * FjDemoJMH.forkJoinTasks    40            8   avgt    6    74.530 ±  1.201   ms/op
+ * FjDemoJMH.forkJoinTasks    40           32   avgt    6    50.857 ±  0.977   ms/op
+ * FjDemoJMH.forkJoinTasks    40           64   avgt    6    50.931 ±  1.287   ms/op
+ * FjDemoJMH.forkJoinTasks    80            8   avgt    6   131.218 ±  1.342   ms/op
+ * FjDemoJMH.forkJoinTasks    80           32   avgt    6    55.715 ±  0.672   ms/op
+ * FjDemoJMH.forkJoinTasks    80           64   avgt    6    55.436 ±  0.653   ms/op
+ * FjDemoJMH.forkJoinTasks   500            8   avgt    6   707.846 ± 15.701   ms/op
+ * FjDemoJMH.forkJoinTasks   500           32   avgt    6   244.371 ±  6.128   ms/op
+ * FjDemoJMH.forkJoinTasks   500           64   avgt    6   154.252 ± 27.986   ms/op
+ * FjDemoJMH.forkJoinTasks  1000            8   avgt    6  1404.119 ± 43.584   ms/op
+ * FjDemoJMH.forkJoinTasks  1000           32   avgt    6   452.897 ± 15.044   ms/op
+ * FjDemoJMH.forkJoinTasks  1000           64   avgt    6   283.017 ± 13.403   ms/op
  */
-@BenchmarkMode({ Mode.AverageTime })
+@BenchmarkMode({ Mode.AverageTime, Mode.Throughput })
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Warmup(iterations = 3, time = 2, timeUnit = TimeUnit.SECONDS)
 @Measurement(iterations = 3, time = 3, timeUnit = TimeUnit.SECONDS)
@@ -74,12 +101,14 @@ import java.util.concurrent.TimeUnit;
 public class FjDemoJMH {
 
     //任务数，每个任务会随机sleep一段时间
-    @Param({ "8", "20", "40", "80", "500" })
+    @Param({ "40", "80", "200", "500" })
     public int N;
+    @Param({ "8", "32", "64" })
+    public int parallism;
+
     long[] numbers;
 
     ForkJoinPool pool;
-    int parallism;
     ExecutorService exPool;
 
     ;
@@ -94,7 +123,6 @@ public class FjDemoJMH {
             numbers[i] = r.nextInt(20);
         }
 
-        parallism = 32;
         pool = new ForkJoinPool(parallism);
         exPool = Executors.newFixedThreadPool(parallism);
     }
@@ -108,7 +136,7 @@ public class FjDemoJMH {
     /**
      * 常规线程池
      */
-    @Benchmark
+    //@Benchmark
     public long executorTasks() {
         Calculator calculator = new ExecutorServiceCalculator(exPool);
         long sum = calculator.sumUp(numbers);
@@ -130,7 +158,7 @@ public class FjDemoJMH {
     /**
      * fork/join All线程池
      */
-    @Benchmark
+    //@Benchmark
     public long forkJoinAllTasks() {
         Calculator calculator = new ForkJoinInvokAllCalculator(pool);
         long sum = calculator.sumUp(numbers);
