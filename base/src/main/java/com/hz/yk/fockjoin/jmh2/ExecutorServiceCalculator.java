@@ -1,8 +1,9 @@
 package com.hz.yk.fockjoin.jmh2;
 
+import com.hz.yk.fockjoin.jmh2.task.SleepTask;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
@@ -35,22 +36,4 @@ public class ExecutorServiceCalculator implements Calculator {
         return total;
     }
 
-    private static class SleepTask implements Callable<Long> {
-
-        private long number;
-
-        public SleepTask(long number) {
-            this.number = number;
-        }
-
-        @Override
-        public Long call() throws Exception {
-            try {
-                Thread.sleep(number);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            return number;
-        }
-    }
 }

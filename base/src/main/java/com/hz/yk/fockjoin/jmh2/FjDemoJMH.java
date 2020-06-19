@@ -90,6 +90,27 @@ import java.util.concurrent.TimeUnit;
  * FjDemoJMH.forkJoinTasks  1000            8   avgt    6  1404.119 ± 43.584   ms/op
  * FjDemoJMH.forkJoinTasks  1000           32   avgt    6   452.897 ± 15.044   ms/op
  * FjDemoJMH.forkJoinTasks  1000           64   avgt    6   283.017 ± 13.403   ms/op
+ * <p></>
+ * 增加了reactor 进行对比，吞吐量基本是线程池1倍，RT在大压力情况下也表现的更好
+ * Benchmark                (N)  (parallism)   Mode  Cnt    Score   Error   Units
+ * FjDemoJMH.executorTasks   80           32  thrpt    6    0.188 ± 0.005  ops/ms
+ * FjDemoJMH.executorTasks  200           32  thrpt    6    0.095 ± 0.003  ops/ms
+ * FjDemoJMH.executorTasks  500           32  thrpt    6    0.042 ± 0.001  ops/ms
+ * FjDemoJMH.forkJoinTasks   80           32  thrpt    6    0.144 ± 0.002  ops/ms
+ * FjDemoJMH.forkJoinTasks  200           32  thrpt    6    0.071 ± 0.002  ops/ms
+ * FjDemoJMH.forkJoinTasks  500           32  thrpt    6    0.032 ± 0.002  ops/ms
+ * FjDemoJMH.reactorTasks    80           32  thrpt    6    0.335 ± 0.014  ops/ms
+ * FjDemoJMH.reactorTasks   200           32  thrpt    6    0.250 ± 0.018  ops/ms
+ * FjDemoJMH.reactorTasks   500           32  thrpt    6    0.108 ± 0.014  ops/ms
+ * FjDemoJMH.executorTasks   80           32   avgt    6   42.196 ± 0.701   ms/op
+ * FjDemoJMH.executorTasks  200           32   avgt    6   84.757 ± 2.346   ms/op
+ * FjDemoJMH.executorTasks  500           32   avgt    6  189.456 ± 3.770   ms/op
+ * FjDemoJMH.forkJoinTasks   80           32   avgt    6   55.422 ± 0.546   ms/op
+ * FjDemoJMH.forkJoinTasks  200           32   avgt    6  113.863 ± 1.574   ms/op
+ * FjDemoJMH.forkJoinTasks  500           32   avgt    6  244.226 ± 9.234   ms/op
+ * FjDemoJMH.reactorTasks    80           32   avgt    6   23.759 ± 0.315   ms/op
+ * FjDemoJMH.reactorTasks   200           32   avgt    6   31.862 ± 1.581   ms/op
+ * FjDemoJMH.reactorTasks   500           32   avgt    6   68.386 ± 4.011   ms/op
  */
 @BenchmarkMode({ Mode.AverageTime, Mode.Throughput })
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
@@ -101,9 +122,10 @@ import java.util.concurrent.TimeUnit;
 public class FjDemoJMH {
 
     //任务数，每个任务会随机sleep一段时间
-    @Param({ "40", "80", "200", "500" })
+    @Param({ "80", "200", "500" })
     public int N;
-    @Param({ "8", "32", "64" })
+    //@Param({ "8", "32", "64" })
+    @Param({ "32" })
     public int parallism;
 
     long[] numbers;
@@ -136,7 +158,7 @@ public class FjDemoJMH {
     /**
      * 常规线程池
      */
-    //@Benchmark
+    @Benchmark
     public long executorTasks() {
         Calculator calculator = new ExecutorServiceCalculator(exPool);
         long sum = calculator.sumUp(numbers);
@@ -152,6 +174,19 @@ public class FjDemoJMH {
         Calculator calculator = new ForkJoinCalculator(pool);
         long sum = calculator.sumUp(numbers);
         //System.out.println("forkJoinTasks=" + sum);
+        return sum;
+    }
+
+    /**
+     * reactor 框架
+     *
+     * @return
+     */
+    @Benchmark
+    public long reactorTasks() {
+        Calculator calculator = new ReactorCalculator();
+        long sum = calculator.sumUp(numbers);
+        //System.out.println("executorTasks=" + sum);
         return sum;
     }
 

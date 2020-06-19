@@ -16,6 +16,7 @@ public class Identity<T> implements Functor<T, Identity<?>> {
 
     @Override
     public <R> Identity<R> map(Function<T, R> function) {
-        return null;
+        R result = function.apply(value);
+        return new Identity<>(result);
     }
 }
