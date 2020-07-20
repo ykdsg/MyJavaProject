@@ -12,11 +12,33 @@ public class Item {
 
     private String content;
 
+    private Item(Builder builder) {setContent(builder.content);}
+
+    public static Builder newBuilder() {
+        return new Builder();
+    }
+
     public String getContent() {
         return content;
     }
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public static final class Builder {
+
+        private String content;
+
+        private Builder() {}
+
+        public Builder content(String val) {
+            content = val;
+            return this;
+        }
+
+        public Item build() {
+            return new Item(this);
+        }
     }
 }

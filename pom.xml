@@ -33,6 +33,7 @@
         <module>spring-mvc</module>
         <module>my-spring-mvc</module>
         <module>practice</module>
+        <module>math</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
