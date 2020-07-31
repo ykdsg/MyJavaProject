@@ -1,7 +1,9 @@
 package com.hz.yk;
 
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,6 +14,9 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
+        ArrayList<Object> list = Lists.newArrayList();
+        list.add(null);
+        System.out.println(list);
         //Integer test1 = new Integer(1);
         //Integer test2 = new Integer(1);
         ////false
