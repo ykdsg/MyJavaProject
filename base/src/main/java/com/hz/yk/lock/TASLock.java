@@ -20,7 +20,6 @@ public class TASLock implements Lock {
         // 当mutex之前是false时才返回，表示获取锁
         // getAndSet方法是原子操作，mutex原子变量的改动对所有线程可见
         while (mutex.getAndSet(true)) {
-            mutex.set(false);
 
         }
 

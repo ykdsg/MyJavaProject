@@ -15,7 +15,7 @@ public class Lesson12_1 {
     private TreeNode rootNode;
 
     public static void main(String[] args) {
-        String[] keys = { "my", "name", "is", "hanyonglu", "the", "son", "handongyang", "home", "near", "not", "their",
+        String[] keys = { "my", "name", "is", "hipac", "the", "son", "handongyang", "home", "near", "not", "their",
                           "no" };
 
         TreeNode rootNode = new TreeNode(' ', null, null);

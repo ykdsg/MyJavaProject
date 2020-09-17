@@ -15,7 +15,7 @@ public class CLHLock implements Lock {
     private AtomicReference<QNode> tail;
     // 两个指针，一个指向自己的Node,一个指向前一个Node
     ThreadLocal<QNode> myNodeTL;
-    ThreadLocal<QNode> myPreNodeTL;
+    ThreadLocal<QNode> preNodeTL;
 
     public CLHLock() {
         tail = new AtomicReference<QNode>(new QNode());
@@ -26,7 +26,7 @@ public class CLHLock implements Lock {
                 return new QNode();
             }
         };
-        myPreNodeTL = new ThreadLocal<QNode>() {
+        preNodeTL = new ThreadLocal<QNode>() {
 
             @Override
             protected QNode initialValue() {
@@ -37,13 +37,13 @@ public class CLHLock implements Lock {
 
     @Override
     public void lock() {
-        QNode node = myNodeTL.get();
-        node.lock = true;
+        QNode myNode = myNodeTL.get();
+        myNode.lock = true;
         // CAS原子操作，保证原子性
-        QNode preNode = tail.getAndSet(node);
-        myPreNodeTL.set(preNode);
-        // volatile变量，能保证锁释放及时通知
+        QNode preNode = tail.getAndSet(myNode);
+        preNodeTL.set(preNode);
         // 只对前一个节点的状态自旋，减少缓存一致性流量
+        //在前一个node的lock状态自旋，当前一个node的锁释放时，会自动通知下一个线程去获得锁。
         while (preNode.lock) {
 
         }
@@ -54,8 +54,8 @@ public class CLHLock implements Lock {
         QNode node = myNodeTL.get();
         node.lock = false;
         // 把myNode指向preNode，目的是保证同一个线程下次还能使用这个锁，因为myNode原来指向的节点有它的后一个节点的preNode引用
-        // 防止这个线程下次lock时myNode.get获得原来的节点
-        myNodeTL.set(myPreNodeTL.get());
+        // 防止这个线程下次lock时myNodeTL.get获得原来的节点
+        myNodeTL.set(preNodeTL.get());
     }
 
     public static class QNode {
