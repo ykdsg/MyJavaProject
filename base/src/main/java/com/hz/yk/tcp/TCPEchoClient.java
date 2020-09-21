@@ -19,7 +19,7 @@ public class TCPEchoClient {
         byte[] data = "hello socket".getBytes(StandardCharsets.UTF_8);
 
         Socket socket = new Socket(server, serverPort);
-        Thread.sleep(10000L);
+        Thread.sleep(3000L);
         System.out.println("connected to server ...");
         InputStream in = socket.getInputStream();
         OutputStream out = socket.getOutputStream();
