@@ -31,7 +31,7 @@ public class TestPaySingleHourlyEmployeeTwoTimeCards {
 		pt.execute();
 
 		Validate val = new Validate();
-		val.validatePaycheck(pt, empid, payDate, 7 * 15.25);
+		val.validatePaycheck(pt.getPayCheck(empid), payDate, 7 * 15.25);
 
 	}
 }

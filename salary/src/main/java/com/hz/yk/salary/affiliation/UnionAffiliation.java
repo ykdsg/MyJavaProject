@@ -6,7 +6,11 @@ import com.hz.yk.salary.servicecharge.ServiceCharge;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+/**
+ * 协会从属关系
+ */
 public class UnionAffiliation implements Affiliation {
 
 	private Calendar itsDate;
@@ -30,8 +34,9 @@ public class UnionAffiliation implements Affiliation {
 		return itsServiceCharge.get(date);
 	}
 
-	public int getMemberId() {
-		return itsMemberId;
+	@Override
+	public Optional<Integer> getMemberId() {
+		return Optional.of(itsMemberId);
 	}
 
 	public double getDues() {

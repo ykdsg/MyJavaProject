@@ -24,7 +24,6 @@ public class ChangeMemberTransaction extends ChangeAffiliationTransaction {
 
 	@Override
 	public void recordMemberShip(Employee e) {
-		PayrollDatabase payrollDatabase = new PayrollDatabase();
-		payrollDatabase.addUnionMember(itsMemberId, e);
+		PayrollDatabase.addUnionMember(itsMemberId, e);
 	}
 }

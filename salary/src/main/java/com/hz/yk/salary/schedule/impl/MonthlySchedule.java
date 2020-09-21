@@ -11,8 +11,10 @@ public class MonthlySchedule implements PaymentSchedule {
 
 	public boolean isLastDayOfMonth(Calendar date) {
 		int m1 = date.get(Calendar.MONTH);
-		date.add(Calendar.DATE, 1);
-		int m2 = date.get(Calendar.MONTH);
+		Calendar nextDay = Calendar.getInstance();
+		nextDay.set(date.get(Calendar.YEAR), date.get(Calendar.MONTH), date.get(Calendar.DATE));
+		nextDay.add(Calendar.DATE, 1);
+		int m2 = nextDay.get(Calendar.MONTH);
 		return (m1 != m2);
 	}
 

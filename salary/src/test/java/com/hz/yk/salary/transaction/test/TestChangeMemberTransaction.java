@@ -6,11 +6,16 @@ import com.hz.yk.salary.change.affiliation.ChangeMemberTransaction;
 import com.hz.yk.salary.database.PayrollDatabase;
 import com.hz.yk.salary.entity.Employee;
 import com.hz.yk.salary.transaction.impl.AddHourlyEmployee;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class TestChangeMemberTransaction {
 
-	public static void main(String[] args) {
-		PayrollDatabase payrollDatabase = new PayrollDatabase();
+	@Test
+	public void testChanageMember() {
 		int empid = 2;
 		AddHourlyEmployee t = new AddHourlyEmployee(empid, "Bill", "Home", 15.25);
 		t.execute();
@@ -18,17 +23,16 @@ public class TestChangeMemberTransaction {
 		ChangeMemberTransaction cmt = new ChangeMemberTransaction(empid, memberid, 99.42);
 		cmt.execute();
 
-		Employee e = payrollDatabase.getEmployee(empid);
-		assert (e != null);
+		Employee e = PayrollDatabase.getEmployee(empid);
+		assertNotNull(e);
 		Affiliation af = e.getAffiliation();
-		assert (af != null);
+		assertNotNull(af);
+		assertTrue(af instanceof UnionAffiliation);
 		UnionAffiliation uf = (UnionAffiliation) af;
-		assert (uf != null);
 		assert (uf.getDues() == 99.42);
-		Employee member = payrollDatabase.getUnionMember(memberid);
+		Employee member = PayrollDatabase.getUnionMember(memberid);
 		assert (member != null);
-		assert (e == member);
+		assertEquals(e, member);
 
-		System.out.println("test success");
 	}
 }

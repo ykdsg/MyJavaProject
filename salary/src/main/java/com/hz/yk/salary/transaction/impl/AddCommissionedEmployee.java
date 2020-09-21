@@ -6,7 +6,7 @@ import com.hz.yk.salary.schedule.PaymentSchedule;
 import com.hz.yk.salary.schedule.impl.BiweeklySchedule;
 
 /**
- * 增加提成员工
+ * 新增底薪+提成员工
  *
  * @author wuzheng.yk
  * @date 2020/9/17

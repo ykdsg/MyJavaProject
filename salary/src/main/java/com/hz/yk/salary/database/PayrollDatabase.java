@@ -8,7 +8,13 @@ import java.util.Map;
 
 public class PayrollDatabase {
 
+	/**
+	 * 维护员工id跟员工的关系
+	 */
 	public static Map<Integer, Employee> itsEmployees = new HashMap<Integer, Employee>();
+	/**
+	 * 维护协会成员id跟员工的关系
+	 */
 	public static Map<Integer, Employee> itsUnionEmployees = new HashMap<Integer, Employee>();
 
 	public static Employee getEmployee(int empid) {

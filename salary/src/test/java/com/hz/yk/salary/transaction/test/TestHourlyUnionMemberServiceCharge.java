@@ -6,31 +6,28 @@ import com.hz.yk.salary.pay.PaydayTransaction;
 import com.hz.yk.salary.transaction.impl.AddHourlyEmployee;
 import com.hz.yk.salary.transaction.impl.ServiceChargeTransaction;
 import com.hz.yk.salary.transaction.impl.TimeCardTransaction;
+import org.junit.Test;
 
 import java.util.Calendar;
 
 public class TestHourlyUnionMemberServiceCharge {
 
-	public static void main(String[] args) {
+	@Test
+	public void test() {
 		int empid = 1;
-		//�����ӵ��Ա
 		AddHourlyEmployee t = new AddHourlyEmployee(empid, "Bill", "Home", 15.24);
 		t.execute();
 
-		//Э��id��Э�����Ա��
 		int memberid = 7734;
-		//������������ÿ�µĻ�Ա�۳�����
 		ChangeMemberTransaction cmt = new ChangeMemberTransaction(empid, memberid, 9.42);
 		cmt.execute();
 
 		Calendar payDate = Calendar.getInstance();
 		payDate.set(2016, 7, 8);
 
-		//��������������Աÿ��Ҫ����Э��ķ������
 		ServiceChargeTransaction sct = new ServiceChargeTransaction(memberid, payDate, 19.42);
 		sct.execute();
 
-		//����ʱ�俨����������ʱ��Ϊ8.0
 		TimeCardTransaction tct = new TimeCardTransaction(payDate, 8.0, empid);
 		tct.execute();
 

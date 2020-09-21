@@ -6,7 +6,7 @@ import com.hz.yk.salary.schedule.PaymentSchedule;
 import com.hz.yk.salary.schedule.impl.WeeklySchedule;
 
 /**
- * 增加按小时计费员工
+ * 新增按小时计费员工
  */
 public class AddHourlyEmployee extends AddEmployeeTemplateTransaction {
 

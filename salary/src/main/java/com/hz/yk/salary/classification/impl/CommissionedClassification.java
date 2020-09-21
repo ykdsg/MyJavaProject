@@ -8,6 +8,9 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 底薪+提成的计算方式
+ */
 public class CommissionedClassification extends PaymentClassification {
 
 	private SalesReceipt salesReceipt;

@@ -7,9 +7,6 @@ import com.hz.yk.salary.transaction.test.util.Validate;
 
 import java.util.Calendar;
 
-/*
- * ����������֤ʵϵͳֻΪ��ǰ֧�����ڵ�ʱ�俨�Թ�Ա����֧��нˮ��ϵͳ���������֧�����ڵ�ʱ�俨
- */
 public class TestPaySingleHourlyEmployeeWithTimeCardsSpanningTwoPayPeriods {
 
 	public static void main(String[] args) {
@@ -23,11 +20,9 @@ public class TestPaySingleHourlyEmployeeWithTimeCardsSpanningTwoPayPeriods {
 		Calendar previousPayPeriod = Calendar.getInstance();
 		previousPayPeriod.set(2016, 7, 1);
 
-		//ʱ�俨1���Ǽ�����Ϊ7��8��
 		TimeCardTransaction tc = new TimeCardTransaction(payDate, 2.0, empid);
 		tc.execute();
 
-		//ʱ�俨2���Ǽ�����Ϊ7��1�ţ�Ϊ��һ�ܵ�����壬�����ӵ㹤��ʱ�����Ա�ʱ�俨û�м�������
 		TimeCardTransaction tc2 = new TimeCardTransaction(previousPayPeriod, 5.0, empid);
 		tc2.execute();
 
@@ -35,7 +30,7 @@ public class TestPaySingleHourlyEmployeeWithTimeCardsSpanningTwoPayPeriods {
 		pt.execute();
 
 		Validate val = new Validate();
-		val.validatePaycheck(pt, empid, payDate, 2 * 15.25);
+		val.validatePaycheck(pt.getPayCheck(empid), payDate, 2 * 15.25);
 
 		System.out.println("test success!");
 

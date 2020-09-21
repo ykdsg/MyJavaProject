@@ -1,19 +1,19 @@
 package com.hz.yk.salary.transaction.test.util;
 
 import com.hz.yk.salary.pay.Paycheck;
-import com.hz.yk.salary.pay.PaydayTransaction;
 
 import java.util.Calendar;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
 public class Validate {
 
-    public void validatePaycheck(PaydayTransaction pt, int empid, Calendar payDate, double pay) {
-        Paycheck pc = pt.getPayCheck(empid);
-        assert (pc != null);
-        assert (pc.getPayPeriodEndDate() == payDate);
-        //		assert("Hold".equals(pc.getField("Disposition")));
-        assert (0.0 == pc.getDeductions());
-        assert (pc.getNetPay() == pay);
+    public void validatePaycheck(Paycheck pc, Calendar payDate, double pay) {
+        assertNotNull(pc);
+        assertEquals(payDate, pc.getPayPeriodEndDate());
+        assertEquals(0.0, pc.getDeductions(), 0.1);
+        assertEquals(pc.getNetPay(), pay, 0.01);
 
     }
 }

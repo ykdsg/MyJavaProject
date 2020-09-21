@@ -40,8 +40,7 @@ public class HourlyClassification extends PaymentClassification {
 		double totalPay = 0;
 		Calendar payPeriod = pc.getPayDate();
 
-		for (int i = 0; i < timecards.size(); i++) {
-			TimeCard tc = timecards.get(i);
+		for (TimeCard tc : timecards) {
 			if (isInPayPeriod(tc, payPeriod)) {
 				totalPay += calculatePayForTimeCard(tc);
 			}
@@ -52,7 +51,7 @@ public class HourlyClassification extends PaymentClassification {
 
 	public boolean isInPayPeriod(TimeCard tc, Calendar payPeriod) {
 		Calendar payPeriodEndDate = payPeriod;
-		payPeriod.set(payPeriod.DATE, -5);
+		payPeriod.set(Calendar.DATE, -5);
 		Calendar payPeriodStartDate = payPeriod;
 		Calendar timeCardDate = tc.getDate();
 		int bigger = timeCardDate.compareTo(payPeriodStartDate);

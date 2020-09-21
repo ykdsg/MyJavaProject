@@ -25,7 +25,6 @@ public class ServiceChargeTransaction implements Transaction {
 
 	@Override
 	public void execute() {
-		payrollDatabase = new PayrollDatabase();
 		Employee e = PayrollDatabase.getUnionMember(itsMemberId);
 		Affiliation af = e.getAffiliation();
 
