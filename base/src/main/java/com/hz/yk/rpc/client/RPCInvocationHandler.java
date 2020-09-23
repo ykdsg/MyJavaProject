@@ -11,7 +11,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.Arrays;
-import java.util.stream.Collectors;
 
 /**
  * @author wuzheng.yk
@@ -23,8 +22,7 @@ public class RPCInvocationHandler implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         MethodInfo methodInfo = new MethodInfo();
         Class<?>[] parameterTypes = method.getParameterTypes();
-        String[] paramterTypeNames = Arrays.stream(parameterTypes).map(aClass -> aClass.getName())
-                .collect(Collectors.toList()).toArray(new String[0]);
+        String[] paramterTypeNames = Arrays.stream(parameterTypes).map(Class::getName).toArray(String[]::new);
 
         methodInfo.setParameterTypes(paramterTypeNames);
         methodInfo.setMethodName(method.getName());
@@ -36,6 +34,7 @@ public class RPCInvocationHandler implements InvocationHandler {
         String server = "127.0.0.1";
         int serverPort = 8909;
         Socket socket = new Socket(server, serverPort);
+        //在debug 的时候有点奇怪，如果断点在下面这行就会卡住，现在发现有可能跟这个类是代理的有关系，直接调用的时候是可以打断点的。
         OutputStream outToServer = socket.getOutputStream();
         DataOutputStream out = new DataOutputStream(outToServer);
 

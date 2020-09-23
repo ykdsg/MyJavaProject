@@ -12,7 +12,7 @@ public class RpcClient {
     public static void main(String[] args) {
         final ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("rpc/client-context.xml");
         final EchoApi bean = context.getBean(EchoApi.class);
-        final String result = bean.echo("hello");
+        final String result = bean.echo("hello worlds");
         System.out.println("echo result=" + result);
     }
 
