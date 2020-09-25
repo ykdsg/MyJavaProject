@@ -29,12 +29,12 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * 状态和线程数，前3位表示状态，所有线程数占29位
      */
     // 初始化状态和数量，状态为RUNNING，线程数为0
-    private final        AtomicInteger ctl        = new AtomicInteger(ctlOf(RUNNING, 0));
-    private static final int           COUNT_BITS = Integer.SIZE - 3;
+    private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
+    private static final int COUNT_BITS = Integer.SIZE - 3;
     /**
      * 根据上面ctl的设计就限制了线程池最大的上限
      */
-    private static final int           CAPACITY   = (1 << COUNT_BITS) - 1;
+    private static final int CAPACITY = (1 << COUNT_BITS) - 1;
 
     // runState is stored in the high-order bits
 
@@ -52,19 +52,19 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
     /**
      * 可以接受新的任务，也可以处理阻塞队列里的任务
      */
-    private static final int RUNNING    = -1 << COUNT_BITS;
+    private static final int RUNNING = -1 << COUNT_BITS;
     /**
      * 不接受新的任务，但是可以处理阻塞队列里的任务
      */
-    private static final int SHUTDOWN   = 0 << COUNT_BITS;
+    private static final int SHUTDOWN = 0 << COUNT_BITS;
     /**
      * 不接受新的任务，不处理阻塞队列里的任务，中断正在处理的任务
      */
-    private static final int STOP       = 1 << COUNT_BITS;
+    private static final int STOP = 1 << COUNT_BITS;
     /**
      * 过渡状态，也就是说所有的任务都执行完了，当前线程池已经没有有效的线程，这个时候线程池的状态将会TIDYING，并且将要调用terminated方法
      */
-    private static final int TIDYING    = 2 << COUNT_BITS;
+    private static final int TIDYING = 2 << COUNT_BITS;
     /**
      * 终止状态。terminated方法调用完成以后的状态
      */
@@ -331,6 +331,7 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         /**
          * Delegates main run loop to outer runWorker
          */
+        @Override
         public void run() {
             runWorker(this);
         }
@@ -340,10 +341,12 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         // The value 0 represents the unlocked state.
         // The value 1 represents the locked state.
 
+        @Override
         protected boolean isHeldExclusively() {
             return getState() != 0;
         }
 
+        @Override
         protected boolean tryAcquire(int unused) {
             if (compareAndSetState(0, 1)) {
                 setExclusiveOwnerThread(Thread.currentThread());
@@ -352,6 +355,7 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             return false;
         }
 
+        @Override
         protected boolean tryRelease(int unused) {
             setExclusiveOwnerThread(null);
             setState(0);
@@ -400,7 +404,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
     private void advanceRunState(int targetState) {
         for (; ; ) {
             int c = ctl.get();
-            if (runStateAtLeast(c, targetState) || ctl.compareAndSet(c, ctlOf(targetState, workerCountOf(c)))) break;
+            if (runStateAtLeast(c, targetState) || ctl.compareAndSet(c, ctlOf(targetState, workerCountOf(c)))) {
+                break;
+            }
         }
     }
 
@@ -422,8 +428,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             // 1. 线程池还在运行，不能终止
             // 2. 线程池处于TIDYING或TERMINATED状态，说明已经在关闭了，不允许继续处理
             // 3. 线程池处于SHUTDOWN状态并且阻塞队列不为空，这时候还需要处理阻塞队列的任务，不能终止线程池
-            if (isRunning(c) || runStateAtLeast(c, TIDYING) || (runStateOf(c) == SHUTDOWN && !workQueue.isEmpty()))
+            if (isRunning(c) || runStateAtLeast(c, TIDYING) || (runStateOf(c) == SHUTDOWN && !workQueue.isEmpty())) {
                 return;
+            }
             // 走到这一步说明线程池已经不在运行，阻塞队列已经没有任务，但是还要回收正在工作的Worker
             if (workerCountOf(c) != 0) { // Eligible to terminate
                 // 由于线程池不运行了，调用了线程池的关闭方法，在解释线程池的关闭原理的时候会说道这个方法
@@ -470,8 +477,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             final ReentrantLock mainLock = this.mainLock;
             mainLock.lock();
             try {
-                for (Worker w : workers)
+                for (Worker w : workers) {
                     security.checkAccess(w.thread);
+                }
             } finally {
                 mainLock.unlock();
             }
@@ -530,7 +538,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                     }
                 }
                 // 如果只打断1个Worker的话，直接break退出，否则，遍历所有的Worker
-                if (onlyOne) break;
+                if (onlyOne)
+                    break;
             }
         } finally {
             mainLock.unlock();
@@ -591,7 +600,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         q.drainTo(taskList);
         if (!q.isEmpty()) {
             for (Runnable r : q.toArray(new Runnable[0])) {
-                if (q.remove(r)) taskList.add(r);
+                if (q.remove(r))
+                    taskList.add(r);
             }
         }
         return taskList;
@@ -656,7 +666,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                 }
                 c = ctl.get();  // Re-read ctl
                 // 重新检查状态,如果状态改变了，重新循环操作
-                if (runStateOf(c) != rs) continue retry;
+                if (runStateOf(c) != rs)
+                    continue retry;
                 // else CAS failed due to workerCount change; retry inner loop
             }
         }
@@ -687,7 +698,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                         workers.add(w);
                         int s = workers.size();
                         // 如果线程池中的线程个数超过了线程池中的最大线程数时，更新一下这个最大线程数
-                        if (s > largestPoolSize) largestPoolSize = s;
+                        if (s > largestPoolSize)
+                            largestPoolSize = s;
                         workerAdded = true;
                     }
                 } finally {
@@ -700,7 +712,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             }
         } finally {
             // 如果任务启动失败，调用addWorkerFailed方法
-            if (!workerStarted) addWorkerFailed(w);
+            if (!workerStarted)
+                addWorkerFailed(w);
         }
         return workerStarted;
     }
@@ -716,7 +729,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         final ReentrantLock mainLock = this.mainLock;
         mainLock.lock();
         try {
-            if (w != null) workers.remove(w);
+            if (w != null)
+                workers.remove(w);
             decrementWorkerCount();
             tryTerminate();
         } finally {
@@ -758,8 +772,10 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         if (runStateLessThan(c, STOP)) {// 如果线程池还处于RUNNING或者SHUTDOWN状态
             if (!completedAbruptly) { // Worker是正常结束流程的话
                 int min = allowCoreThreadTimeOut ? 0 : corePoolSize;
-                if (min == 0 && !workQueue.isEmpty()) min = 1;
-                if (workerCountOf(c) >= min) return; // replacement not needed
+                if (min == 0 && !workQueue.isEmpty())
+                    min = 1;
+                if (workerCountOf(c) >= min)
+                    return; // replacement not needed
             }
             // 新开一个Worker代替原先的Worker
             // 新开一个Worker需要满足以下3个条件中的任意一个：
@@ -816,18 +832,19 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             // 如果worker数量比基本大小要大的话，timed就为true，需要进行回收worker
             boolean timed = allowCoreThreadTimeOut || wc > corePoolSize;
 
-
             // 方法一开始注释的1，4两点，会进行下一步worker数量减一
             if ((wc > maximumPoolSize || (timed && timedOut)) && (wc > 1 || workQueue.isEmpty())) {
                 // worker数量减一，返回null，之后会进行Worker回收工作
-                if (compareAndDecrementWorkerCount(c)) return null;
+                if (compareAndDecrementWorkerCount(c))
+                    return null;
                 continue;
             }
 
             try {
                 // 如果需要设置超时时间，使用poll方法，否则使用take方法一直阻塞等待阻塞队列新进数据
                 Runnable r = timed ? workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS) : workQueue.take();
-                if (r != null) return r;
+                if (r != null)
+                    return r;
                 timedOut = true;
             } catch (InterruptedException retry) {
                 timedOut = false; // 闲置Worker被中断
@@ -1054,7 +1071,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                                 YKRejectedExecutionHandler handler) {
         if (corePoolSize < 0 || maximumPoolSize <= 0 || maximumPoolSize < corePoolSize || keepAliveTime < 0)
             throw new IllegalArgumentException();
-        if (workQueue == null || threadFactory == null || handler == null) throw new NullPointerException();
+        if (workQueue == null || threadFactory == null || handler == null)
+            throw new NullPointerException();
         this.corePoolSize = corePoolSize;
         this.maximumPoolSize = maximumPoolSize;
         this.workQueue = workQueue;
@@ -1077,7 +1095,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * @throws NullPointerException       if {@code command} is null
      */
     public void execute(Runnable command) {
-        if (command == null) throw new NullPointerException();
+        if (command == null) {
+            throw new NullPointerException();
+        }
         /*
          * Proceed in 3 steps:
          *
@@ -1102,15 +1122,18 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         // 第一个步骤，满足线程池中的线程大小比基本大小要小
         if (workerCountOf(c) < corePoolSize) {
             // addWorker方法第二个参数true表示使用基本大小
-            if (addWorker(command, true)) return;
+            if (addWorker(command, true))
+                return;
             c = ctl.get();
         }
         // 第二个步骤，线程池的线程大小比基本大小要大，并且线程池还在RUNNING状态，阻塞队列也没满的情况，加到阻塞队列里
         if (isRunning(c) && workQueue.offer(command)) {
             int recheck = ctl.get();
             // 虽然满足了第二个步骤，但是这个时候可能突然线程池关闭了，所以再做一层判断
-            if (!isRunning(recheck) && remove(command)) reject(command);
-            else if (workerCountOf(recheck) == 0) addWorker(null, false);
+            if (!isRunning(recheck) && remove(command))
+                reject(command);
+            else if (workerCountOf(recheck) == 0)
+                addWorker(null, false);
         } else if (!addWorker(command, false)) { // 第三个步骤，直接使用线程池最大大小。addWorker方法第二个参数false表示使用最大大小
             reject(command);
         }
@@ -1206,8 +1229,10 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         mainLock.lock();
         try {
             for (; ; ) {
-                if (runStateAtLeast(ctl.get(), TERMINATED)) return true;
-                if (nanos <= 0) return false;
+                if (runStateAtLeast(ctl.get(), TERMINATED))
+                    return true;
+                if (nanos <= 0)
+                    return false;
                 nanos = termination.awaitNanos(nanos);
             }
         } finally {
@@ -1231,7 +1256,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * @see #getThreadFactory
      */
     public void setThreadFactory(ThreadFactory threadFactory) {
-        if (threadFactory == null) throw new NullPointerException();
+        if (threadFactory == null)
+            throw new NullPointerException();
         this.threadFactory = threadFactory;
     }
 
@@ -1253,7 +1279,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * @see #getRejectedExecutionHandler
      */
     public void setRejectedExecutionHandler(YKRejectedExecutionHandler handler) {
-        if (handler == null) throw new NullPointerException();
+        if (handler == null)
+            throw new NullPointerException();
         this.handler = handler;
     }
 
@@ -1279,10 +1306,12 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * @see #getCorePoolSize
      */
     public void setCorePoolSize(int corePoolSize) {
-        if (corePoolSize < 0) throw new IllegalArgumentException();
+        if (corePoolSize < 0)
+            throw new IllegalArgumentException();
         int delta = corePoolSize - this.corePoolSize;
         this.corePoolSize = corePoolSize;
-        if (workerCountOf(ctl.get()) > corePoolSize) interruptIdleWorkers();
+        if (workerCountOf(ctl.get()) > corePoolSize)
+            interruptIdleWorkers();
         else if (delta > 0) {
             // We don't really know how many new threads are "needed".
             // As a heuristic, prestart enough new workers (up to new
@@ -1290,7 +1319,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             // queue, but stop if queue becomes empty while doing so.
             int k = Math.min(delta, workQueue.size());
             while (k-- > 0 && addWorker(null, true)) {
-                if (workQueue.isEmpty()) break;
+                if (workQueue.isEmpty())
+                    break;
             }
         }
     }
@@ -1323,8 +1353,10 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      */
     void ensurePrestart() {
         int wc = workerCountOf(ctl.get());
-        if (wc < corePoolSize) addWorker(null, true);
-        else if (wc == 0) addWorker(null, false);
+        if (wc < corePoolSize)
+            addWorker(null, true);
+        else if (wc == 0)
+            addWorker(null, false);
     }
 
     /**
@@ -1336,7 +1368,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      */
     public int prestartAllCoreThreads() {
         int n = 0;
-        while (addWorker(null, true)) ++n;
+        while (addWorker(null, true))
+            ++n;
         return n;
     }
 
@@ -1377,7 +1410,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             throw new IllegalArgumentException("Core threads must have nonzero keep alive times");
         if (value != allowCoreThreadTimeOut) {
             allowCoreThreadTimeOut = value;
-            if (value) interruptIdleWorkers();
+            if (value)
+                interruptIdleWorkers();
         }
     }
 
@@ -1394,9 +1428,11 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * @see #getMaximumPoolSize
      */
     public void setMaximumPoolSize(int maximumPoolSize) {
-        if (maximumPoolSize <= 0 || maximumPoolSize < corePoolSize) throw new IllegalArgumentException();
+        if (maximumPoolSize <= 0 || maximumPoolSize < corePoolSize)
+            throw new IllegalArgumentException();
         this.maximumPoolSize = maximumPoolSize;
-        if (workerCountOf(ctl.get()) > maximumPoolSize) interruptIdleWorkers();
+        if (workerCountOf(ctl.get()) > maximumPoolSize)
+            interruptIdleWorkers();
     }
 
     /**
@@ -1424,13 +1460,15 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * @see #getKeepAliveTime(TimeUnit)
      */
     public void setKeepAliveTime(long time, TimeUnit unit) {
-        if (time < 0) throw new IllegalArgumentException();
+        if (time < 0)
+            throw new IllegalArgumentException();
         if (time == 0 && allowsCoreThreadTimeOut())
             throw new IllegalArgumentException("Core threads must have nonzero keep alive times");
         long keepAliveTime = unit.toNanos(time);
         long delta = keepAliveTime - this.keepAliveTime;
         this.keepAliveTime = keepAliveTime;
-        if (delta < 0) interruptIdleWorkers();
+        if (delta < 0)
+            interruptIdleWorkers();
     }
 
     /**
@@ -1497,14 +1535,16 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             Iterator<Runnable> it = q.iterator();
             while (it.hasNext()) {
                 Runnable r = it.next();
-                if (r instanceof Future<?> && ((Future<?>) r).isCancelled()) it.remove();
+                if (r instanceof Future<?> && ((Future<?>) r).isCancelled())
+                    it.remove();
             }
         } catch (ConcurrentModificationException fallThrough) {
             // Take slow path if we encounter interference during traversal.
             // Make copy for traversal and call remove for cancelled entries.
             // The slow path is more likely to be O(N*N).
             for (Object r : q.toArray())
-                if (r instanceof Future<?> && ((Future<?>) r).isCancelled()) q.remove(r);
+                if (r instanceof Future<?> && ((Future<?>) r).isCancelled())
+                    q.remove(r);
         }
 
         tryTerminate(); // In case SHUTDOWN and now empty
@@ -1541,7 +1581,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         try {
             int n = 0;
             for (Worker w : workers)
-                if (w.isLocked()) ++n;
+                if (w.isLocked())
+                    ++n;
             return n;
         } finally {
             mainLock.unlock();
@@ -1579,7 +1620,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             long n = completedTaskCount;
             for (Worker w : workers) {
                 n += w.completedTasks;
-                if (w.isLocked()) ++n;
+                if (w.isLocked())
+                    ++n;
             }
             return n + workQueue.size();
         } finally {
@@ -1627,7 +1669,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             nworkers = workers.size();
             for (Worker w : workers) {
                 ncompleted += w.completedTasks;
-                if (w.isLocked()) ++nactive;
+                if (w.isLocked())
+                    ++nactive;
             }
         } finally {
             mainLock.unlock();

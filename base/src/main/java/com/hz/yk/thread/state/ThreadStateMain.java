@@ -1,6 +1,5 @@
 package com.hz.yk.thread.state;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -9,9 +8,10 @@ import java.net.Socket;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+
+import static com.hz.yk.thread.RunnableUtils.buildThreadPool;
+import static com.hz.yk.thread.RunnableUtils.cpuRun;
 
 /**
  * http://www.jiacheo.org/blog/338
@@ -28,12 +28,12 @@ public class ThreadStateMain {
         runnableInBlockedSocket();
     }
 
-    private static void NEW() {
+    public static void NEW() {
         Thread t = new Thread();
         System.out.println(t.getState());
     }
 
-    private static void RUNNABLE() throws InterruptedException {
+    public static void RUNNABLE() throws InterruptedException {
         Thread t = new Thread() {
 
             @Override
@@ -54,7 +54,7 @@ public class ThreadStateMain {
      *
      * @throws InterruptedException
      */
-    private static void runnableInBlockedIO() throws InterruptedException {
+    public static void runnableInBlockedIO() throws InterruptedException {
         Scanner in = new Scanner(System.in);
 
         Thread t1 = new Thread("demo-t1") {
@@ -83,7 +83,7 @@ public class ThreadStateMain {
      *
      * @throws InterruptedException
      */
-    private static void runnableInBlockedSocket() throws InterruptedException {
+    public static void runnableInBlockedSocket() throws InterruptedException {
         Thread serverThread = new Thread(new Runnable() {
 
             @Override
@@ -117,7 +117,7 @@ public class ThreadStateMain {
      * jstack文件中显示的是waiting for monitor entry
      * 在ibm的jca工具中显示为waiting on monitor ，跟堆栈信息中不太一样，
      */
-    private static void BLOCKED() {
+    public static void BLOCKED() {
 
         final Object lock = new Object();
 
@@ -147,30 +147,10 @@ public class ThreadStateMain {
     }
 
     /**
-     * 显示，waiting on condition ，Thread.State: TIMED_WAITING (sleeping)，
-     * jca显示：Waiting on condition
-     */
-    private static void SLEEP() {
-        Thread t1 = new Thread("t1") {
-
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(200000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        };
-        t1.start();
-    }
-
-    /**
      * t1 在wait的时候显示 WAITING (on object monitor)，
      * jca 中表示的状态是Object.wait()
      */
-    private static void WAITING() {
+    public static void WAITING() {
 
         final Object lock = new Object();
         Thread t1 = new Thread() {
@@ -221,13 +201,43 @@ public class ThreadStateMain {
     }
 
     /**
+     * 显示，waiting on condition ，Thread.State: TIMED_WAITING (sleeping)，
+     * jca显示：Waiting on condition
+     * at java.lang.Thread.sleep(Native Method)
+     * at com.hz.yk.thread.state.ThreadStateMain$3.run(ThreadStateMain.java:76)
+     */
+    public static void SLEEP() {
+        Thread t1 = new Thread("t1") {
+
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(200000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        };
+        t1.start();
+    }
+
+    /**
      * 模拟线程池处理空闲的情况
      * 线程池空闲线程的状态：waiting on condition，java.lang.Thread.State: WAITING (parking)
      * jca显示：Waiting on condition
+     * at sun.misc.Unsafe.park(Native Method)
+     * at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+     * at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2039)
+     * at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+     * at java.util.concurrent.ThreadPoolExecutor.getTask(ThreadPoolExecutor.java:1067)
+     * at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1127)
+     * at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+     * at java.lang.Thread.run(Thread.java:745)
      *
      * @throws InterruptedException
      */
-    private static void threadPoolFree() throws InterruptedException {
+    public static void threadPoolFree() throws InterruptedException {
         System.out.println("all start");
         ThreadPoolExecutor threadPoolExecutor = buildThreadPool();
 
@@ -245,11 +255,11 @@ public class ThreadStateMain {
     }
 
     /**
-     * 模拟线程池繁忙的情况
+     * 模拟线程池繁忙的情况，那都是RUNNABLE
      *
      * @throws InterruptedException
      */
-    private static void threadPoolBusy() throws InterruptedException {
+    public static void threadPoolBusy() throws InterruptedException {
         System.out.println("all start");
         final ThreadPoolExecutor threadPoolExecutor = buildThreadPool();
         Thread.sleep(2000);
@@ -269,42 +279,34 @@ public class ThreadStateMain {
         System.out.println("all end");
     }
 
-    private static ThreadPoolExecutor buildThreadPool() {
-        ThreadFactory threadFactory = (new ThreadFactoryBuilder()).setNameFormat("demo-test-%d").build();
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 5, 0, TimeUnit.SECONDS,
-                                                                       new LinkedBlockingQueue(1000), threadFactory);
-
-        //这里快速预热一下，让线程池充分初始化
-        for (int i = 0; i < 20; i++) {
-            threadPoolExecutor.execute(new Runnable() {
-
-                @Override
-                public void run() {
-                    cpuRun(10);
-                }
-            });
-        }
-        return threadPoolExecutor;
-    }
-
     /**
-     * 模拟cpu运行
+     * waiting on condition
+     * jca:Waiting on condition
+     * at sun.misc.Unsafe.park(Native Method)
+     * at java.util.concurrent.locks.LockSupport.park(LockSupport.java:175)
+     * at java.util.concurrent.locks.AbstractQueuedSynchronizer$ConditionObject.await(AbstractQueuedSynchronizer.java:2039)
+     * at java.util.concurrent.LinkedBlockingQueue.take(LinkedBlockingQueue.java:442)
+     * at com.hz.yk.thread.state.ThreadStateDemo$1.run(ThreadStateDemo.java:22)
      *
-     * @param duration
+     * @throws InterruptedException
      */
-    private static void cpuRun(long duration) {
+    public static void testLinkedBlockingQueue() throws InterruptedException {
+        LinkedBlockingQueue<String> queue = new LinkedBlockingQueue(2);
+        final Thread thread = new Thread("test1") {
 
-        final long startTime = System.currentTimeMillis();
-        int num = 0;
-        while (true) {
-            num++;
-            if (num == Integer.MAX_VALUE) {
-                System.out.println(Thread.currentThread() + "rest");
-                num = 0;
+            @Override
+            public void run() {
+                try {
+                    queue.take();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-            if (System.currentTimeMillis() - startTime > duration) {
-                return;
-            }
-        }
+        };
+        thread.start();
+        System.out.println("after start:" + thread.getState());
+        Thread.sleep(1000);
+        System.out.println("after sleep:" + thread.getState());
     }
+
 }
