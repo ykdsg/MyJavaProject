@@ -30,9 +30,13 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      */
     // 初始化状态和数量，状态为RUNNING，线程数为0
     private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
+    /**
+     * 32-3 = 29 ，低位29位存储线程池中线程数
+     */
     private static final int COUNT_BITS = Integer.SIZE - 3;
     /**
      * 根据上面ctl的设计就限制了线程池最大的上限
+     * 线程池最多可以有536870911个线程，一般绝对创建不到这么大
      */
     private static final int CAPACITY = (1 << COUNT_BITS) - 1;
 
@@ -48,25 +52,33 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      *STOP -> TIDYING：当线程池为空的时候
      *
      *TIDYING -> TERMINATED：terminated方法调用完成之后
+     *只有RUNNING状态下才会接收新任务；
+     *只有RUNNING状态和SHUTDOWN状态才会执行任务队列中的任务；
+     *其它状态都不会接收新任务，不会执行任务队列中的任务；
      */
     /**
      * 可以接受新的任务，也可以处理阻塞队列里的任务
+     * -1的二进制为32个1，移位后为：11100000000000000000000000000000
      */
     private static final int RUNNING = -1 << COUNT_BITS;
     /**
      * 不接受新的任务，但是可以处理阻塞队列里的任务
+     * 0的二进制为32个0，移位后还是全0
      */
     private static final int SHUTDOWN = 0 << COUNT_BITS;
     /**
      * 不接受新的任务，不处理阻塞队列里的任务，中断正在处理的任务
+     * 1的二进制为前面31个0，最后一个1，移位后为：00100000000000000000000000000000
      */
     private static final int STOP = 1 << COUNT_BITS;
     /**
-     * 过渡状态，也就是说所有的任务都执行完了，当前线程池已经没有有效的线程，这个时候线程池的状态将会TIDYING，并且将要调用terminated方法
+     * 过渡状态，也就是说所有的任务都执行完了，当前线程池已经没有有效的线程，workerCount 的值为0，这个时候线程池的状态将会TIDYING，并且将要调用terminated方法
+     * 2的二进制为01000000000000000000000000000000
      */
     private static final int TIDYING = 2 << COUNT_BITS;
     /**
-     * 终止状态。terminated方法调用完成以后的状态
+     * 终止状态。terminated方法调用完成以后的状态,terminated()方法执行结束.
+     * 3移位后01100000000000000000000000000000
      */
     private static final int TERMINATED = 3 << COUNT_BITS;
 
@@ -93,6 +105,13 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         return c & CAPACITY;
     }
 
+    /**
+     * 设置ctl的值，rs为线程池状态，wc为线程数；
+     *
+     * @param rs
+     * @param wc
+     * @return
+     */
     private static int ctlOf(int rs, int wc) {
         return rs | wc;
     }
@@ -169,6 +188,7 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
     /**
      * Set containing all worker threads in pool. Accessed only when
      * holding mainLock.
+     * 用来存储线程池中的线程，线程都被封装成了Worker对象
      */
     private final HashSet<Worker> workers = new HashSet<Worker>();
 
@@ -186,6 +206,7 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
     /**
      * Counter for completed tasks. Updated only on termination of
      * worker threads. Accessed only under mainLock.
+     * 记录了已经销毁的线程，完成的任务总数；
      */
     private long completedTaskCount;
 
@@ -666,8 +687,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                 }
                 c = ctl.get();  // Re-read ctl
                 // 重新检查状态,如果状态改变了，重新循环操作
-                if (runStateOf(c) != rs)
+                if (runStateOf(c) != rs) {
                     continue retry;
+                }
                 // else CAS failed due to workerCount change; retry inner loop
             }
         }
@@ -712,8 +734,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             }
         } finally {
             // 如果任务启动失败，调用addWorkerFailed方法
-            if (!workerStarted)
+            if (!workerStarted) {
                 addWorkerFailed(w);
+            }
         }
         return workerStarted;
     }
@@ -1082,6 +1105,7 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
     }
 
     /**
+     * 添加新任务
      * Executes the given task sometime in the future.  The task
      * may execute in a new thread or in an existing pooled thread.
      * If the task cannot be submitted for execution, either because this
@@ -1118,18 +1142,30 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
          * thread.  If it fails, we know we are shut down or saturated
          * and so reject the task.
          */
+        //获取当前线程池的ctl值，不知道它作用的看前面说明
         int c = ctl.get();
         // 第一个步骤，满足线程池中的线程大小比基本大小要小
+        //如果当前线程数小于核心线程数，这时候任务不会进入任务队列，会创建新的工作线程直接执行任务；
         if (workerCountOf(c) < corePoolSize) {
+            //添加新的工作线程执行任务
             // addWorker方法第二个参数true表示使用基本大小
-            if (addWorker(command, true))
+            if (addWorker(command, true)) {
                 return;
+            }
+            //addWorker操作返回false，说明添加新的工作线程失败，则获取当前线程池状态；要么是线程池大小发生了变化，要么是线程池状态发生了变化
+            // （线程池数量小于corePoolSize情况下，创建新的工作线程失败，是因为线程池的状态发生了改变，已经处于非Running状态，或shutdown状态且任务队列为空）
             c = ctl.get();
         }
-        // 第二个步骤，线程池的线程大小比基本大小要大，并且线程池还在RUNNING状态，阻塞队列也没满的情况，加到阻塞队列里
+
+        //以下两种情况继续执行后面代码
+        //1.前面的判断中，线程池中线程数小于核心线程数，并且创建新的工作线程失败；
+        //2.前面的判断中，线程池中线程数大于等于核心线程数
+
+        // 第二个步骤，线程池处于RUNNING状态，说明线程池中线程已经>=corePoolSize，阻塞队列也没满的情况，加到阻塞队列里
         if (isRunning(c) && workQueue.offer(command)) {
             int recheck = ctl.get();
             // 虽然满足了第二个步骤，但是这个时候可能突然线程池关闭了，所以再做一层判断
+            //再次检查线程池的状态，如果线程池状态变了，非RUNNING状态下不会接收新的任务，需要将任务移除，成功从队列中删除任务，则执行reject方法处理任务；
             if (!isRunning(recheck) && remove(command))
                 reject(command);
             else if (workerCountOf(recheck) == 0)

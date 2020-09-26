@@ -23,9 +23,9 @@ import static com.hz.yk.thread.RunnableUtils.cpuRun;
 public class ThreadStateMain {
 
     public static void main(String[] args) throws InterruptedException {
-        //threadPoolBusy();
+        threadPoolBusy();
         //runnableInBlockedIO();
-        runnableInBlockedSocket();
+        //runnableInBlockedSocket();
     }
 
     public static void NEW() {
@@ -269,6 +269,7 @@ public class ThreadStateMain {
 
                 @Override
                 public void run() {
+                    System.out.println();
                     final Random random = new Random();
                     final int duration = random.nextInt(100) + 3000;
                     cpuRun(duration);
