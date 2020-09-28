@@ -3,6 +3,7 @@ package com.hz.yk.thread.state;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * https://blog.csdn.net/u011024652/article/details/51584527
@@ -116,7 +117,7 @@ public class StopThread {
         thread.interrupt();
         sleep(1000);
         //通过判断 isInterrupted 进行中断
-        assertThat(thread.getState()).isEqualTo(Thread.State.TERMINATED);
+        assertTrue(thread.isInterrupted());
         System.out.println("主线程执行结束！");
     }
 

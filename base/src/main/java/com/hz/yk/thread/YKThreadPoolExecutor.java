@@ -367,6 +367,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             return getState() != 0;
         }
 
+        //尝试加锁方法，将状态从0设置为1；如果不是0则加锁失败,在worker线程没有启动前是-1状态，无法加锁
+        //该方法重写了父类AQS的同名方法
         @Override
         protected boolean tryAcquire(int unused) {
             if (compareAndSetState(0, 1)) {
@@ -376,6 +378,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             return false;
         }
 
+        //尝试释放锁的方法，直接将state置为0
+        //该方法重写了父类AQS的同名方法
         @Override
         protected boolean tryRelease(int unused) {
             setExclusiveOwnerThread(null);
@@ -383,6 +387,8 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             return true;
         }
 
+        //注意：tryAcquire与tryRelease是重写了AQS父类的方法，且不可以直接调用，它们被以下方法调用实现加锁解锁操作
+        //加锁:acquire法是它父类AQS类的方法,会调用tryAcquire方法加锁
         public void lock() {
             acquire(1);
         }
@@ -391,6 +397,7 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             return tryAcquire(1);
         }
 
+        //解锁:release方法是它父类AQS类的方法，会调用tryRelease方法
         public void unlock() {
             release(1);
         }
@@ -657,24 +664,34 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      *                  state).
      * @return true if successful
      */
-    // 两个参数，firstTask表示需要跑的任务。boolean类型的core参数为true的话表示使用线程池的基本大小，为false使用线程池最大大小
-    // 返回值是boolean类型，true表示新任务被接收了，并且执行了。否则是false
+
+    /**
+     * 增加线程时，先判断当前线程池的状态允不允许创建新的线程，如果允许再判断线程池有没有达到 限制，如果条件都满足，才继续执行；
+     * 先增加线程数计数 ctl，增加计数成功后，才会去创建线程;
+     * 创建线程是通过 work 对象来创建的，创建成功后，将 work 对象放入到 works 线程池中（就是一个 hashSet）;
+     * 添加完成后，更新 largestPoolSize 值（线程池中创建过的线程最大数量），最后启动线程，如果参数 firstTask 不为 null，则执行第一个要执行的任务，然后循环去任务队列中取任务来执行；
+     * 成功添加 worker 工作线程需要线程池处于以下两种状态中的一种
+     * 线程池处于 RUNNING 状态
+     * 线程池处于 SHUTDOWN 状态，且创建线程的时候没有传入新的任务（此状态下不接收新任务），且任务队列不为空（此状态下，要执行完任务队列中的剩余任务才能关闭）；
+     * 两个参数，firstTask表示需要跑的任务。boolean类型的core参数为true的话表示使用线程池的基本大小，为false使用线程池最大大小
+     * 返回值是boolean类型，true表示新任务被接收了，并且执行了。否则是false
+     */
     private boolean addWorker(Runnable firstTask, boolean core) {
+        //以下for循环，增加线程数计数，ctl，只增加计数，不增加线程，只有增加计数成功，才会增加线程
         retry:
         for (; ; ) {
             int c = ctl.get();
             int rs = runStateOf(c);
-
-            // 这个判断转换成 rs >= SHUTDOWN && (rs != SHUTDOWN || firstTask != null || workQueue.isEmpty)。
-            // 概括为3个条件：
-            // 1. 线程池不在RUNNING状态并且状态是STOP、TIDYING或TERMINATED中的任意一种状态
-            // 2. 线程池不在RUNNING状态，线程池接受了新的任务
-            // 3. 线程池不在RUNNING状态，阻塞队列为空。  满足这3个条件中的任意一个的话，拒绝执行任务
-            // Check if queue empty only if necessary.
+            //这个代码块的判断，如果是STOP，TIDYING和TERMINATED这三种状态，都会返回false。(这几种状态不会接收新任务，也不再执行队列中的任务，中断当前执行的任务)
+            //如果是SHUTDOWN，firstTask不为空（SHUTDOWN状态下，不会接收新任务）或 者workQueue是空（队列里面都没有任务了，也就不需要线程了），返回false。
             if (rs >= SHUTDOWN && !(rs == SHUTDOWN && firstTask == null && !workQueue.isEmpty())) {
                 return false;
             }
 
+            //只有满足以下两种条件才会继续创建worker线程对象
+            //1.RUNNING状态，
+            //2.shutdown状态，且firstTask为null（因为shutdown状态下不再接收新任务），队列不是空（shutdown状态下需要继续处理队列中的任务）
+            // 通过自旋的方式增加线程池线程数
             for (; ; ) {
                 int wc = workerCountOf(c);
                 // 如果线程池线程数量超过线程池最大限制或者线程数量超过了基本大小(core参数为true，core参数为false的话判断超过最大大小)
@@ -686,13 +703,14 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                     break retry;
                 }
                 c = ctl.get();  // Re-read ctl
-                // 重新检查状态,如果状态改变了，重新循环操作
+                //否则则判断当前线程池的状态，如果现在获取到的状态与进入自旋的状态不一致的话，那么则通过continue retry重新进行状态的判断
                 if (runStateOf(c) != rs) {
                     continue retry;
                 }
                 // else CAS failed due to workerCount change; retry inner loop
             }
         }
+
         // 走到这一步说明cas操作成功了，线程池线程数量+1
         boolean workerStarted = false; // 任务是否成功启动标识
         boolean workerAdded = false; // 任务是否添加成功标识
@@ -710,23 +728,29 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                     // shut down before lock acquired.
                     // 在锁住之后再重新检测一下状态
                     int rs = runStateOf(ctl.get());
-                    // 如果线程池在RUNNING状态或者线程池在SHUTDOWN状态并且任务是个null
+                    // RUNNING状态 || SHUTDONW状态下，没有新的任务，只是处理任务队列中剩余的任务；
                     if (rs < SHUTDOWN || (rs == SHUTDOWN && firstTask == null)) {
-                        // 判断线程是否还活着，也就是说线程已经启动并且还没死掉
+                        //如果线程是活动状态，直接抛出异常，因为线程刚创建，还没有执行start方法，一定不会是活动状态；
+                        //这里为什么需要判断下有点奇怪，难道是为了避免不同ThreadFactory  newThread的机制不同？
                         if (t.isAlive()) {// precheck that t is startable
                             // 如果存在已经启动并且还没死的线程，抛出异常
                             throw new IllegalThreadStateException();
                         }
+                        // 将新启动的线程添加到线程池中
                         workers.add(w);
                         int s = workers.size();
-                        // 如果线程池中的线程个数超过了线程池中的最大线程数时，更新一下这个最大线程数
-                        if (s > largestPoolSize)
+                        //将线程池中创建过的线程最大数量，设置给largestPoolSize，可以通过getLargestPoolSize()方法获取，注意这个方法只能在 ThreadPoolExecutor中调用，
+                        // Executer，ExecuterService，AbstractExecutorService中都是没有这个方法的
+                        if (s > largestPoolSize) {
                             largestPoolSize = s;
+                        }
                         workerAdded = true;
                     }
                 } finally {
                     mainLock.unlock();
                 }
+                // 启动新添加的线程，这个线程首先执行firstTask，然后不停的从队列中取任务执行
+                // 当等待keepAlieTime还没有任务执行则该线程结束。见runWoker和getTask方法的代码。
                 if (workerAdded) {// 如果任务添加成功，运行任务，改变一下任务成功启动标识
                     t.start(); // 启动线程，这里的t是Worker中的thread属性，所以相当于就是调用了Worker的run方法
                     workerStarted = true;
@@ -752,8 +776,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         final ReentrantLock mainLock = this.mainLock;
         mainLock.lock();
         try {
-            if (w != null)
+            if (w != null) {
                 workers.remove(w);
+            }
             decrementWorkerCount();
             tryTerminate();
         } finally {
@@ -913,13 +938,17 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * @param w the worker
      */
     final void runWorker(Worker w) {
+        //当前线程
         Thread wt = Thread.currentThread();
+        //获取当前Worker线程创建时，指定的第一个要执行的任务，也可以不指定任务，那么它自己就会去任务队列中取任务；
         Runnable task = w.firstTask;
         w.firstTask = null; // 将Worker中的任务置空
+        // 在构造方法里面将state设置为了-1，执行该方法就将state置为了0，这样就可以加锁了，-1状态下是无法加锁的，看Worker类的tryAcquire方法
         w.unlock(); // allow interrupts
+        //该变量代表任务执行是否发生异常，默认值为true发生了异常，后面会用到这个变量
         boolean completedAbruptly = true;
         try {
-            // 如果worker中的任务不为空，继续执行，否则使用getTask获得任务。一直死循环，除非得到的任务为空才退出
+            //如果创建worker时传入了第一个任务，则执行第一个任务，否则 从任务队列中获取任务getTask()
             while (task != null || (task = getTask()) != null) {
                 // 如果拿到了任务，给自己上锁，表示当前Worker已经要开始执行任务了，已经不是闲置Worker(闲置Worker的解释请看下面的线程池关闭)
                 w.lock();
@@ -931,12 +960,17 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
 
                 // 在执行任务之前先做一些处理。 1. 如果线程池已经处于STOP状态并且当前线程没有被中断，中断线程
                 // 2. 如果线程池还处于RUNNING或SHUTDOWN状态，并且当前线程已经被中断了，重新检查一下线程池状态，如果处于STOP状态并且没有被中断，那么中断线程
+
+                //先判断线程池状态是否允许继续执行任务：
+                //1.如果是stop<tidying<terminated（这种状态是不接受任务，且不执行任务的），并且线程是非中断状态
+                //2.如果线程池还处于RUNNING或SHUTDOWN状态 ，处于中断状态（并复位中断标志），如果这个时候其它线程执行了shutdownNow方法，shutdownNow方法会把状态设置为STOP
+                //这个时候则中断线程
                 if ((runStateAtLeast(ctl.get(), STOP) || (Thread.interrupted() && runStateAtLeast(ctl.get(), STOP)))
                     && !wt.isInterrupted()) {
                     wt.interrupt();
                 }
                 try {
-                    // 任务执行前需要做什么，ThreadPoolExecutor是个空实现
+                    //任务执行前要做的处理：这个方法是空的，什么都不做，一般会通过继承ThreadPoolExecute类后重写该方法实现自己的功能；传入参数为当前线程与要执行的任务
                     beforeExecute(wt, task);
                     Throwable thrown = null;
                     try {
@@ -963,11 +997,15 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                     w.unlock(); // 执行完任务之后，解锁，Worker变成闲置Worker
                 }
             }
+            //退出while循环，线程结束
+            //判断task.run()方法是否抛出了异常，如果没有则设置它为false，如果发生了异常，前面会直接抛出，中断方法继续执行，就不会执行下面这句；
             completedAbruptly = false;
         } finally {
             //如果getTask返回的是null跳出while 循环 ，那说明阻塞队列已经没有任务并且当前调用getTask的Worker需要被回收，那么会调用processWorkerExit方法进行回收
             processWorkerExit(w, completedAbruptly); // 回收Worker方法
         }
+        // 线程如果执行任务过程中，业务代码抛出了异常，那么会将抛出的异常catch以后抛出，如果是Throwable类型的异常，则会封装成Error抛出，最后此线程退出，但是退出之前会将任务完成数照样+1，然后会在控制台上打印Error或者是RuntimeException 异常，这些异常不会被我们捕获，异常信息只会在控制台打出，不会在我们的log日志中打出；
+        //所以我们一定要自己去捕获并处理我们的异常，而不能抛出不管；
     }
 
     // Public constructors and methods
@@ -1118,6 +1156,7 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      *                                    cannot be accepted for execution
      * @throws NullPointerException       if {@code command} is null
      */
+    @Override
     public void execute(Runnable command) {
         if (command == null) {
             throw new NullPointerException();
@@ -1161,16 +1200,27 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         //1.前面的判断中，线程池中线程数小于核心线程数，并且创建新的工作线程失败；
         //2.前面的判断中，线程池中线程数大于等于核心线程数
 
-        // 第二个步骤，线程池处于RUNNING状态，说明线程池中线程已经>=corePoolSize，阻塞队列也没满的情况，加到阻塞队列里
+        // 线程池处于RUNNING状态，说明线程池中线程已经>=corePoolSize,这时候要将任务放入队列中，等待执行;
         if (isRunning(c) && workQueue.offer(command)) {
             int recheck = ctl.get();
-            // 虽然满足了第二个步骤，但是这个时候可能突然线程池关闭了，所以再做一层判断
             //再次检查线程池的状态，如果线程池状态变了，非RUNNING状态下不会接收新的任务，需要将任务移除，成功从队列中删除任务，则执行reject方法处理任务；
-            if (!isRunning(recheck) && remove(command))
+            if (!isRunning(recheck) && remove(command)) {
                 reject(command);
-            else if (workerCountOf(recheck) == 0)
+            }
+            //如果线程池的状态没有改变，且池中无线程
+            else if (workerCountOf(recheck) == 0) {
+                // 两种情况进入以该分支
+                //1.线程池处于RUNNING状态，线程池中没有线程了，因为有新任务进入队列所以要创建工作线程
+                // （这时候新任务已经在队列中，所以下面创建worker线程时第一个参数，要执行的任务为null，只是创建一个新的工作线程并启动它，让它自己去队列中取任务执行）
+                //2.线程池处于非RUNNING状态但是任务移除失败,导致任务队列中仍然有任务，但是线程池中的线程数为0，则创建新的工作线程，处理队列中的任务；
                 addWorker(null, false);
-        } else if (!addWorker(command, false)) { // 第三个步骤，直接使用线程池最大大小。addWorker方法第二个参数false表示使用最大大小
+            }
+        }
+        // 两种情况执行下面分支：
+        // 1.非RUNNING状态拒绝新的任务,并且无法创建新的线程，则拒绝任务
+        // 2.线程池处于RUNNING状态，线程池线程数量已经大于等于coresize，任务就需要放入队列，如果任务入队失败，说明队列满了，则创建新的线程，
+        // 创建成功则新线程继续执行任务，如果创建失败说明线程池中线程数已经超过maximumPoolSize，则拒绝任务
+        else if (!addWorker(command, false)) {
             reject(command);
         }
     }
@@ -1292,8 +1342,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * @see #getThreadFactory
      */
     public void setThreadFactory(ThreadFactory threadFactory) {
-        if (threadFactory == null)
+        if (threadFactory == null) {
             throw new NullPointerException();
+        }
         this.threadFactory = threadFactory;
     }
 
