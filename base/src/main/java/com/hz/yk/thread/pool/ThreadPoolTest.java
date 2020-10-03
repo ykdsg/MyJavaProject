@@ -99,6 +99,14 @@ public class ThreadPoolTest {
                 @Override
                 public void run() {
                     System.out.println("thread name:" + Thread.currentThread().getName());
+                    System.out.println(
+                            Thread.currentThread().getName() + " pool size :" + threadPoolExecutor.getPoolSize());
+                    System.out.println(
+                            Thread.currentThread().getName() + " queue size :" + threadPoolExecutor.getQueue().size());
+                    System.out.println(
+                            Thread.currentThread().getName() + " active count :" + threadPoolExecutor.getActiveCount());
+                    System.out.println(Thread.currentThread().getName() + " completed count :" + threadPoolExecutor
+                            .getCompletedTaskCount());
                     throw new RuntimeException("just test");
                 }
             });

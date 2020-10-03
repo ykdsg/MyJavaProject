@@ -449,32 +449,55 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * from the queue during shutdown. The method is non-private to
      * allow access from ScheduledThreadPoolExecutor.
      */
+    //该方法会在很多地方调用，如添加worker线程失败的addWorkerFailed（)方法，worker线程跳出执行任务的while 循环退出时的processWorkerExit（）方法，
+    // 关闭线程池的shutdown()和shutdownNow()方法，从任务队列移除任务的remove()方法；
+    //该方法的作用是检测当前线程池的状态是否可以将线程池终止，如果可以终止则尝试着去终止线程，否则直接返回；
+    /*
+
+     */
     final void tryTerminate() {
         for (; ; ) {
             int c = ctl.get();
-            // 满足3个条件中的任意一个，不终止线程池
-            // 1. 线程池还在运行，不能终止
-            // 2. 线程池处于TIDYING或TERMINATED状态，说明已经在关闭了，不允许继续处理
-            // 3. 线程池处于SHUTDOWN状态并且阻塞队列不为空，这时候还需要处理阻塞队列的任务，不能终止线程池
+            //以下状态不可被终止：
+            //1.如果线程池的状态是RUNNING（不可终止）
+            //或者是TIDYING（该状态一定执行过了tryTerminate方法，正在执行或即将执行terminated()方法，所以不需要重复执行），
+            //或者是TERMINATED（该状态已经执行完成terminated()钩子方法，已经是被终止状态了），
+            //以上三种状态直接返回。
+            //2.如果线程池状态是SHUTDOWN，而且任务队列不是空的（该状态需要继续处理任务队列中的任务，不可被终止），也直接返回。
             if (isRunning(c) || runStateAtLeast(c, TIDYING) || (runStateOf(c) == SHUTDOWN && !workQueue.isEmpty())) {
                 return;
             }
-            // 走到这一步说明线程池已经不在运行，阻塞队列已经没有任务，但是还要回收正在工作的Worker
+            //以下状态才会继续执行：
+            //1.如果线程池状态是SHUTDOWN，而且任务队列是空的（shutdown状态下，任务队列为空，可以被终止），向下进行。
+            //2.如果线程池状态是STOP（该状态下，不接收新任务，不执行任务队列中的任务，并中断正在执行中的线程，可以被终止），向下进行。
+
+            // workerCount不为0则还不能停止线程池,而且这时线程都处于空闲等待的状态
+            // 需要中断让线程“醒”过来，醒过来的线程才能继续处理shutdown的信号。
             if (workerCountOf(c) != 0) { // Eligible to terminate
                 // 由于线程池不运行了，调用了线程池的关闭方法，在解释线程池的关闭原理的时候会说道这个方法
+                // runWoker方法中w.unlock就是为了可以被中断,getTask方法也处理了中断。
+                // ONLY_ONE:这里只需要中断1个线程去处理shutdown信号就可以了。
                 interruptIdleWorkers(ONLY_ONE);
                 return;
             }
             // 走到这里说明worker已经全部回收了，并且线程池已经不在运行，阻塞队列已经没有任务。可以准备结束线程池了
+            //满足以下两个条件才会继续执行
+            //1.线程池状态是STOP且 工作线程池中的线程wc是0
+            //2.线程池状态是SHUTDOWN而且工作线程池wc(pool)和任务队列(queue)都是空的
             final ReentrantLock mainLock = this.mainLock;
             mainLock.lock();
             try {
+                //进入TIDYING状态，线程池的状态被原子操作ctl.compareAndSet(c, ctlOf(TIDYING, 0)将状态设置为TIDYING，
+                // (因为tryTerminate方法会在多处调用，存在竞争)
                 if (ctl.compareAndSet(c, ctlOf(TIDYING, 0))) {
                     try {
                         terminated();
                     } finally {
+                        //进入TERMINATED状态
+                        //进一步在terminated结束之后的finally块中通过ctl.set(ctlOf(TERMINATED, 0))设置为TERMINATED。
                         // terminated方法调用完毕之后，状态变为TERMINATED
                         ctl.set(ctlOf(TERMINATED, 0));
+                        //最后执行termination.signalAll()，会唤醒awaitTermination方法中由于执行termination.awaitNanos(nanos)操作进入等待状态的线程
                         termination.signalAll();
                     }
                     return;
@@ -517,14 +540,17 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
     /**
      * Interrupts all threads, even if active. Ignores SecurityExceptions
      * (in which case some threads may remain uninterrupted).
+     * 中断所有正在运行的线程，注意，这里与interruptIdelWorkers()方法不同的是，没有使用worker的AQS锁
      */
     private void interruptWorkers() {
         final ReentrantLock mainLock = this.mainLock;
         mainLock.lock();
         try {
-            for (Worker w : workers)
-                // 中断Worker的执行
+            // 中断Worker的执行
+            for (Worker w : workers) {
+
                 w.interruptIfStarted();
+            }
         } finally {
             mainLock.unlock();
         }
@@ -549,6 +575,7 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      *                idle workers so that redundant workers exit promptly, not
      *                waiting for a straggler task to finish.
      */
+    //中断空闲线程，没有执行任务的线程会被中断，onlyOne参数用来标识是否只中断一个线程；
     private void interruptIdleWorkers(boolean onlyOne) {
         final ReentrantLock mainLock = this.mainLock;
         mainLock.lock();
@@ -557,6 +584,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                 Thread t = w.thread;
                 // Worker中的线程没有被打断并且Worker可以获取锁，这里Worker能获取锁说明Worker是个闲置Worker，在阻塞队列里拿数据一直被阻塞，
                 // 没有数据进来。如果没有获取到Worker锁，说明Worker还在执行任务，不进行中断(shutdown方法不会中断正在执行的任务)
+                //如果线程没有被中断，w.tryLock()会调用tryAcquire()方法尝试加锁，加锁成功后会中断线程
+                //为什么要w.tryLock(),因为在runWorker()方法的while循环执行任务之前会加锁，如果已经被加锁说明线程正在执行任务，不能被中断；
+
                 if (!t.isInterrupted() && w.tryLock()) {
                     try {
                         t.interrupt();
@@ -566,8 +596,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
                     }
                 }
                 // 如果只打断1个Worker的话，直接break退出，否则，遍历所有的Worker
-                if (onlyOne)
+                if (onlyOne) {
                     break;
+                }
             }
         } finally {
             mainLock.unlock();
@@ -800,15 +831,18 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      * @param completedAbruptly if the worker died due to user exception
      */
     private void processWorkerExit(Worker w, boolean completedAbruptly) {
-        // 如果Worker没有正常结束流程调用processWorkerExit方法，worker数量减一。如果是正常结束的话，在getTask方法里worker数量已经减一了
-        if (completedAbruptly) // If abrupt, then workerCount wasn't adjusted
+        // 如果任务运行异常导致则completedAbruptly=true，则将线程池worker线程数减1，如果是没有获取到任务导致的completedAbruptly=false，则会在getTask()方法里面将线程数减1;
+        if (completedAbruptly) { // If abrupt, then workerCount wasn't adjusted
+            //自旋锁将ctl减1（也就是将线程池中的线程数减1）
             decrementWorkerCount();
+        }
 
         final ReentrantLock mainLock = this.mainLock;
         mainLock.lock();
         try {
+            //退出前，将本线程已完成的任务数量，添加到已经完成任务的总数中；
             completedTaskCount += w.completedTasks;
-            // 线程池的worker集合删除掉需要回收的Worker
+            //线程队列中移除当前线程
             workers.remove(w);
         } finally {
             mainLock.unlock();
@@ -816,20 +850,34 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         // 尝试结束线程池
         tryTerminate();
 
+        /*
+         *判断是否要增加新的线程
+         *如果满足以下条件则新增线程：
+         * 一、当线程池是RUNNING或SHUTDOWN状态，且worker是异常结束，那么会直接addWorker；
+         * 二、当线程池是RUNNING或SHUTDOWN状态，且worker是没有任务可做结束的；
+         *   1.如果allowCoreThreadTimeOut=true，则判断等待队列不为空  ，且当前线程数是否小于1；
+         *   2.如果allowCoreThreadTimeOut=false，则判断当前线程数是否小于corePoolSize；
+         *   如果小于，则会创建addWorker线程；
+         **/
+
         int c = ctl.get();
         if (runStateLessThan(c, STOP)) {// 如果线程池还处于RUNNING或者SHUTDOWN状态
+            //如果非异常状况completedAbruptly=false，也就是没有获取到可执行的任务，则获取线程池允许的最小线程数，
+            // 如果allowCoreThreadTimeOut为true说明允许核心线程超时，则最小线程数为0，否则最小线程数为corePoolSize;
             if (!completedAbruptly) { // Worker是正常结束流程的话
                 int min = allowCoreThreadTimeOut ? 0 : corePoolSize;
-                if (min == 0 && !workQueue.isEmpty())
+                //如果allowCoreThreadTimeOut=true，且任务队列有任务要执行，则将最最小线程数设置为1
+                if (min == 0 && !workQueue.isEmpty()) {
                     min = 1;
-                if (workerCountOf(c) >= min)
+                }
+                //如果当前线程数大于等于最小线程数，则直接返回
+                if (workerCountOf(c) >= min) {
                     return; // replacement not needed
+                }
             }
-            // 新开一个Worker代替原先的Worker
-            // 新开一个Worker需要满足以下3个条件中的任意一个：
-            // 1. 用户执行的任务发生了异常
-            // 2. Worker数量比线程池基本大小要小
-            // 3. 阻塞队列不空但是没有任何Worker在工作
+            //以下两种情况会添加一个新的线程代替原先的Worker
+            //1.worker是异常结束；
+            //2.如果是非异常结束，且任务队列里面还有任务，
             addWorker(null, false);
         }
     }
@@ -859,15 +907,17 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
     private Runnable getTask() {
         // 如果使用超时时间并且也没有拿到任务的标识
         boolean timedOut = false; // Did the last poll() time out?
-
+        //这是个for循环
+        //1.先判断线程池状态是否允许取任务，不允许直接将线程数量减1 ，直接返回null；
+        //2.若线程池状态允许取任务，则判断当前线程是否超时 ，若线程超时则将线程池数量减1，直接返回null；
+        //3.若没有超时，则去任务队列取任务，取到的话返回任务，若超时则设置超时状态，继续循环，在下次循环中处理超时状态
         for (; ; ) {
             int c = ctl.get();
             int rs = runStateOf(c);
 
             // Check if queue empty only if necessary.
-            // 如果线程池是SHUTDOWN状态并且阻塞队列为空的话，worker数量减一，直接返回null(SHUTDOWN状态还会处理阻塞队列任务，
-            // 但是阻塞队列为空的话就结束了)，如果线程池是STOP状态的话，worker数量建议，直接返回null(STOP状态不处理阻塞队列任务)
-            // [方法一开始注释的2，3两点，返回null，开始Worker回收]
+            // 1.如果是rs > SHUTDOWN，即状态为stop、tidying、terminated；这时不再处理队列中的任务，直接返回null
+            // 2.如果是rs = SHUTDOWN ，rs>=STOP不成立，这时还需要处理队列中的任务除非队列为空，没有任务要处理，则返回null
             if (rs >= SHUTDOWN && (rs >= STOP || workQueue.isEmpty())) {
                 decrementWorkerCount();
                 return null;
@@ -880,22 +930,30 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
             // 如果worker数量比基本大小要大的话，timed就为true，需要进行回收worker
             boolean timed = allowCoreThreadTimeOut || wc > corePoolSize;
 
-            // 方法一开始注释的1，4两点，会进行下一步worker数量减一
+            //超时销毁线程需要先满足以下两个条件之一
+            // 1. wc > maximumPoolSize的情况是因为可能在此方法执行阶段同时执行了setMaximumPoolSize方法；
+            // 2. timed && timedOut 如果为true，表示当前操作需要进行超时控制，并且上次循环当前线程从任务队列中获取任务发生了超时，没有取到任务；
+            //  满足上面两个条件之一的情况下，接下来判断，如果线程数量大于1，或者线程队列是空的，那么尝试将workerCount减1，减1成功则返回null，退出当前线程； 如果减1失败，则返回继续执行循环操作，重试。
             if ((wc > maximumPoolSize || (timed && timedOut)) && (wc > 1 || workQueue.isEmpty())) {
                 // worker数量减一，返回null，之后会进行Worker回收工作
-                if (compareAndDecrementWorkerCount(c))
+                if (compareAndDecrementWorkerCount(c)) {
                     return null;
+                }
+                //如果将线程池数量减一不成功则循环重试
                 continue;
             }
 
             try {
-                // 如果需要设置超时时间，使用poll方法，否则使用take方法一直阻塞等待阻塞队列新进数据
+                //根据timed（是否启用超时控制）来判断执行poll操作还是执行take()操作还是执行有时间限制的poll操作，并返回获取到的任务；
                 Runnable r = timed ? workQueue.poll(keepAliveTime, TimeUnit.NANOSECONDS) : workQueue.take();
-                if (r != null)
+                if (r != null) {
                     return r;
+                }
+                //如果poll操作等待超时,没有取到任务；则将timeOut设置为true；
                 timedOut = true;
             } catch (InterruptedException retry) {
-                timedOut = false; // 闲置Worker被中断
+                //如果是因为线程中断导致没有取到任务；则设置timedOut=false继续执行循环，取任务
+                timedOut = false;
             }
         }
     }
@@ -1235,13 +1293,14 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      *
      * @throws SecurityException {@inheritDoc}
      */
+    @Override
     public void shutdown() {
         final ReentrantLock mainLock = this.mainLock;
         mainLock.lock();
         try {
             // 检查关闭线程池的权限
             checkShutdownAccess();
-            // 把线程池状态更新到SHUTDOWN
+            // 线程池状态设为SHUTDOWN，如果已经是shutdown<stop<tidying<terminated，也就是非RUNING状态则直接返回
             advanceRunState(SHUTDOWN);
             // 中断闲置的Worker
             interruptIdleWorkers();
@@ -1268,6 +1327,7 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
      *
      * @throws SecurityException {@inheritDoc}
      */
+    @Override
     public List<Runnable> shutdownNow() {
         List<Runnable> tasks;
         final ReentrantLock mainLock = this.mainLock;
@@ -1275,8 +1335,9 @@ public class YKThreadPoolExecutor extends AbstractExecutorService {
         try {
             checkShutdownAccess();
             advanceRunState(STOP);
-            // 中断Worker的运行
+            // 中断所有线程，无论空闲还是在执行任务
             interruptWorkers();
+            //将任务队列清空，并返回队列中还没有被执行的任务。
             tasks = drainQueue();
         } finally {
             mainLock.unlock();
