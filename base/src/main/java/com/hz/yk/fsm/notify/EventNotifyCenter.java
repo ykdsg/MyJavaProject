@@ -1,21 +1,23 @@
 package com.hz.yk.fsm.notify;
 
-
 import com.hz.yk.fsm.event.IEvent;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * 事件通知中心
  * 注册主题消息
  * 注册事件
  * 事件分发
- * @author flyrain.zx
  *
+ * @author flyrain.zx
  */
 public enum EventNotifyCenter {
+	/**
+	 *
+	 */
 	instace;
 
 	private final ConcurrentHashMap<String, CopyOnWriteArrayList<IEvent<?>>> obseverList = new ConcurrentHashMap<String, CopyOnWriteArrayList<IEvent<?>>>();
@@ -54,7 +56,7 @@ public enum EventNotifyCenter {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public  <T extends Object> void postNotify(String msgCode, T sourceData) {
+	public <T extends Object> void postNotify(String msgCode, T sourceData) {
 		if (StringUtils.isBlank(msgCode) || null == sourceData) {
 			return;
 		}
@@ -67,8 +69,7 @@ public enum EventNotifyCenter {
 		}
 	}
 
-	public void postNotifyWithEventSource(String msgCode, Object sourceData,
-			Object sourceEvent) {
+	public void postNotifyWithEventSource(String msgCode, Object sourceData, Object sourceEvent) {
 		throw new UnsupportedOperationException();
 	}
 

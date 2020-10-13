@@ -35,6 +35,7 @@
         <module>practice</module>
         <module>math</module>
         <module>salary</module>
+        <module>effective</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
