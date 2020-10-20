@@ -38,11 +38,14 @@ public class Lesson5_1 {
     }
 
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        // read the data
-        System.out.println("请输入要计算的金额：");
-        int n = input.nextInt();
-        calculate(n, new ArrayList<>());
-        System.out.println("有几种组合方式：" + count);
+        while (true) {
+            Scanner input = new Scanner(System.in);
+            // read the data
+            System.out.println("请输入要计算的金额：");
+            int n = input.nextInt();
+            calculate(n, new ArrayList<>());
+            System.out.println("有几种组合方式：" + count);
+        }
+
     }
 }

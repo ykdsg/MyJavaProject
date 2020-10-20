@@ -1,10 +1,10 @@
 package com.hz.yk;
 
 import com.google.common.collect.Lists;
+import com.hz.yk.schema.People;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,9 +21,9 @@ public class Main {
         //Integer test2 = new Integer(1);
         ////false
         //System.out.println(test1 == test2);
-        List<String> emptyList = Collections.emptyList();
-        emptyList.add("test1");
-        System.out.println(emptyList);
+        //List<String> emptyList = Collections.emptyList();
+        //emptyList.add("test1");
+        //System.out.println(emptyList);
         //
         //int[] ints = new int[] { 1, 2, 3, 4, 55 };
         ////原始类型会把整个array 当做list的一个元素
@@ -46,6 +46,9 @@ public class Main {
         //List<String> strList = Lists.newArrayList("2", "22");
         //List<String> filterList = strList.stream().filter(s -> s.equals("1")).collect(Collectors.toList());
         //System.out.println(filterList);
+
+        List<People> appMappingJSONs = com.alibaba.fastjson.JSONObject.parseArray("", People.class);
+        System.out.println(appMappingJSONs);
     }
 
     //方法没有声明throws
