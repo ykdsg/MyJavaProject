@@ -22,6 +22,16 @@ public class TransmitThreadLocalTest {
     private static ThreadLocal tl = new TransmittableThreadLocal<>(); //这里采用TTL的实现
 
     public static void main(String[] args) {
+        String mainThreadName = "**********main**********";
+        tl.set(1);
+        executorService.execute(() -> {
+            sleep(1L);
+            System.out.println(String.format("本地变量改变之前(1), 父线程名称-%s, 子线程名称-%s, 变量值=%s", mainThreadName,
+                                             Thread.currentThread().getName(), tl.get()));
+        });
+    }
+
+    public static void main1(String[] args) {
 
         new Thread(() -> {
 
@@ -31,8 +41,8 @@ public class TransmitThreadLocalTest {
 
             executorService.execute(() -> {
                 sleep(1L);
-                System.out.println(String.format("本地变量改变之前(1), 父线程名称-%s, 子线程名称-%s, 变量值=%s", mainThreadName,
-                                                 Thread.currentThread().getName(), tl.get()));
+                System.out.println(
+                        String.format("本地变量改变之前(1), 父线程名称-%s, 子线程名称-%s, 变量值=%s", mainThreadName, Thread.currentThread().getName(), tl.get()));
             });
 
             executorService.execute(() -> {

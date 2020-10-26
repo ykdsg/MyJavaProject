@@ -1,0 +1,24 @@
+@startuml
+
+actor Actor
+
+Actor->TtlRunnable:execute
+TtlRunnable->Transmitter:replay(captured)
+activate Transmitter
+Transmitter->Transmitter:replayTtlValues(ttl2Value) \n 回放在上一步包装的Runnableb 中存放的父线程的变量
+activate Transmitter
+Transmitter->TransmittableThreadLocal:holder.get().keySet()\n 这是当前线程的hold
+alt !captured.containsKey(threadLocal)原生变量不在父类线程里面
+Transmitter->Transmitter:iterator.remove();\n 从当前线程清除掉
+Transmitter->Transmitter: threadLocal.superRemove();
+note right :如果不清除的话会存在问题，如果某个在线程池的某个线程中有值\n 但是在在父线程中是不设置这个值的，如果运行时依赖这个值就会跟预期不符
+end
+Transmitter->Transmitter:setTtlValuesTo(captured);
+activate Transmitter
+loop ttlValues.entrySet()
+Transmitter->TransmittableThreadLocal:setTtlValuesTo \n 调用一次ttl的set方法写入父线程的值
+deactivate Transmitter
+end
+TtlRunnable->TtlRunnable:runnable.run()
+TtlRunnable->TtlRunnable:restore(backup)\n 跟上面的replay类似，这里是把原来的线程值恢复
+@enduml

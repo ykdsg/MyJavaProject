@@ -1,0 +1,21 @@
+@startuml
+
+actor Actor
+Actor -> TransmittableThreadLocal:set(T value)
+activate TransmittableThreadLocal
+TransmittableThreadLocal -> ThreadLocal@super:set(value)
+TransmittableThreadLocal -> TransmittableThreadLocal:addThisToHolder
+activate TransmittableThreadLocal
+TransmittableThreadLocal-> ThreadLocal@hold:holder.get()
+activate ThreadLocal@hold
+ThreadLocal@hold->ThreadLocal@hold:setInitialValue
+activate ThreadLocal@hold
+ThreadLocal@hold->ThreadLocal@hold:initialValue\n调用子类重写的方法
+ThreadLocal@hold-->TransmittableThreadLocal:WeakHashMap\n 返回hold持有的
+deactivate ThreadLocal@hold
+deactivate ThreadLocal@hold
+TransmittableThreadLocal -> WeakHashMap:holder.get().containsKey(this)
+WeakHashMap-->TransmittableThreadLocal:false\n是否包含
+TransmittableThreadLocal -> WeakHashMap:holder.get().put(this, null)
+
+@enduml

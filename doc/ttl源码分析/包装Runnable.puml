@@ -1,0 +1,31 @@
+@startuml
+title 包装的Runnableb
+
+actor Actor
+participant ExecutorServiceTtlWrapper
+participant TtlRunnable
+autonumber
+Actor -> ExecutorServiceTtlWrapper: execute
+activate ExecutorServiceTtlWrapper
+ExecutorServiceTtlWrapper -> TtlRunnable: get(Runnable runnable)
+activate TtlRunnable
+'TtlRunnable -> TtlRunnable: get(Runnable runnable, boolean releaseTtlValueReferenceAfterRun, boolean idempotent)
+TtlRunnable->TtlRunnable:<<create>>
+TtlRunnable->Transmitter:capture \n 获取父线程的ttl值存在本地变量中
+activate Transmitter
+Transmitter->Transmitter:captureTtlValues\n 获取父类ttl里的值
+activate Transmitter
+Transmitter->TransmittableThreadLocal:holder.get().keySet() \n 将前一步set操作中的hold里的值进行复制
+Transmitter->TransmittableThreadLocal:copyValue
+activate TransmittableThreadLocal
+TransmittableThreadLocal->TransmittableThreadLocal:get()
+TransmittableThreadLocal->ThreadLocal:super.get()
+TransmittableThreadLocal->TransmittableThreadLocal:addThisToHolder \n 跟set操作中一样
+deactivate TransmittableThreadLocal
+deactivate Transmitter
+Transmitter->Transmitter:captureThreadLocalValues
+Transmitter-->TtlRunnable:capturedRef \n 父线程的ttl变量和tl变量存入子线程的字段
+deactivate Transmitter
+TtlRunnable-->ExecutorServiceTtlWrapper:
+
+@enduml
