@@ -1,11 +1,11 @@
 package com.hz.yk;
 
-import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * @author wuzheng.yk
@@ -43,10 +43,51 @@ public class Main2 {
      *
      * @param args
      */
+    //public static void main(String[] args) {
+    //    List<String> testList = Lists.newArrayList("A", "B", "c", "d");
+    //    List split = split(testList, 3);
+    //    System.out.println(split);
+    //}
+
+    static List<String> list = new ArrayList<>();
+
     public static void main(String[] args) {
-        List<String> testList = Lists.newArrayList("A", "B", "c", "d");
-        List split = split(testList, 3);
-        System.out.println(split);
+        Scanner scanner = new Scanner(System.in);
+        int[] money = { 1, 2, 5, 10 };
+        while (scanner.hasNext()) {
+            String s = scanner.nextLine();
+            int target = Integer.parseInt(s);
+            int[] memo = new int[target + 1];
+            memo[0] = 1;
+            for (int i = 0; i < target; i++) {
+                for (int num : money) {
+                    if (num + i <= target) {
+                        memo[i + num] += memo[i];
+                    }
+                }
+            }
+            System.out.println(memo[target]);
+        }
+
+    }
+
+    static void dfs_(boolean[] visit, String temp, String get) {
+        if (temp.length() == 3) {    //System.out.println(temp);
+            if (!list.contains(temp))
+                list.add(temp);
+            return;
+        }
+        //System.out.println(temp);
+        for (int i = 0; i < 5; i++) {
+            if (visit[i] == false) {
+                temp += get.charAt(i) + "";
+                visit[i] = true;
+                dfs_(visit, temp, get);
+                visit[i] = false;
+                temp = temp.substring(0, temp.length() - 1);
+
+            }
+        }
     }
 
 }

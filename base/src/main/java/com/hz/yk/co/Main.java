@@ -18,12 +18,18 @@ import static com.hz.yk.co.LoggerFacade.writer;
  * Created by wuzheng.yk on 16/12/2.
  */
 public class Main {
+
     //代表特定的文件
-    private static PrintWriter err_writer = new PrintWriter(System.err,true);
-    private static PrintWriter warning_writer = new PrintWriter(System.out,true);
-    private static PrintWriter info_writer = new PrintWriter(System.out,true);
+    private static PrintWriter err_writer = new PrintWriter(System.err, true);
+    private static PrintWriter warning_writer = new PrintWriter(System.out, true);
+    private static PrintWriter info_writer = new PrintWriter(System.out, true);
 
     public static void main(String[] args) {
+        //test();
+        trydemo();
+    }
+
+    private static void test() {
         //表示不同的log文件
         Logger err_log = writer(err_writer);
         Logger warning_log = writer(warning_writer);
@@ -47,12 +53,25 @@ public class Main {
 
         logger = myprefix(logger);
 
-        logger.println(INFO,"-----------this is info");
+        logger.println(INFO, "-----------this is info");
 
         //标准输出上的东西只要通知我们出错了就行，不需要详细的stack trace
         PrintWriter out = new PrintWriter(System.err);
         std_logger = new ErrorMessageLogger(out, writer(out));
         std_logger = ignore(ERROR, std_logger);
-        std_logger.println(ERROR,"this is std error");
+        std_logger.println(ERROR, "this is std error");
+    }
+
+    public static void trydemo() {
+
+        try {
+            System.out.println("this is try");
+            final int i = 1 / 0;
+        } catch (Exception e) {
+            System.out.println("this is cache");
+            return;
+        } finally {
+            System.out.println("this is finally");
+        }
     }
 }
