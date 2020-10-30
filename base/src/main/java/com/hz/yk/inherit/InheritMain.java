@@ -17,7 +17,6 @@ public class InheritMain {
     public static void main(String[] args) {
         final Son son = new Son();
         son.call();
-
     }
 
 }

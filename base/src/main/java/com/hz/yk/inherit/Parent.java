@@ -16,5 +16,6 @@ public class Parent {
     public Parent() {
         System.out.println("construct parent");
         System.out.println("son name is null :" + (Son.getName() == null));
+        System.out.println("```````");
     }
 }
