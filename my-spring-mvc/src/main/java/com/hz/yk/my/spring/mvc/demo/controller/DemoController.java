@@ -4,7 +4,7 @@ import com.hz.yk.my.spring.mvc.annotation.Autowired;
 import com.hz.yk.my.spring.mvc.annotation.Controller;
 import com.hz.yk.my.spring.mvc.annotation.RequestMapping;
 import com.hz.yk.my.spring.mvc.annotation.RequestParam;
-import com.hz.yk.real.spring.demo.service.DemoService;
+import com.hz.yk.my.spring.mvc.demo.service.DemoService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
