@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yt.easy.icp.biz.dao.TBrandAnalyseDao">
+
+    <resultMap type="com.yt.easy.icp.biz.entity.TBrandAnalyse" id="TBrandAnalyseMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="brandId" column="brand_id" jdbcType="INTEGER"/>
+        <result property="abType" column="ab_type" jdbcType="VARCHAR"/>
+        <result property="brandChannel" column="brand_channel" jdbcType="VARCHAR"/>
+        <result property="brandName" column="brand_name" jdbcType="VARCHAR"/>
+        <result property="brandUniteName" column="brand_unite_name" jdbcType="VARCHAR"/>
+        <result property="brandCnName" column="brand_cn_name" jdbcType="VARCHAR"/>
+        <result property="brandUniteCnName" column="brand_unite_cn_name" jdbcType="VARCHAR"/>
+        <result property="skuCount" column="sku_count" jdbcType="VARCHAR"/>
+        <result property="mainCategory" column="main_category" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="TBrandAnalyseMap">
+        select
+          id, brand_id, ab_type, brand_channel, brand_name, brand_unite_name, brand_cn_name, brand_unite_cn_name, sku_count, main_category
+        from yt_icp.t_brand_analyse
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="TBrandAnalyseMap">
+        select
+          id, brand_id, ab_type, brand_channel, brand_name, brand_unite_name, brand_cn_name, brand_unite_cn_name, sku_count, main_category
+        from yt_icp.t_brand_analyse
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="TBrandAnalyseMap">
+        select
+        id, brand_id, ab_type, brand_channel, brand_name, brand_unite_name, brand_cn_name, brand_unite_cn_name,
+        sku_count, main_category
+        from yt_icp.t_brand_analyse
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="brandId != null">
+                and brand_id = #{brandId}
+            </if>
+            <if test="abType != null and abType != ''">
+                and ab_type = #{abType}
+            </if>
+            <if test="brandChannel != null and brandChannel != ''">
+                and brand_channel = #{brandChannel}
+            </if>
+            <if test="brandName != null and brandName != ''">
+                and brand_name = #{brandName}
+            </if>
+            <if test="brandUniteName != null and brandUniteName != ''">
+                and brand_unite_name = #{brandUniteName}
+            </if>
+            <if test="brandCnName != null and brandCnName != ''">
+                and brand_cn_name = #{brandCnName}
+            </if>
+            <if test="brandUniteCnName != null and brandUniteCnName != ''">
+                and brand_unite_cn_name = #{brandUniteCnName}
+            </if>
+            <if test="skuCount != null and skuCount != ''">
+                and sku_count = #{skuCount}
+            </if>
+            <if test="mainCategory != null and mainCategory != ''">
+                and main_category = #{mainCategory}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into yt_icp.t_brand_analyse(brand_id, ab_type, brand_channel, brand_name, brand_unite_name, brand_cn_name, brand_unite_cn_name, sku_count, main_category)
+        values (#{brandId}, #{abType}, #{brandChannel}, #{brandName}, #{brandUniteName}, #{brandCnName}, #{brandUniteCnName}, #{skuCount}, #{mainCategory})
+    </insert>
+
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into yt_icp.t_brand_analyse(brand_id, ab_type, brand_channel, brand_name, brand_unite_name,
+        brand_cn_name, brand_unite_cn_name, sku_count, main_category)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.brandId}, #{entity.abType}, #{entity.brandChannel}, #{entity.brandName}, #{entity.brandUniteName},
+            #{entity.brandCnName}, #{entity.brandUniteCnName}, #{entity.skuCount}, #{entity.mainCategory})
+        </foreach>
+    </insert>
+
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into yt_icp.t_brand_analyse(brand_id, ab_type, brand_channel, brand_name, brand_unite_name,
+        brand_cn_name, brand_unite_cn_name, sku_count, main_category)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.brandId}, #{entity.abType}, #{entity.brandChannel}, #{entity.brandName}, #{entity.brandUniteName},
+            #{entity.brandCnName}, #{entity.brandUniteCnName}, #{entity.skuCount}, #{entity.mainCategory})
+        </foreach>
+        on duplicate key update
+        brand_id = values(brand_id) , ab_type = values(ab_type) , brand_channel = values(brand_channel) , brand_name =
+        values(brand_name) , brand_unite_name = values(brand_unite_name) , brand_cn_name = values(brand_cn_name) ,
+        brand_unite_cn_name = values(brand_unite_cn_name) , sku_count = values(sku_count) , main_category =
+        values(main_category)
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update yt_icp.t_brand_analyse
+        <set>
+            <if test="brandId != null">
+                brand_id = #{brandId},
+            </if>
+            <if test="abType != null and abType != ''">
+                ab_type = #{abType},
+            </if>
+            <if test="brandChannel != null and brandChannel != ''">
+                brand_channel = #{brandChannel},
+            </if>
+            <if test="brandName != null and brandName != ''">
+                brand_name = #{brandName},
+            </if>
+            <if test="brandUniteName != null and brandUniteName != ''">
+                brand_unite_name = #{brandUniteName},
+            </if>
+            <if test="brandCnName != null and brandCnName != ''">
+                brand_cn_name = #{brandCnName},
+            </if>
+            <if test="brandUniteCnName != null and brandUniteCnName != ''">
+                brand_unite_cn_name = #{brandUniteCnName},
+            </if>
+            <if test="skuCount != null and skuCount != ''">
+                sku_count = #{skuCount},
+            </if>
+            <if test="mainCategory != null and mainCategory != ''">
+                main_category = #{mainCategory},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from yt_icp.t_brand_analyse where id = #{id}
+    </delete>
+
+</mapper>

@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <bean class="com.hz.yk.my.spring.custom.CustomBeanDefinitionRegistryPostProcessor">
+    <bean class="com.hz.yk.spring.custom.CustomBeanDefinitionRegistryPostProcessor">
         <property name="packageName" value="com.hz.yk.spring.custom.service"/>
     </bean>
 

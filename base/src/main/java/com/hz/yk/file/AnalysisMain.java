@@ -17,7 +17,7 @@ public class AnalysisMain {
 
     public static void main(String[] args) throws IOException {
         final Map<String, AppLevel> result = readFile("/level/trade.txt", "/level/base.txt", "/level/mall.txt",
-                                                      "/level/seller.txt", "/level/data.txt");
+                                                      "/level/crm.txt", "/level/data.txt");
         System.out.println(result);
 
         Set<AppLevel> p1App = new HashSet<>();
@@ -35,19 +35,19 @@ public class AnalysisMain {
             }
 
         }
-        //System.out.println("P1级别应用：");
-        //for (AppLevel appLevel : p1App) {
-        //    System.out.println(appLevel.getApp() + "  " + appLevel.getGroup());
-        //}
-        //System.out.println("P2级别应用：");
-        //for (AppLevel appLevel : p2App) {
-        //    System.out.println(appLevel.getApp() + "  " + appLevel.getGroup());
-        //}
-
-        System.out.println("P3级别应用：");
-        for (AppLevel appLevel : p3App) {
+        System.out.println("P1级别应用：");
+        for (AppLevel appLevel : p1App) {
             System.out.println(appLevel.getApp() + "  " + appLevel.getGroup());
         }
+        System.out.println("P2级别应用：");
+        for (AppLevel appLevel : p2App) {
+            System.out.println(appLevel.getApp() + "  " + appLevel.getGroup());
+        }
+
+        //System.out.println("P3级别应用：");
+        //for (AppLevel appLevel : p3App) {
+        //    System.out.println(appLevel.getApp() + "  " + appLevel.getGroup());
+        //}
     }
 
     private static Map<String, AppLevel> readFile(String... filePaths) throws IOException {
@@ -63,8 +63,8 @@ public class AnalysisMain {
                 group = "数据线";
             } else if (filePath.contains("mall")) {
                 group = "商城线";
-            } else if (filePath.contains("seller")) {
-                group = "大商家";
+            } else if (filePath.contains("crm")) {
+                group = "CRM线";
             } else if (filePath.contains("trade")) {
                 group = "交易线";
             }
