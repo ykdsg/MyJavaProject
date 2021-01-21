@@ -36,6 +36,7 @@
         <module>salary</module>
         <module>effective</module>
         <module>rocketmq</module>
+        <module>ddd</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
