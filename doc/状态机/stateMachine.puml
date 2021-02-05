@@ -1,0 +1,20 @@
+@startuml
+Supplier_Manager_Processing --> Closed : Supplier_Agree
+Supplier_Manager_Processing --> Price_Manager_Processing : Apply_Over_P0_Sell
+Supplier_Manager_Processing --> Closed : P0_Changed
+Supplier_Manager_Processing --> Closed : Page_Price_changed
+Supplier_Manager_Processing --> Supplier_Manager_Processing : Normal_Update
+None --> Supplier_Processing : Create
+Supplier_Processing --> Supplier_Manager_Processing : Supplier_Reject
+Supplier_Processing --> Closed : Supplier_Agree
+Supplier_Processing --> Closed : P0_Changed
+Supplier_Processing --> Supplier_Manager_Processing : Supplier_Timeout
+Supplier_Processing --> Closed : Page_Price_changed
+Supplier_Processing --> Supplier_Processing : Normal_Update
+Price_Manager_Processing --> Supplier_Manager_Processing : Reject_Over_P0_Sell
+Price_Manager_Processing --> Closed : Supplier_Agree
+Price_Manager_Processing --> Closed : P0_Changed
+Price_Manager_Processing --> Closed : Agree_Over_P0_Sell
+Price_Manager_Processing --> Closed : Page_Price_changed
+Price_Manager_Processing --> Price_Manager_Processing : Normal_Update
+@enduml
