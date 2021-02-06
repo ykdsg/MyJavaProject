@@ -37,6 +37,13 @@
         <module>effective</module>
         <module>rocketmq</module>
         <module>ddd</module>
+        <module>bank-domain</module>
+        <module>ddd/bank-domain</module>
+        <module>ddd-bank-domain</module>
+        <module>ddd-bank-domain/bank-domian</module>
+        <module>ddd-bank-domain/bank-types</module>
+        <module>ddd-bank-domain/bank-persistence</module>
+        <module>ddd-bank-domain/bank-application</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
