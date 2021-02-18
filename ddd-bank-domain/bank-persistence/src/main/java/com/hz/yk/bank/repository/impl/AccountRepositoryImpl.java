@@ -10,11 +10,13 @@ import com.hz.yk.bank.types.AccountId;
 import com.hz.yk.bank.types.AccountNumber;
 import com.hz.yk.bank.types.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author wuzheng.yk
  * @date 2021/2/5
  */
+@Service
 public class AccountRepositoryImpl implements AccountRepository {
 
     @Autowired

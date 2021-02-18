@@ -2,11 +2,13 @@ package com.hz.yk.bank.persistence.impl;
 
 import com.hz.yk.bank.persistence.AccountDAO;
 import com.hz.yk.bank.persistence.AccountDO;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author wuzheng.yk
  * @date 2021/2/5
  */
+@Repository
 public class AccountMapperImpl implements AccountDAO {
 
     @Override
@@ -23,7 +25,7 @@ public class AccountMapperImpl implements AccountDAO {
 
     @Override
     public AccountDO selectByUserId(Long id) {
-        return null;
+        return new AccountDO();
     }
 
     @Override

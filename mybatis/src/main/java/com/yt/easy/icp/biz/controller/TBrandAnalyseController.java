@@ -11,8 +11,8 @@ import javax.annotation.Resource;
  * @author makejava
  * @since 2020-12-17 22:34:14
  */
-@RestController
-@RequestMapping("tBrandAnalyse")
+//@RestController
+//@RequestMapping("tBrandAnalyse")
 public class TBrandAnalyseController {
 
     /**
@@ -27,7 +27,7 @@ public class TBrandAnalyseController {
      * @param id 主键
      * @return 单条数据
      */
-    @GetMapping("selectOne")
+    //@GetMapping("selectOne")
     public TBrandAnalyse selectOne(Integer id) {
         return this.tBrandAnalyseService.queryById(id);
     }

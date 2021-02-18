@@ -8,11 +8,13 @@ import com.hz.yk.bank.types.AccountNumber;
 import com.hz.yk.bank.types.Currency;
 import com.hz.yk.bank.types.Money;
 import com.hz.yk.bank.types.UserId;
+import org.springframework.stereotype.Component;
 
 /**
  * @author wuzheng.yk
  * @date 2021/2/5
  */
+@Component
 public class AccountBuilderImpl implements AccountBuilder {
 
     @Override

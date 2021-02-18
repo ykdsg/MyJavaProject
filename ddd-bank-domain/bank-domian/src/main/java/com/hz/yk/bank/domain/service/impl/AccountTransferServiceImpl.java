@@ -5,11 +5,13 @@ import com.hz.yk.bank.domain.service.AccountTransferService;
 import com.hz.yk.bank.exception.DailyLimitExceededException;
 import com.hz.yk.bank.types.ExchangeRate;
 import com.hz.yk.bank.types.Money;
+import org.springframework.stereotype.Service;
 
 /**
  * @author wuzheng.yk
  * @date 2021/2/5
  */
+@Service
 public class AccountTransferServiceImpl implements AccountTransferService {
 
     @Override

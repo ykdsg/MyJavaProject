@@ -10,8 +10,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>bank-persistence</artifactId>
-    <!--    持久化模块，要依赖具体的ORM类库，比如MyBatis。-->
+    <artifactId>bank-external</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.hz.yk</groupId>

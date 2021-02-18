@@ -1,6 +1,6 @@
-package com.hz.yk.application.impl;
+package com.hz.yk.bank.application.impl;
 
-import com.hz.yk.application.TransferService;
+import com.hz.yk.bank.application.TransferService;
 import com.hz.yk.bank.common.Result;
 import com.hz.yk.bank.domain.entity.Account;
 import com.hz.yk.bank.domain.service.AccountTransferService;
@@ -15,6 +15,7 @@ import com.hz.yk.bank.types.ExchangeRate;
 import com.hz.yk.bank.types.Money;
 import com.hz.yk.bank.types.UserId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
@@ -22,6 +23,7 @@ import java.math.BigDecimal;
  * @author wuzheng.yk
  * @date 2021/2/5
  */
+@Service
 public class TransferServiceImpl implements TransferService {
 
     @Autowired

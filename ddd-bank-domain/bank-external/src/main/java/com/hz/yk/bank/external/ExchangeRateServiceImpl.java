@@ -4,6 +4,7 @@ import com.hz.yk.bank.external.impl.YahooForexService;
 import com.hz.yk.bank.types.Currency;
 import com.hz.yk.bank.types.ExchangeRate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
  * @author wuzheng.yk
  * @date 2021/2/5
  */
+@Service
 public class ExchangeRateServiceImpl implements ExchangeRateService {
 
     @Autowired
