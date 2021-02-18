@@ -15,7 +15,6 @@ public class Money {
     private Currency currency;
 
     public Money(BigDecimal amout, Currency currency) {
-
         if (amout == null) {
             throw new MoneyAmoutNotNullException("金额不能为空");
         }

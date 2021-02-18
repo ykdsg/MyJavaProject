@@ -8,6 +8,6 @@ import com.hz.yk.bank.domain.types.AuditMessage;
  */
 public interface AuditMessageProducer {
 
-    void send(AuditMessage message);
+    SendResult send(AuditMessage message);
 
 }
