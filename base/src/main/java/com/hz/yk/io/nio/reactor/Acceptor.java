@@ -23,22 +23,22 @@ import java.util.Set;
 /**
  * @author seaboat
  * @version 1.0
- *          <pre><b>email: </b>849586227@qq.com</pre>
- *          <pre><b>blog: </b>http://blog.csdn.net/wangyangzhizhou</pre>
- *          <p>This Acceptor provides a NIO mode to accept client sockets.</p>
+ * <pre><b>email: </b>849586227@qq.com</pre>
+ * <pre><b>blog: </b>http://blog.csdn.net/wangyangzhizhou</pre>
+ * <p>This Acceptor provides a NIO mode to accept client sockets.</p>
  * @date 2016-08-25
  */
 public final class Acceptor extends Thread {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Acceptor.class);
-    private final int                 port;
-    private final Selector            selector;
+    private final int port;
+    private final Selector selector;
     private final ServerSocketChannel serverChannel;
-    private       long                acceptCount;
+    private long acceptCount;
     private static final AcceptIdGenerator IdGenerator = new AcceptIdGenerator();
     private ReactorPool reactorPool;
-    private List<ConnectionEventHandler> eventHandlers     = new LinkedList<ConnectionEventHandler>();
-    private ConnectionFactory            connectionFactory = new DefaultConnectionFactory();
+    private List<ConnectionEventHandler> eventHandlers = new LinkedList<ConnectionEventHandler>();
+    private ConnectionFactory connectionFactory = new DefaultConnectionFactory();
 
     public Acceptor(ReactorPool reactorPool, String name, String bindIp, int port) throws IOException {
         super.setName(name);
@@ -61,7 +61,8 @@ public final class Acceptor extends Thread {
         return acceptCount;
     }
 
-    @Override public void run() {
+    @Override
+    public void run() {
         final Selector selector = this.selector;
         for (; ; ) {
             ++acceptCount;
@@ -100,8 +101,9 @@ public final class Acceptor extends Thread {
             channel.setOption(StandardSocketOptions.TCP_NODELAY, true);
             Reactor reactor = reactorPool.getNextReactor();
             Connection connection = connectionFactory.createConnection(channel, IdGenerator.getId(), reactor);
-            for (ConnectionEventHandler handler : eventHandlers)
+            for (ConnectionEventHandler handler : eventHandlers) {
                 connection.addEventHandler(handler);
+            }
             connection.processEvent(ConnectionEvents.ACCEPT);
             reactor.postRegister(connection);
         } catch (Throwable e) {
@@ -147,9 +149,9 @@ public final class Acceptor extends Thread {
      */
     private static class AcceptIdGenerator {
 
-        private static final long   MAX_VALUE = 0xffffffffL;
-        private              long   acceptId  = 0L;
-        private final        Object lock      = new Object();
+        private static final long MAX_VALUE = 0xffffffffL;
+        private long acceptId = 0L;
+        private final Object lock = new Object();
 
         private long getId() {
             synchronized (lock) {
