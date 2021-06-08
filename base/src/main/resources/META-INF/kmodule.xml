@@ -7,4 +7,13 @@
     <kbase name="demo-rule" packages="rules.demo1">
         <ksession name="demo1-rules"/>
     </kbase>
+
+
+    <kbase name="DrinkBeerKB" packages="rules.demo2">
+        <ksession name="drink-rules"/>
+    </kbase>
+
+    <kbase name="demo3" packages="rules.demo3">
+        <ksession name="demo3-rules"/>
+    </kbase>
 </kmodule>

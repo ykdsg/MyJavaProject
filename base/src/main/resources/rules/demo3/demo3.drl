@@ -1,0 +1,26 @@
+package rules.demo3;
+dialect  "mvel"
+import com.hz.yk.drools.demo3.Segment
+import com.hz.yk.drools.demo3.Hotel
+import com.hz.yk.drools.demo3.ReservedLounge
+import com.hz.yk.drools.demo3.Location
+
+rule "segment_hotel"
+    when
+        seg : Segment( startCity in ( "XMN", "PEK", "FOC", "HGH", "TSN", "JJN" ) , cabin == "Y" )
+        hotel : Hotel( ifCanPackageSale == true , location != null , location.city == seg.arriveCity )
+    then
+
+        System.out.println("【机+酒产品】"+seg.getProCode()+" + "+hotel.getProCode());
+
+end
+
+rule "segment_hotel_lounge"
+    dialect "java"
+    when
+        seg : Segment( startCity in ( "XMN", "PEK", "FOC", "HGH", "TSN", "JJN" ) , cabin == "Y" )
+        hotel : Hotel( ifCanPackageSale == true , location != null , location.city == seg.arriveCity )
+        lounge:ReservedLounge(selfSupport==true,location.city == seg.startCity)
+    then
+    System.out.println("【机+酒+休息室产品】"+seg.getProCode()+" + "+hotel.getProCode()+" + "+lounge.getProCode());
+end
