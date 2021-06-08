@@ -39,6 +39,8 @@
         <module>ddd</module>
         <module>ddd-bank-domain</module>
         <module>webmagic</module>
+        <module>zookeeper</module>
+        <module>groovy</module>
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
