@@ -1,7 +1,7 @@
-package com.hz.yk.yk.drools.fact
+package com.hz.yk.drools.fact
 
-import com.hz.yk.yk.drools.fact.OrderItem;
-import com.hz.yk.yk.drools.fact.OrderItem.PromotionType;
+import com.hz.yk.drools.fact.OrderItem;
+import com.hz.yk.drools.fact.OrderItem.PromotionType;
 
 rule 'Ordinary'
     when
