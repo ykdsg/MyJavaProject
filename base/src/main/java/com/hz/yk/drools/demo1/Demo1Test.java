@@ -19,6 +19,7 @@ public class Demo1Test {
     @Test
     public void test() {
         KieServices kieServices = KieServices.Factory.get();
+        //getKieClasspathContainer，会加载kmodule.xml 配置路径的文件
         container = kieServices.getKieClasspathContainer();
         statefulKieSession = container.newKieSession("demo1-rules");
         Person person = new Person();
