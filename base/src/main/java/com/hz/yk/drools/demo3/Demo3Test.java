@@ -10,6 +10,8 @@ import java.util.Date;
 import static com.hz.yk.drools.DroolsUtil.getSession;
 
 /**
+ * https://blog.csdn.net/liao0801_123/article/details/108787172
+ *
  * @author wuzheng.yk
  * @date 2021/6/8
  */
