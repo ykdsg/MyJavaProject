@@ -17,10 +17,6 @@
             <artifactId>canal.client</artifactId>
             <version>1.0.23</version>
         </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
