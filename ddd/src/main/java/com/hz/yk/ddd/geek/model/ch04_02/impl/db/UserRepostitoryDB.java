@@ -15,8 +15,4 @@ public class UserRepostitoryDB implements UserRepostitory {
         return user;
     }
 
-    private User setMySubscription(User user) {
-        user.setMySubscription(new MySubscriptionsDB(user));
-        return user;
-    }
 }
