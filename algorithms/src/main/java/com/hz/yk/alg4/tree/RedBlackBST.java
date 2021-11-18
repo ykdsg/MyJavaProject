@@ -19,6 +19,61 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         root.color = BLACK;
     }
 
+    public boolean isEmpty() {
+        return root == null;
+    }
+
+    public void deleteMin() {
+        if (!isRed(root.left) && !isRed(root.right)) {
+            root.color = RED;
+        }
+        root = deleteMin(root);
+        if (!isEmpty()) {
+            root.color = BLACK;
+        }
+    }
+
+    private Node deleteMin(Node node) {
+        if (node.left == null) {
+            return null;
+        }
+        if (!isRed(node.left) && !isRed(node.left.left)) {
+            node = moveRedLeft(node);
+        }
+        node.left = deleteMin(node.left);
+        return balance(node);
+    }
+
+    // restore red-black tree invariant
+    private Node balance(Node h) {
+        // assert (h != null);
+
+        if (isRed(h.right)) {
+            h = rotateLeft(h);
+        }
+        if (isRed(h.left) && isRed(h.left.left)) {
+            h = rotateRight(h);
+        }
+        if (isRed(h.left) && isRed(h.right)) {
+            flipColors(h);
+        }
+
+        h.size = size(h.left) + size(h.right) + 1;
+        return h;
+    }
+
+    //假设节点node 为红色，node.left和node.left.left都是黑色
+    //将node.left或者node.left的子节点之一变红
+    private Node moveRedLeft(Node node) {
+        flipColors(node);
+        if (isRed(node.right.left)) {
+            node.right = rotateRight(node.right);
+            node = rotateLeft(node);
+
+        }
+        return node;
+    }
+
     private Node put(Node node, Key key, Value value) {
         if (node == null) {
             return new Node(key, value, BLACK, 1);
@@ -34,6 +89,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (isRed(node.right) && !isRed(node.left)) {
             node = rotateLeft(node);
         }
+        //如果存在连续的2条左红链接，进行右旋之后就变成左右都是红链接。进入下一个if判断
         if (isRed(node.left) && node.left.left != null && isRed(node.left.left)) {
             node = rotateRight(node);
         }
