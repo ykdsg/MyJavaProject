@@ -1,4 +1,4 @@
-package com.hz.yk.ddd.geek.model.ch4_01;
+package com.hz.yk.ddd.geek.model.ch04_01;
 
 import com.google.common.collect.Lists;
 
