@@ -1,11 +1,6 @@
 package com.hz.yk;
 
-import com.google.common.collect.Lists;
-import com.hz.yk.schema.People;
 import org.junit.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author wuzheng.yk
@@ -14,9 +9,14 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<Object> list = Lists.newArrayList();
-        list.add(null);
-        System.out.println(list);
+        int count = 100;
+        for (int i = 0; i < 10; i++) {
+            System.out.println(--count);
+        }
+
+        //ArrayList<Object> list = Lists.newArrayList();
+        //list.add(null);
+        //System.out.println(list);
         //Integer test1 = new Integer(1);
         //Integer test2 = new Integer(1);
         ////false
@@ -47,8 +47,8 @@ public class Main {
         //List<String> filterList = strList.stream().filter(s -> s.equals("1")).collect(Collectors.toList());
         //System.out.println(filterList);
 
-        List<People> appMappingJSONs = com.alibaba.fastjson.JSONObject.parseArray("", People.class);
-        System.out.println(appMappingJSONs);
+        //List<People> appMappingJSONs = com.alibaba.fastjson.JSONObject.parseArray("", People.class);
+        //System.out.println(appMappingJSONs);
     }
 
     //方法没有声明throws
