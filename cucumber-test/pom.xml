@@ -85,7 +85,7 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <!--最新版的1.4.197 有问题，sql文件解析的时候报语法错误，WTF 害我耗了好长时间-->
-            <version>1.4.196</version>
+            <version>2.1.210</version>
             <scope>test</scope>
         </dependency>
         <dependency>
