@@ -12,7 +12,7 @@
         <module>base</module>
         <module>antlr</module>
         <module>netty</module>
-<!--        <module>jstormdemo</module>-->
+        <!--        <module>jstormdemo</module>-->
         <module>canal</module>
         <module>avro</module>
         <module>express</module>
@@ -40,6 +40,7 @@
         <module>ddd-bank-domain</module>
         <module>webmagic</module>
         <module>zookeeper</module>
+        <module>intellj</module>
         <!--        <module>groovy</module>-->
     </modules>
     <packaging>pom</packaging>

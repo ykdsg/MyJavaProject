@@ -31,4 +31,10 @@ public class Allocator {
         als.remove(param2);
     }
 
+    public static void main(String[] args) {
+        Allocator allocator = new Allocator();
+        allocator.apply("s1", "s2");
+        System.out.println("apply end ");
+    }
+
 }
