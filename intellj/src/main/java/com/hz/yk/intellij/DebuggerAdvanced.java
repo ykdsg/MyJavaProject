@@ -10,6 +10,12 @@ import java.util.Date;
 import java.util.List;
 
 
+
+
+
+
+
+
 /**
  * <h1>Debugger 高级技巧</h1>
  *
@@ -158,7 +164,7 @@ public class DebuggerAdvanced {
          * </ul>
          */
         @Test
-        public void ExceptionBreakPoint() {
+        public void exceptionBreakPoint() {
             try {
                 int i = 9, j = 0;
                 System.out.println(i / j);
