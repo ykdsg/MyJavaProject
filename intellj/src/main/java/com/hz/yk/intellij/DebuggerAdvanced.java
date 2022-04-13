@@ -92,8 +92,11 @@ public class DebuggerAdvanced {
          *   </ul>
          */
         public List<String> strList;
+        private int i, j;
 
         public void initList() {
+            i = 0;
+            j = 0;
             strList = new ArrayList<>();
         }
 
@@ -129,6 +132,9 @@ public class DebuggerAdvanced {
             SuperI superI = new Son();
             superI.method1();
 
+            SuperI super2 = new Son2();
+            super2.method1();
+
         }
 
         interface SuperI {
@@ -137,6 +143,16 @@ public class DebuggerAdvanced {
         }
 
         static class Son implements SuperI {
+
+            @Override
+            public void method1() {
+                System.out.println("son print ....");
+                System.out.println("end...");
+            }
+        }
+
+
+        static class Son2 implements SuperI {
 
             @Override
             public void method1() {
@@ -154,18 +170,24 @@ public class DebuggerAdvanced {
         /**
          * <h1>异常断点</h1>
          * <ul>
-         *     <li><font size=5>在BreakPoints 对话框中新建对应类型的异常断点</font> </li>
-         *     <li><font size=5>一般情况下需要配合filter 使用</font></li>
+         *     <li><font size=6>在BreakPoints 对话框中新建对应类型的异常断点</font> </li>
+         *     <li><font size=6>一般情况下需要配合filter 使用</font>
+         *      <ul>
+         *          <li><font size=5>catch class filter: 配置捕获异常的类，只有对应的类捕获了异常才会停住断点</li>
+         *          <li><font size=5>class filter: 异常发生的类，对应的类抛出异常就停住断点</li>
+         *      </ul>
+         *     </li>
+         *     
          * </ul>
          */
         @Test
         public void exceptionBreakPoint() {
-            //try {
+            try {
                 int i = 9, j = 0;
                 System.out.println(i / j);
-            //} catch (Exception e) {
-            //    System.err.println(e);
-            //}
+            } catch (Exception e) {
+                System.err.println(e);
+            }
         }
 
     }
@@ -210,7 +232,7 @@ public class DebuggerAdvanced {
 
         public void work() {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -296,6 +318,9 @@ public class DebuggerAdvanced {
     public static class BreakpointsStep {
 
         public static void main(String[] args) throws IOException {
+
+            //System.out.println(str());
+            
             while (true) {
                 int read = System.in.read();
                 System.out.println("Input:" + read);
@@ -303,6 +328,14 @@ public class DebuggerAdvanced {
                     process(read);
                 }
             }
+        }
+
+        private static String str() {
+
+            System.out.println("");
+            //****
+            //
+            return "2";
         }
 
         private static boolean filter(int read) {
