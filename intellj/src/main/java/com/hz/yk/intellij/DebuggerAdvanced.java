@@ -71,32 +71,26 @@ public class DebuggerAdvanced {
      * <h1>Breakpoints types</h1>
      * <ul>
      *     <li><font size=6>行断点-最常用的断点</font></li>
-     *     <li><font size=6>字段断点</font>
-     *      <ul>
-     *          <li><font size=5>监测字段读写-对于集合和对象来说需要更关注读</font></li>
-     *      </ul>
-     *     </li>
-     *     <li><font size=6>方法断点</font>
-     *      <ul>
-     *          <li><font size=5>监测方法进入、离开</font></li>
-     *          <li><font size=5>在interface上特别好用</font></li>
-     *      </ul>
-     *      </li>
+     *     <li><font size=6>字段断点</font></li>
+     *     <li><font size=6>方法断点</font></li>
      *     <li><font size=6>异常断点</font></li>
      * </ul>
      */
     int slide2;
-
-    
-    
-    
-    
-    
-    
-    
     
     public static class BreakPointsType {
 
+        
+        
+        
+        
+        
+        /**
+         * <h1>字段断点</h1>
+         *   <ul>
+         *       <li><font size=5>监测字段读写-对于集合和对象来说更关注读</font></li>
+         *   </ul>
+         */
         public List<String> strList;
 
         public void initList() {
@@ -106,10 +100,7 @@ public class DebuggerAdvanced {
         public void printList() {
             System.out.println("strList = " + strList);
         }
-
-        /**
-         * <h1>字段断点</h1>
-         */
+       
         @Test
         public void fieldBreakpoint() {
             BreakPointsType breakPointsType = new BreakPointsType();
@@ -128,6 +119,10 @@ public class DebuggerAdvanced {
 
         /**
          * <h1>方法断点</h1>
+         *  <ul>
+         *      <li><font size=5>监测方法进入、离开</font></li>
+         *      <li><font size=5>在interface上特别好用</font></li>
+         *  </ul>
          */
         @Test
         public void methodBreakPoint() {
@@ -165,12 +160,12 @@ public class DebuggerAdvanced {
          */
         @Test
         public void exceptionBreakPoint() {
-            try {
+            //try {
                 int i = 9, j = 0;
                 System.out.println(i / j);
-            } catch (Exception e) {
-                System.err.println(e);
-            }
+            //} catch (Exception e) {
+            //    System.err.println(e);
+            //}
         }
 
     }
@@ -226,8 +221,19 @@ public class DebuggerAdvanced {
 
     
     
+    
+    
+    
+    
+    
+    
     /**
-     * <h1>Suspend All VS  Thread<h1/>
+     * <h1>Suspend: All VS  Thread<h1/>
+     *  <ul>
+     *      <li><font size=5>All :stop all world</font></li>
+     *      <li><font size=5>Thread: stop breakpoint threads</font></li>
+     *  </ul>
+     * 
      * <h3>* 在多线程调试的时候，可以在run config 界面中设置Repet为"until Failure"</h2>
      */
     public static class ConcurrencyTest {
@@ -249,16 +255,25 @@ public class DebuggerAdvanced {
         }
 
         private static void addIfAbsent(List<Integer> list, int x) {
-            synchronized (list) {
+            //synchronized (list) {
                 if (!list.contains(x)) {
                     list.add(x);
                 }
-            }
+            //}
 
         }
 
     }
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * <h1>Breakpoints 运行时技巧</h1>
      * <ul>
