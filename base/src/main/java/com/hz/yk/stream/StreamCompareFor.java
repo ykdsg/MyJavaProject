@@ -55,13 +55,13 @@ public class StreamCompareFor {
 
     @Benchmark
     public List<Long> testStream() {
-        List<Long> distList = tasks.stream().filter(Objects::nonNull).distinct().collect(Collectors.toList());
+        List<Long> distList = tasks.stream().filter(Objects::nonNull).collect(Collectors.toList());
         return distList;
     }
 
     @Benchmark
     public List<Long> testStream2() {
-        List<Long> distList = tasks.parallelStream().filter(id -> id != null).distinct().collect(Collectors.toList());
+        List<Long> distList = tasks.parallelStream().filter(id -> id != null).collect(Collectors.toList());
         return distList;
     }
 
