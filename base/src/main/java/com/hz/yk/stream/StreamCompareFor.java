@@ -69,7 +69,7 @@ public class StreamCompareFor {
     public List<Long> testFor() {
         List<Long> distinctIds= Lists.newArrayList();
         for (Long  id : tasks) {
-            if(!distinctIds.contains(id)){
+            if(id != null){
                 distinctIds.add(id);
             }
         }
