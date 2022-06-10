@@ -26,7 +26,8 @@ public class TestActiveObjectEngine {
     }
 
     private boolean secondCommandExecuted = false;
-
+    
+    @Test
     public void testTwoCommands() throws Exception {
         ActiveObjectEngine e = new ActiveObjectEngine();
         e.addCommand(new Command() {
