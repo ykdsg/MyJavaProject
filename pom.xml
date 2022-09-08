@@ -51,7 +51,7 @@
         <java.encoding>UTF-8</java.encoding>
         <!--        <springframework.version>5.0.7.RELEASE</springframework.version>-->
         <springframework.version>5.3.22</springframework.version>
-        <drools.version>6.3.0.Final</drools.version>
+        <drools.version>7.60.0.Final</drools.version>
         <lucence.version>7.2.0</lucence.version>
         <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
     </properties>
