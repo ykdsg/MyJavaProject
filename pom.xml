@@ -40,7 +40,7 @@
         <module>ddd-bank-domain</module>
         <module>webmagic</module>
         <module>zookeeper</module>
-        <module>intellj</module>
+        <module>intellij</module>
         <!--        <module>groovy</module>-->
     </modules>
     <packaging>pom</packaging>
@@ -50,7 +50,7 @@
         <java.version>1.8</java.version>
         <java.encoding>UTF-8</java.encoding>
         <!--        <springframework.version>5.0.7.RELEASE</springframework.version>-->
-        <springframework.version>4.1.9.RELEASE</springframework.version>
+        <springframework.version>5.3.22</springframework.version>
         <drools.version>6.3.0.Final</drools.version>
         <lucence.version>7.2.0</lucence.version>
         <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
@@ -80,22 +80,31 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
+        
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
         </dependency>
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.logback-extensions</groupId>
-            <artifactId>logback-ext-spring</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>jcl-over-slf4j</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>ch.qos.logback</groupId>-->
+<!--            <artifactId>logback-core</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>ch.qos.logback</groupId>-->
+<!--            <artifactId>logback-classic</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.logback-extensions</groupId>-->
+<!--            <artifactId>logback-ext-spring</artifactId>-->
+<!--        </dependency>-->
     </dependencies>
 
 
@@ -178,11 +187,11 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>3.11</version>
             </dependency>
-            <dependency>
-                <groupId>org.slf4j</groupId>
-                <artifactId>log4j-over-slf4j</artifactId>
-                <version>1.7.13</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.slf4j</groupId>-->
+<!--                <artifactId>log4j-over-slf4j</artifactId>-->
+<!--                <version>1.7.13</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>io.github.benas</groupId>
                 <artifactId>jpopulator</artifactId>
@@ -529,8 +538,20 @@
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-api</artifactId>
-                <version>1.7.13</version>
+                <version>1.7.21</version>
             </dependency>
+            <!-- 模拟log4j-->
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-api</artifactId>
+                <version>2.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-core</artifactId>
+                <version>2.9.1</version>
+            </dependency>
+<!--            
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
@@ -551,6 +572,7 @@
                 <artifactId>logback-ext-spring</artifactId>
                 <version>0.1.2</version>
             </dependency>
+            -->
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-core</artifactId>
@@ -670,21 +692,21 @@
                 <artifactId>bottom</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
-            <dependency>
-                <groupId>com.hz.yk</groupId>
-                <artifactId>client</artifactId>
-                <version>1.0-SNAPSHOT</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.hz.yk</groupId>-->
+<!--                <artifactId>client</artifactId>-->
+<!--                <version>1.0-SNAPSHOT</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>com.google.inject</groupId>
                 <artifactId>guice</artifactId>
                 <version>4.1.0</version>
             </dependency>
-            <dependency>
-                <groupId>com.alibaba.trade.proxy</groupId>
-                <artifactId>method-invoke-proxy</artifactId>
-                <version>1.0.2-SNAPSHOT</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>com.alibaba.trade.proxy</groupId>-->
+<!--                <artifactId>method-invoke-proxy</artifactId>-->
+<!--                <version>1.0.2-SNAPSHOT</version>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-core</artifactId>
