@@ -19,5 +19,5 @@ http://code.alibabatech.com/schema/dubbo/dubbo.xsd
     <dubbo:provider protocol="dubbo" delay="-1" executes="500" timeout="30000"
                     group="dev-wz" retries="0"/>
 
-    <dubbo:service interface="com.hz.yk.dubbo.provider.api.service.LogService" ref="logService"/>
+    <dubbo:service interface="com.hz.yk.dubbo.demo2.provider.api.service.LogService" ref="logService"/>
 </beans>

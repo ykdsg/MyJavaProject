@@ -1,0 +1,3 @@
+dubbo=com.hz.yk.dubbo.demo2.adaptive.DubboAdaptiveExt2
+cloud=com.hz.yk.dubbo.demo2.adaptive.SpringCloudAdaptiveExt2
+thrift=com.hz.yk.dubbo.demo2.adaptive.ThriftAdaptiveExt2

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://code.alibabatech.com/schema/dubbo
+http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+">
+
+    <!-- dubbo配置_服务方应用名，不能带"." -->
+    <dubbo:application name="wz-test-consumer" owner="wuzheng"/>
+    <!-- dubbo配置_注册中心 -->
+    <dubbo:registry address="zookeeper://test-zk.yangtuojia.com:2184?backup=test-zk.yangtuojia.com:2185"
+                    timeout="20000"/>
+    <!-- dubbo配置_协议 -->
+    <dubbo:protocol name="dubbo" charset="UTF-8" serialization="hessian2" port="28889" threads="100"/>
+    <dubbo:consumer check="false" timeout="6000" retries="0"/>
+
+    <dubbo:reference id="tradeSupplyQueryApi" interface="com.hz.yk.dubbo.demo2.provider.api.service.LogService"
+                     group="dev-wz" url="dubbo://localhost:20880"/>
+
+    <dubbo:reference id="brandQueryFacade" interface="com.yt.icp.facade.BrandQueryFacade"
+                     group="dev_wz"/>
+</beans>

@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="ProviderMain" type="Application" factoryName="Application" nameIsGenerated="true">
+    <option name="MAIN_CLASS_NAME" value="com.hz.yk.dubbo.provider.api.ProviderMain" />
+    <module name="dubbo" />
+    <extension name="GrepConsole" selectedProfileId="1649988709232" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="com.hz.yk.dubbo.provider.api.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <extension name="recording" autostart="false" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
