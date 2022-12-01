@@ -21,7 +21,7 @@
         <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>kubernetes-client</artifactId>
-            <version>5.0.0</version>
+            <version>5.0.3</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
