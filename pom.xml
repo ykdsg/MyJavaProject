@@ -42,6 +42,7 @@
         <module>zookeeper</module>
         <module>intellij</module>
         <module>dubbo-demo2</module>
+        <module>k8s</module>
         <!--        <module>groovy</module>-->
     </modules>
     <packaging>pom</packaging>

@@ -20,7 +20,7 @@ public class ConsumerMain {
         LogService logService = context.getBean(LogService.class);
         LogReq logReq = new LogReq(System.currentTimeMillis(), 1, "domain-dddd", "content-cccc");
         Long aLong = logService.create(logReq);
-        System.out.println("constumer result=" + aLong);
+        System.out.println("------------------------constumer result=" + aLong);
 
         //try {
         //    Long aLong1 = logService.create(null);
