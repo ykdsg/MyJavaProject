@@ -15,7 +15,6 @@
         <!--        <module>jstormdemo</module>-->
         <module>canal</module>
         <module>avro</module>
-        <module>express</module>
         <module>asm5</module>
         <module>akka</module>
         <module>junit</module>
@@ -83,30 +82,30 @@
             <artifactId>slf4j-api</artifactId>
         </dependency>
         
+<!--        <dependency>-->
+<!--            <groupId>org.apache.logging.log4j</groupId>-->
+<!--            <artifactId>log4j-api</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.logging.log4j</groupId>-->
+<!--            <artifactId>log4j-core</artifactId>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.slf4j</groupId>-->
-<!--            <artifactId>jcl-over-slf4j</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>ch.qos.logback</groupId>-->
-<!--            <artifactId>logback-core</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>ch.qos.logback</groupId>-->
-<!--            <artifactId>logback-classic</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.logback-extensions</groupId>-->
-<!--            <artifactId>logback-ext-spring</artifactId>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.logback-extensions</groupId>
+            <artifactId>logback-ext-spring</artifactId>
+        </dependency>
     </dependencies>
 
 
@@ -542,7 +541,7 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.21</version>
             </dependency>
-            <!-- 模拟log4j-->
+            <!-- 模拟log4j
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-api</artifactId>
@@ -553,7 +552,8 @@
                 <artifactId>log4j-core</artifactId>
                 <version>2.9.1</version>
             </dependency>
-<!--            
+            -->
+<!--          -->  
             <dependency>
                 <groupId>org.slf4j</groupId>
                 <artifactId>jcl-over-slf4j</artifactId>
@@ -574,7 +574,7 @@
                 <artifactId>logback-ext-spring</artifactId>
                 <version>0.1.2</version>
             </dependency>
-            -->
+            
             <dependency>
                 <groupId>org.apache.camel</groupId>
                 <artifactId>camel-core</artifactId>

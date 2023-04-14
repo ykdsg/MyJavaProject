@@ -36,7 +36,7 @@ public class LeaderElectionExamples {
                 return;
             }
             kc.leaderElector().withConfig(
-                    new LeaderElectionConfigBuilder().withName("Sample Leader Election configuration")
+                    new LeaderElectionConfigBuilder().withName("k8s-api-proxy Leader Election configuration")
                             .withLeaseDuration(Duration.ofSeconds(15L))
                             .withLock(new LeaseLock(NAMESPACE, NAME, lockIdentity))
                             .withRenewDeadline(Duration.ofSeconds(10L)).withRetryPeriod(Duration.ofSeconds(2L))

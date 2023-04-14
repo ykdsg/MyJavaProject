@@ -1,0 +1,9 @@
+#!/bin/bash
+
+print_sum() {
+  local -i n=$1
+  local -i sum=$((n * (n + 1) / 2))
+  echo "$sum"
+}
+
+print_sum 5
