@@ -1,0 +1,26 @@
+@startuml
+title 向量化处理器
+
+actor Client
+participant "处理器" as Processor
+database "DB" as DB
+boundary "LLM-Server" as server
+
+activate Client
+
+Client -> Processor: List<knowledge_id>
+activate Processor
+Processor -> DB: 根据id 查询满足条件的记录
+Processor -> Processor: 将记录分为insertList 和deleteList 两部分
+
+loop  处理insert & delete 记录
+    Processor -> DB: 将记录更新为"处理中"
+    Processor -> server: 调用 insert/delete  API 
+    server --> Processor: Return  result
+    Processor -> DB: 更新相应记录状态或者错误信息
+end
+
+Processor -> Client: 返回结果
+deactivate Processor
+deactivate Client
+@enduml

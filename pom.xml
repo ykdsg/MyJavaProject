@@ -12,18 +12,15 @@
         <module>base</module>
         <module>antlr</module>
         <module>netty</module>
-        <!--        <module>jstormdemo</module>-->
         <module>canal</module>
         <module>avro</module>
         <module>asm5</module>
         <module>akka</module>
         <module>junit</module>
         <module>java8InAction</module>
-        <module>spring-mvc</module>
         <module>dubbo</module>
         <module>algorithms</module>
         <module>springboot-demo</module>
-        <module>gatling</module>
         <module>leetcode</module>
         <module>h2db</module>
         <module>cucumber-test</module>
@@ -36,13 +33,10 @@
         <module>effective</module>
         <module>rocketmq</module>
         <module>ddd</module>
-        <module>ddd-bank-domain</module>
         <module>webmagic</module>
         <module>zookeeper</module>
         <module>intellij</module>
-        <module>dubbo-demo2</module>
         <module>k8s</module>
-        <!--        <module>groovy</module>-->
     </modules>
     <packaging>pom</packaging>
     <name>MyjavaExperiment</name>
@@ -55,6 +49,8 @@
         <drools.version>6.3.0.Final</drools.version>
         <lucence.version>7.2.0</lucence.version>
         <spring.boot.version>2.0.3.RELEASE</spring.boot.version>
+        <spock.version>2.0-M4-groovy-3.0</spock.version>
+        <groovy.version>3.0.7</groovy.version>
     </properties>
 
     <dependencies>
@@ -655,8 +651,12 @@
             <dependency>
                 <groupId>org.spockframework</groupId>
                 <artifactId>spock-core</artifactId>
-                <version>1.1-groovy-2.4</version>
-                <scope>test</scope>
+                <version>${spock.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.spockframework</groupId>
+                <artifactId>spock-spring</artifactId>
+                <version>${spock.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.objenesis</groupId>
@@ -667,7 +667,8 @@
             <dependency>
                 <groupId>org.codehaus.groovy</groupId>
                 <artifactId>groovy-all</artifactId>
-                <version>2.4.10</version>
+                <version>${groovy.version}</version>
+                <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
@@ -739,6 +740,19 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.codehaus.gmavenplus</groupId>
+                <artifactId>gmavenplus-plugin</artifactId>
+                <version>2.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>compileTests</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>

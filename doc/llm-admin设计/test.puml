@@ -1,0 +1,7 @@
+@startuml
+database "Database Transaction" {
+    rectangle "Step 1: Begin Transaction"
+    rectangle "Step 2: Execute Queries"
+    rectangle "Step 3: Commit Transaction"
+}
+@enduml

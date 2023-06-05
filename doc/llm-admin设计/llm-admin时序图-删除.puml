@@ -1,0 +1,26 @@
+@startuml
+title 批量导入
+
+actor client
+participant "llm-admin" as admin
+database "DB" as DB
+control 处理器 as process
+
+activate client
+
+client -> admin: 需要删除的id列表
+admin  -> DB: 查询对应的记录
+DB --> admin: 返回记录
+alt 返回记录为空
+    admin -> client: 提示错误
+end
+admin -> admin: 校验数据是否满足删除条件
+alt 校验失败
+    admin -> client: 返回校验失败信息
+end
+admin -> DB: 软删并标记vector_status为init
+admin -> process: 调用处理器
+process -->admin: 返回处理结果
+admin -> client: 返回结果信息
+deactivate client
+@enduml

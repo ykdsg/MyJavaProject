@@ -1,0 +1,13 @@
+@startuml
+left to right direction
+
+actor User
+rectangle "知识管理列表" as KMSystem {
+  User --> (列表)
+  User --> (导入模板下载)
+  User --> (知识导入)
+  User --> (知识删除)
+  User --> (查看详情)
+  User --> (搜索)
+}
+@enduml

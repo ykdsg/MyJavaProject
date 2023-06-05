@@ -1,0 +1,34 @@
+@startuml
+
+node "HOP" {
+    [hop-api] as hop
+}
+
+
+
+node "LLM-Admin" {
+    [admin-api] as admin
+}
+
+database "数据库" {
+    [llm-admin] as adminDB
+    [openSearch向量版] as vectorDB 
+}
+
+node "三方服务" {
+    [LLM-Server-api] as server
+}
+
+node "外部服务" {
+    [openAI-api] as oepnAI
+}
+
+hop --> admin : dubbo
+admin --> adminDB : jdbc
+admin --> server : dubbo
+server --> oepnAI : http
+server --> vectorDB 
+
+
+
+@enduml

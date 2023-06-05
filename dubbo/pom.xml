@@ -6,13 +6,19 @@
         <artifactId>MyjavaExperiment</artifactId>
         <groupId>com.hz.yk</groupId>
         <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
+    <packaging>pom</packaging>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dubbo</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
+    <modules>
+        <module>dubbo-demo2</module>
+        <module>dubbo-demo</module>
+    </modules>
     <dependencies>
         <dependency>
             <groupId>com.yangt.asd</groupId>

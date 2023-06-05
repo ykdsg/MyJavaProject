@@ -1,0 +1,22 @@
+@startuml
+title 向量化定时任务
+
+actor Toc
+participant "llm-admin" as admin
+database "DB" as DB
+control 处理器 as Processor
+
+
+Toc -> admin: 定时消息触发-遗留init处理
+admin -> Toc: 返回成功
+loop
+    admin  -> DB: 搜索vector_status为init，\n 且edit_time 距离当前时间大于阈值的记录
+    admin -> Processor: 调用处理器
+end
+==  ==
+Toc -> admin: 定时消息触发-超时记录处理
+admin -> Toc: 返回成功
+admin  -> DB: 搜索vector_status为ing，\n 且edit_time 距离当前时间大于阈值的记录
+admin -> Processor: 调用处理器
+
+@enduml

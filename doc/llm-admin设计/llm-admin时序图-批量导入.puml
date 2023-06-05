@@ -1,0 +1,22 @@
+@startuml
+title 批量导入
+
+actor Client
+participant "llm-admin" as admin
+database "DB" as DB
+control 处理器 as Processor
+
+activate Client
+
+Client -> admin: excel文件
+admin  -> admin: 解析excel文件到对应模型
+admin -> admin: 模型数据校验
+alt 校验失败
+    admin -> Client: 返回校验失败信息
+end
+admin -> DB: 保存数据到DB，其中vector_status=init
+admin -> Processor: 调用处理器
+Processor -->admin: 返回处理结果
+admin -> Client: 返回结果信息
+deactivate Client
+@enduml

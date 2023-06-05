@@ -1,0 +1,24 @@
+@startuml
+title 列表查询
+
+actor Client
+participant "llm-admin" as admin
+database "DB" as DB
+boundary "LLM-Server" as server
+
+activate Client
+
+Client -> admin: form 表单
+admin  -> admin: form 数据校验
+alt 校验失败
+    admin -> Client: 返回校验失败信息
+end
+admin  -> admin: 组装查询条件
+admin -> server: 查询向量数据库
+server -->admin: 返回查询结果
+admin -> DB: 根据返回记录id 查询DB
+DB --> admin: 返回DB查询记录
+admin -> Client: 返回封装结果
+
+deactivate Client
+@enduml
