@@ -7,14 +7,14 @@ import java.util.function.Function;
  * @author wuzheng.yk
  * @date 2023/6/5
  */
-public class IntOptionParser implements OptionParser {
-     Function<String, Object> valuePraser ;
-    public IntOptionParser(Function<String, Object> valuePraser) {
+public class SingleValueOptionParser<T> implements OptionParser {
+     Function<String, T> valuePraser ;
+    public SingleValueOptionParser(Function<String, T> valuePraser) {
         this.valuePraser = valuePraser;
     }
 
     @Override
-    public Object parse(List<String> arguments, Option option) {
+    public T parse(List<String> arguments, Option option) {
         int index = arguments.indexOf("-" + option.value());
         final String value = arguments.get(index + 1);
         return valuePraser.apply(value);

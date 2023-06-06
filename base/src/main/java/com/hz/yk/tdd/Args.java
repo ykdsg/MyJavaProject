@@ -40,8 +40,8 @@ public class Args {
     private static Map<Class<?>, OptionParser> PARSERS = Maps.newHashMap();
     static {
         PARSERS.put(boolean.class, new BooleanOptionParser());
-        PARSERS.put(int.class, new IntOptionParser(Integer::parseInt));
-        PARSERS.put(String.class, new IntOptionParser(String::valueOf));
+        PARSERS.put(int.class, new SingleValueOptionParser<>(Integer::parseInt));
+        PARSERS.put(String.class, new SingleValueOptionParser<>(String::valueOf));
     }
 
 }
