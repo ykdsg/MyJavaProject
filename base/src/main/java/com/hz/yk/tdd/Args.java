@@ -23,6 +23,8 @@ public class Args {
                     .toArray();
 
             return (T) constructor.newInstance(values);
+        } catch (IllegalOptionException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -31,6 +33,9 @@ public class Args {
     @Nullable
     private static Object parseOption(Parameter parameter, List<String> arguments) {
         final Option option = parameter.getAnnotation(Option.class);
+        if (option == null) {
+            throw new IllegalOptionException(parameter.getName());
+        }
         final Class<?> type = parameter.getType();
 
         OptionParser parser = PARSERS.get(type);

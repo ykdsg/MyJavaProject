@@ -5,6 +5,7 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author wuzheng.yk
@@ -97,6 +98,40 @@ public class ArgsTest {
         assertEquals("/usr/logs", options.getDirectory());
     }
 
+    @Test
+    public void should_throw_illegal_option_exception_if_option_not_present() {
+        final IllegalOptionException ex = assertThrows(IllegalOptionException.class, () -> {
+            Args.parse(OptionsWithoutAnnotition.class, "-l", "-p", "8080", "-d", "/usr/logs");
+        });
+        assertEquals("port",ex.getParameter());
+    }
+
+    private  static class OptionsWithoutAnnotition {
+        private boolean logging;
+        private int port;
+        private String directory;
+
+        public OptionsWithoutAnnotition(@Option("l") boolean logging,  int port, @Option("d") String directory) {
+            this.logging = logging;
+            this.port = port;
+            this.directory = directory;
+        }
+
+        public boolean getLogging() {
+            return logging;
+        }
+
+        public int getPort() {
+            return port;
+        }
+
+        public String getDirectory() {
+            return directory;
+        }
+        
+    }
+    
+
     private static class MultiOptions {
 
         private boolean logging;
@@ -121,23 +156,6 @@ public class ArgsTest {
             return directory;
         }
     }
-
-    //@Test
-    //void should_parse_multiple_option_2() {
-    //    ListOptions options = Args.parse(ListOptions.class, "-g", "this", "is", "a", "list", "-d", "1", "2", "-3", "5");
-    //
-    //    assertArrayEquals(new String[]{"this", "is", "a", "list"}, options.getGroup());
-    //    assertArrayEquals(new Integer[]{1, 2, -3, 5}, options.getDecimals());
-    //}
-    //
-    //
-    //@Test
-    //void should_throw_illegal_option_exception_when_annotation_not_present() {
-    //    IllegalOptionException exception = assertThrows(IllegalOptionException.class,
-    //            () -> Args.parse(OptionWithoutAnnotation.class, "-l", "-p", "8080", "-d", "/usr/logs"));
-    //    // the parameter arg is arg1 rather than port
-    //    assertEquals("arg1", exception.getParameter());
-    //}
 
     private static class OptionWithoutAnnotation {
 
