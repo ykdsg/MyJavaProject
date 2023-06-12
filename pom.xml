@@ -490,6 +490,12 @@
             <dependency>
                 <groupId>org.qi4j.core</groupId>
                 <artifactId>org.qi4j.core.bootstrap</artifactId>
+                <exclusions>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                </exclusions>
                 <version>2.1</version>
             </dependency>
             <dependency>
