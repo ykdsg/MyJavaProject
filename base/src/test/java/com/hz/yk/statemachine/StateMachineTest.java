@@ -2,8 +2,9 @@ package com.hz.yk.statemachine;
 
 import com.hz.yk.statemachine.builder.StateMachineBuilder;
 import com.hz.yk.statemachine.builder.StateMachineBuilderFactory;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * @author wuzheng.yk
@@ -42,7 +43,7 @@ public class StateMachineTest {
 
         StateMachine<States, Events, Context> stateMachine = builder.build(MACHINE_ID);
         States target = stateMachine.fireEvent(States.STATE1, Events.EVENT1, new Context());
-        Assert.assertEquals(States.STATE2, target);
+       assertEquals(States.STATE2, target);
     }
 
     private Condition<Context> checkCondition() {

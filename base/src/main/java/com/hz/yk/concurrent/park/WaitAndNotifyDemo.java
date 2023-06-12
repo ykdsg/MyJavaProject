@@ -1,6 +1,6 @@
 package com.hz.yk.concurrent.park;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * 实现两线程同步,使用wait/notify实现　

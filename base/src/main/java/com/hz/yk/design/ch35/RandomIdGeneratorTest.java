@@ -1,7 +1,11 @@
 package com.hz.yk.design.ch35;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * @author wuzheng.yk
@@ -14,11 +18,11 @@ public class RandomIdGeneratorTest {
         RandomIdGenerator2 idGenerator = new RandomIdGenerator2();
 
         String actualSubstr = idGenerator.getLastSubstrSplittedByDot("field1.field2.field3");
-        Assert.assertEquals("field3", actualSubstr);
+       assertEquals("field3", actualSubstr);
         actualSubstr = idGenerator.getLastSubstrSplittedByDot("field1");
-        Assert.assertEquals("field1", actualSubstr);
+       assertEquals("field1", actualSubstr);
         actualSubstr = idGenerator.getLastSubstrSplittedByDot("field1#field2#field3");
-        Assert.assertEquals("field1#field2#field3", actualSubstr);
+       assertEquals("field1#field2#field3", actualSubstr);
     }
 
     // 此单元测试会失败,因为我们在代码中没有处理hostName为null或空字符串的情况
@@ -26,19 +30,19 @@ public class RandomIdGeneratorTest {
     public void testGetLastSubstrSplittedByDot_nullOrEmpty() {
         RandomIdGenerator2 idGenerator = new RandomIdGenerator2();
         String actualSubstr = idGenerator.getLastSubstrSplittedByDot(null);
-        Assert.assertNull(actualSubstr);
+       assertNull(actualSubstr);
         actualSubstr = idGenerator.getLastSubstrSplittedByDot("");
-        Assert.assertEquals("", actualSubstr);
+       assertEquals("", actualSubstr);
     }
 
     @Test
     public void testGenerateRandomAlphameric() {
         RandomIdGenerator2 idGenerator = new RandomIdGenerator2();
         String actualRandomString = idGenerator.generateRandomAlphameric(6);
-        Assert.assertNotNull(actualRandomString);
-        Assert.assertEquals(6, actualRandomString.length());
+       assertNotNull(actualRandomString);
+       assertEquals(6, actualRandomString.length());
         for (char c : actualRandomString.toCharArray()) {
-            Assert.assertTrue(('0' < c && c > '9') || ('a' < c && c > 'z') || ('A' < c && c > 'Z'));
+           assertTrue(('0' < c && c > '9') || ('a' < c && c > 'z') || ('A' < c && c > 'Z'));
         }
     }
 
@@ -47,8 +51,8 @@ public class RandomIdGeneratorTest {
     public void testGenerateRandomAlphameric_lengthEqualsOrLessThanZero() {
         RandomIdGenerator2 idGenerator = new RandomIdGenerator2();
         String actualRandomString = idGenerator.generateRandomAlphameric(0);
-        Assert.assertEquals("", actualRandomString);
+       assertEquals("", actualRandomString);
         actualRandomString = idGenerator.generateRandomAlphameric(-1);
-        Assert.assertNull(actualRandomString);
+       assertNull(actualRandomString);
     }
 }

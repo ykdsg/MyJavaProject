@@ -1,6 +1,6 @@
 package com.hz.yk.drools.demo3;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.kie.api.runtime.KieSession;
 
 import java.text.ParseException;

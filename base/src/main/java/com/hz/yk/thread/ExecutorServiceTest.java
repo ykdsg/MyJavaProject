@@ -1,7 +1,7 @@
 package com.hz.yk.thread;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;

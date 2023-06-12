@@ -1,7 +1,7 @@
 package com.hz.yk.thread.pool;
 
 import org.apache.commons.lang3.concurrent.BasicThreadFactory;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.ThreadFactory;

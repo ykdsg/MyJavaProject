@@ -2,7 +2,7 @@ package com.hz.yk.reactor;
 
 import com.hz.yk.reactor.core.publisher.MyEventListener;
 import com.hz.yk.reactor.core.publisher.MyEventSource;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 
 import java.util.Date;

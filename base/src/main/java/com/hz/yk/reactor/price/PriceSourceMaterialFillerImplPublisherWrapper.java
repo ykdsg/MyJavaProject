@@ -1,7 +1,5 @@
 package com.hz.yk.reactor.price;
 
-import com.hz.yk.thread.groboutils.ThreadJigglePoint;
-import com.yangt.tracker.util.CallableWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
@@ -93,12 +91,15 @@ public class PriceSourceMaterialFillerImplPublisherWrapper {
         //    return true;
         //}).subscribeOn(executor);
 
-        return Mono.fromCallable(CallableWrapper.of(() -> {
-            //log.info("--------" + msg + " start");
-            ThreadJigglePoint.jiggle();
-            runnable.run();
-            //log.info("--------" + msg + " end");
-            return true;
-        })).subscribeOn(executor);
+        //return Mono.fromCallable(CallableWrapper.of(() -> {
+        //    //log.info("--------" + msg + " start");
+        //    ThreadJigglePoint.jiggle();
+        //    runnable.run();
+        //    //log.info("--------" + msg + " end");
+        //    return true;
+        //})).subscribeOn(executor);
+        // 因为依赖的groboutils 只能在junit4 下使用，升级到junit5就用不了
+        return null;
+                
     }
 }

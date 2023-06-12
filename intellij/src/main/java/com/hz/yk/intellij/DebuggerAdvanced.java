@@ -1,7 +1,6 @@
 package com.hz.yk.intellij;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,13 +8,8 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
-
-
-
-
- 
 /**
  * <h1>Debugger 高级技巧</h1>
  *
@@ -263,7 +257,7 @@ public class DebuggerAdvanced {
         @Test
         public void test() throws InterruptedException {
             final List<Integer> list = work();
-            Assert.assertEquals(1, list.size());
+           assertEquals(1, list.size());
         }
 
         static List<Integer> work() throws InterruptedException {

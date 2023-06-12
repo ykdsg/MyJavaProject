@@ -1,6 +1,6 @@
 package com.hz.yk.io.nio.reactor;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.net.Socket;
 

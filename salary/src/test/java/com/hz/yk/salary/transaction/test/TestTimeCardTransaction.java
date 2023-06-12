@@ -7,13 +7,13 @@ import com.hz.yk.salary.entity.Employee;
 import com.hz.yk.salary.timecard.TimeCard;
 import com.hz.yk.salary.transaction.impl.AddHourlyEmployee;
 import com.hz.yk.salary.transaction.impl.TimeCardTransaction;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestTimeCardTransaction {
 
@@ -30,7 +30,7 @@ public class TestTimeCardTransaction {
 		Employee e = PayrollDatabase.getEmployee(empid);
 		assert (e != null);
 		PaymentClassification pc = e.getClassification();
-		Assert.assertTrue(pc instanceof HourlyClassification);
+		assertTrue(pc instanceof HourlyClassification);
 		HourlyClassification hc = (HourlyClassification) pc;
 		assertNotNull(hc);
 

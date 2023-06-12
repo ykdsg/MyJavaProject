@@ -3,14 +3,17 @@ package com.yt.icp.biz.mapper;
 import com.google.common.collect.Lists;
 import com.yt.icp.biz.domain.entity.Brand;
 import io.github.benas.jpopulator.impl.PopulatorBuilder;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * .
@@ -18,7 +21,7 @@ import java.util.List;
  * @author wuzheng.yk
  * @since 16/6/21
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(locations = { "classpath:spring-context.xml" })
 public class BrandMapperTest {
 
@@ -39,8 +42,8 @@ public class BrandMapperTest {
     @Test
     public void testInsert() {
         int result = brandMapper.insert(brand);
-        Assert.assertEquals(1, result);
-        Assert.assertNotNull(brand.getId());
+       assertEquals(1, result);
+       assertNotNull(brand.getId());
         System.out.println("=============brandId=" + brand.getId());
 
     }
@@ -48,23 +51,23 @@ public class BrandMapperTest {
     @Test
     public void testupdateBrand() {
         int result = brandMapper.insert(brand);
-        Assert.assertEquals(1, result);
+       assertEquals(1, result);
 
         brand.setEditor("putiupdate");
         brand.setName("putiBrand");
         int updateResult = brandMapper.updateBrand(brand);
-        Assert.assertEquals(1, updateResult);
+       assertEquals(1, updateResult);
     }
 
     @Test
     public void testDeleteBrand() {
 
         int result = brandMapper.insert(brand);
-        Assert.assertEquals(1, result);
+       assertEquals(1, result);
 
         brand.setEditor("putidelete");
         int updateResult = brandMapper.deleteBrand(brand);
-        Assert.assertEquals(1, updateResult);
+       assertEquals(1, updateResult);
 
     }
 
@@ -75,8 +78,8 @@ public class BrandMapperTest {
         //Assert.assertNotNull(brand.getId());
 
         Brand brandQueryResult = brandMapper.getBrandById(brand.getId(), 1);
-        Assert.assertEquals(brand.getId(), brandQueryResult.getId());
-        Assert.assertEquals(brand.getName(), brandQueryResult.getName());
+       assertEquals(brand.getId(), brandQueryResult.getId());
+       assertEquals(brand.getName(), brandQueryResult.getName());
 
     }
 
@@ -84,13 +87,13 @@ public class BrandMapperTest {
     public void testGetBrandByIdList() {
 
         int result = brandMapper.insert(brand);
-        Assert.assertEquals(1, result);
-        Assert.assertNotNull(brand.getId());
+       assertEquals(1, result);
+       assertNotNull(brand.getId());
 
         List<Brand> brandList = brandMapper.queryBrandByIdList(Lists.newArrayList(brand.getId()), 1);
-        Assert.assertNotNull(brandList);
-        Assert.assertEquals(brand.getId(), brandList.get(0).getId());
-        Assert.assertEquals(brand.getName(), brandList.get(0).getName());
+       assertNotNull(brandList);
+       assertEquals(brand.getId(), brandList.get(0).getId());
+       assertEquals(brand.getName(), brandList.get(0).getName());
 
     }
 
@@ -98,12 +101,12 @@ public class BrandMapperTest {
     public void testQueryBrandAll() {
 
         int result = brandMapper.insert(brand);
-        Assert.assertEquals(1, result);
-        Assert.assertNotNull(brand.getId());
+       assertEquals(1, result);
+       assertNotNull(brand.getId());
 
         List<Brand> brandList = brandMapper.queryBrandAll(1, 1);
-        Assert.assertNotNull(brandList);
-        Assert.assertNotEquals(0, brandList.size());
+       assertNotNull(brandList);
+       assertNotEquals(0, brandList.size());
 
     }
 
@@ -111,12 +114,12 @@ public class BrandMapperTest {
     public void testGetBrandByNam() {
 
         int result = brandMapper.insert(brand);
-        Assert.assertEquals(1, result);
-        Assert.assertNotNull(brand.getId());
+       assertEquals(1, result);
+       assertNotNull(brand.getId());
 
         Brand brand1 = brandMapper.getBrandByName(brand.getName(), 1);
-        Assert.assertNotNull(brand1);
-        Assert.assertEquals(brand1.getName(), brand.getName());
+       assertNotNull(brand1);
+       assertEquals(brand1.getName(), brand.getName());
     }
 
 }

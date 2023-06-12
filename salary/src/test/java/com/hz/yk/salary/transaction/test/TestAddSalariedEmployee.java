@@ -9,10 +9,10 @@ import com.hz.yk.salary.payment.impl.HoldMethod;
 import com.hz.yk.salary.schedule.PaymentSchedule;
 import com.hz.yk.salary.schedule.impl.MonthlySchedule;
 import com.hz.yk.salary.transaction.impl.AddSalariedEmployee;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author wuzheng.yk

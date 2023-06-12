@@ -1,9 +1,9 @@
 package com.hz.yk.ddd.demo4.oop;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 /**
  * @author wuzheng.yk

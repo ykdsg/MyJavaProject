@@ -4,8 +4,7 @@ import com.hipac.ttl.TransmittableThreadLocal;
 import com.hipac.ttl.threadpool.TtlExecutors;
 import com.yt.asd.kit.pressure.PressureContext;
 import org.assertj.core.util.Lists;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -14,6 +13,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 import static com.hz.yk.thread.RunnableUtils.buildThreadPool;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * TTL 是用来解决 ITL 解决不了的问题而诞生的，所以 TTL 一定是支持父线程的本地变量传递给子线程这种基本操作的，ITL 也可以做到，但是前面有讲过，ITL 在线程池的模式下，就没办法再正确传递了，所以 TTL 做出的改进就是即便是在线程池模式下，也可以很好的将父线程本地变量传递下去
@@ -69,7 +69,7 @@ public class TransmitThreadLocalTest {
         System.out.println("outer - " + PressureContext.getPressure());
         tp.execute(() -> {
             System.out.println("inner a - " + PressureContext.getPressure());
-            Assert.assertNotNull(PressureContext.getPressure());
+           assertNotNull(PressureContext.getPressure());
             List<String> ls = Lists.newArrayList("1", "2").parallelStream().filter(s -> notEmpty(s))
                     .collect(Collectors.toList());
             System.out.println("inner b - " + PressureContext.getPressure());

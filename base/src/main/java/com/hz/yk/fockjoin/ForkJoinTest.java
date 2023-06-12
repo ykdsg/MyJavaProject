@@ -1,12 +1,12 @@
 package com.hz.yk.fockjoin;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * ForkJoinTask是分支合并的执行任何，分支合并的业务逻辑使用者可以再继承了这个抽先类之后，在抽象方法exec()中实现。<br>
@@ -18,7 +18,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class ForkJoinTest {
 
-    @Test public void testForkJoinInvoke() throws InterruptedException, ExecutionException {
+    @Test
+    public void testForkJoinInvoke() throws InterruptedException, ExecutionException {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         MyForkJoinTask<String> task = new MyForkJoinTask<String>();
         task.setSuccess(true);

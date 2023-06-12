@@ -3,9 +3,10 @@ package com.hz.yk.cucumber.test.glue.case1;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.junit.Assert;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author wuzheng.yk
@@ -21,7 +22,7 @@ public class TestSteps {
     @Then("检查{string}")
     public void checkName(String itemName) {
         System.out.println(itemName);
-        Assert.assertNotNull(itemName);
+       assertNotNull(itemName);
 
     }
 

@@ -3,7 +3,7 @@ package com.hz.yk.ttl;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.yt.asd.kit.pressure.PressureContext;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;

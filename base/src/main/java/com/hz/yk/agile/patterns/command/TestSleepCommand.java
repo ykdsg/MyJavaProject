@@ -1,7 +1,9 @@
 package com.hz.yk.agile.patterns.command;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created by wuzheng.yk on 2018/3/14.
@@ -25,7 +27,7 @@ public class TestSleepCommand {
         e.run();
         long stop = System.currentTimeMillis();
         long sleepTime = (stop-start);
-        Assert.assertTrue("SleepTime " + sleepTime + " expected == 1000", sleepTime == milliseconds);
-        Assert.assertTrue("Command Executed", commandExecuted);
+        assertEquals(sleepTime, milliseconds, "SleepTime " + sleepTime + " expected == 1000");
+        assertTrue( commandExecuted,"Command Executed");
     }
 }

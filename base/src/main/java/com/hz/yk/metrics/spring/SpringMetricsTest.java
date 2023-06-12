@@ -6,9 +6,9 @@ import com.codahale.metrics.Gauge;
 import com.codahale.metrics.Meter;
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -19,9 +19,9 @@ import static com.hz.yk.metrics.spring.TestUtil.forGaugeField;
 import static com.hz.yk.metrics.spring.TestUtil.forGaugeMethod;
 import static com.hz.yk.metrics.spring.TestUtil.forMeteredMethod;
 import static com.hz.yk.metrics.spring.TestUtil.forTimedMethod;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Created by wuzheng.yk on 2017/12/20.
@@ -31,7 +31,7 @@ public class SpringMetricsTest {
     private static MetricRegistry                     metricRegistry;
     private static TestBean testBean;
 
-    @BeforeClass
+    @BeforeAll
     public static void beforeClass() {
         applicationContext = new AnnotationConfigApplicationContext(SpringConfiguringClass.class);
         metricRegistry = applicationContext.getBean(MetricRegistry.class);
@@ -39,7 +39,7 @@ public class SpringMetricsTest {
     }
 
 
-    @AfterClass
+    @AfterAll
     public static void afterClass() {
         if (applicationContext != null) {
             applicationContext.close();

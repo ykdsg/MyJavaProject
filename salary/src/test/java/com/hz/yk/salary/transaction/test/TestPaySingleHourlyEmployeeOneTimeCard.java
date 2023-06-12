@@ -4,7 +4,7 @@ import com.hz.yk.salary.pay.PaydayTransaction;
 import com.hz.yk.salary.transaction.impl.AddHourlyEmployee;
 import com.hz.yk.salary.transaction.impl.TimeCardTransaction;
 import com.hz.yk.salary.transaction.test.util.Validate;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
 

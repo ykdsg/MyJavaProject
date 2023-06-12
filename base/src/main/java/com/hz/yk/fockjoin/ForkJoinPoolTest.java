@@ -1,7 +1,6 @@
 package com.hz.yk.fockjoin;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -9,12 +8,15 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * Created by wuzheng.yk on 2017/6/28.
  */
 public class ForkJoinPoolTest {
 
-    @Test public void testPrint() throws Exception {
+    @Test
+    public void testPrint() throws Exception {
         // 创建包含Runtime.getRuntime().availableProcessors()返回值作为个数的并行线程的ForkJoinPool
         ForkJoinPool forkJoinPool = new ForkJoinPool();
         // 提交可分解的PrintTask任务
@@ -45,7 +47,9 @@ public class ForkJoinPoolTest {
         Future<Integer> future = forkJoinPool.submit(new SumTask2(arr, 0, arr.length));
         System.out.println("计算出来的总和=" + future.get());
         int sum = future.get();
-        Assert.assertEquals(total, sum);
+        
+        assertEquals(total, sum);
+        
         // 关闭线程池
         forkJoinPool.shutdown();
         System.out.println("cost :" + (System.currentTimeMillis() - start));
@@ -73,7 +77,7 @@ public class ForkJoinPoolTest {
         //System.out.println("计算出来的总和=" + future.get());
         //int sum = future.get();
         int sum = forkJoinPool.invoke(new SumTask(arr, 0, arr.length));
-        Assert.assertEquals(total, sum);
+         assertEquals(total, sum);
     }
 
 }

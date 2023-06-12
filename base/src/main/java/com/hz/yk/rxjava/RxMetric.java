@@ -3,7 +3,7 @@ package com.hz.yk.rxjava;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;

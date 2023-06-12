@@ -1,6 +1,6 @@
 package com.hz.yk.temp;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.text.DecimalFormat;
 import java.text.ParseException;

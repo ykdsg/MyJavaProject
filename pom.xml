@@ -59,8 +59,12 @@
             <artifactId>annotations</artifactId>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -117,6 +121,12 @@
                 <groupId>com.yangt.disconf</groupId>
                 <artifactId>disconf-client</artifactId>
                 <version>1.0.6</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>junit</groupId>
+                        <artifactId>junit</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
@@ -596,10 +606,11 @@
                 <artifactId>spring-aop</artifactId>
                 <version>${springframework.version}</version>
             </dependency>
+
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>4.12</version>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-params</artifactId>
+                <version>5.9.2</version>
             </dependency>
 
             <dependency>

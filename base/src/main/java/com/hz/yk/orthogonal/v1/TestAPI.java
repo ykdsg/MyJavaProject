@@ -2,8 +2,8 @@ package com.hz.yk.orthogonal.v1;
 
 import com.google.common.collect.Lists;
 import com.hz.yk.orthogonal.Student;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public class TestAPI {
 
     List<Student> students = Lists.newArrayList();
 
-    @Before
+    @BeforeAll
     public void setup() {
         students.add(new Student(1, "1name"));
         students.add(new Student(2, "2name"));

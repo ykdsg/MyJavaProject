@@ -2,11 +2,12 @@ package com.hz.yk.reactor.price;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author wuzheng.yk
@@ -42,8 +43,8 @@ public class PriceMaterialsMain {
         System.out.println("item:" + priceSourceMaterials.getItem());
         System.out.println("result:" + priceSourceMaterials.getBatch());
 
-        Assert.assertNotNull(priceSourceMaterials.getItem());
-        Assert.assertNotNull(priceSourceMaterials.getBatch());
+       assertNotNull(priceSourceMaterials.getItem());
+       assertNotNull(priceSourceMaterials.getBatch());
     }
 
     //依赖批次信息
@@ -71,8 +72,8 @@ public class PriceMaterialsMain {
         System.out.println("result :" + priceSourceMaterials.getBatch());
         System.out.println("item:" + priceSourceMaterials.getItem());
 
-        Assert.assertNotNull(priceSourceMaterials.getItem());
-        Assert.assertNotNull(priceSourceMaterials.getBatch());
+       assertNotNull(priceSourceMaterials.getItem());
+       assertNotNull(priceSourceMaterials.getBatch());
 
     }
 

@@ -4,10 +4,10 @@ import com.hz.yk.salary.database.PayrollDatabase;
 import com.hz.yk.salary.entity.Employee;
 import com.hz.yk.salary.transaction.impl.AddCommissionedEmployee;
 import com.hz.yk.salary.transaction.impl.DeleteEmployeeTransaction;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TestDeleteEmployee {
 

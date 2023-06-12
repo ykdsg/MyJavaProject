@@ -1,9 +1,9 @@
 package com.hz.yk.thread.state;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * https://blog.csdn.net/u011024652/article/details/51584527

@@ -4,8 +4,8 @@ import com.hz.yk.salary.pay.Paycheck;
 
 import java.util.Calendar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class Validate {
 

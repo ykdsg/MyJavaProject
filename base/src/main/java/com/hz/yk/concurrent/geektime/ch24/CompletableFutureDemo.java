@@ -1,6 +1,6 @@
 package com.hz.yk.concurrent.geektime.ch24;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.CompletableFuture;
 

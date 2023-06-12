@@ -1,13 +1,13 @@
 package com.hz.yk.drools.fact;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 
 /**
  * Created by wuzheng.yk on 15/10/28.
@@ -15,7 +15,7 @@ import org.kie.api.runtime.KieSession;
 public class PromotionRuleTest {
     private KieServices kieServices;
     private KieContainer kieContainer;
-    @Before
+    @BeforeAll
     public void setUp() {
         kieServices = KieServices.Factory.get();
         kieContainer = kieServices.getKieClasspathContainer();

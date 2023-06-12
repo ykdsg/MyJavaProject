@@ -1,6 +1,6 @@
 package com.hz.yk.thread;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by wuzheng.yk on 2017/5/23.

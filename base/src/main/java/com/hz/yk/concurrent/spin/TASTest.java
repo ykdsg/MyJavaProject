@@ -1,6 +1,6 @@
 package com.hz.yk.concurrent.spin;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * 测试结果，单线程的执行效率最高，多线程的情况下导致执行效率变慢，我的电脑时4核的，

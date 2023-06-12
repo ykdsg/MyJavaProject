@@ -1,6 +1,6 @@
 package com.hz.yk.concurrent.aqs;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;

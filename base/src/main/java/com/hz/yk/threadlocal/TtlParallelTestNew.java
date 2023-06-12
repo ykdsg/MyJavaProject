@@ -3,8 +3,7 @@ package com.hz.yk.threadlocal;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.yt.asd.kit.pressure.PressureContext;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -12,6 +11,8 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @author wuzheng.yk
@@ -34,7 +35,7 @@ public class TtlParallelTestNew {
         System.out.println("outer - " + PressureContext.getPressure());
         tp.execute(() -> {
             System.out.println("inner a - " + PressureContext.getPressure());
-            Assert.assertNotNull(PressureContext.getPressure());
+           assertNotNull(PressureContext.getPressure());
             List<String> ls = Lists.newArrayList("1", "2").parallelStream().filter(s -> notEmpty(s))
                     .collect(Collectors.toList());
             System.out.println("inner b - " + PressureContext.getPressure());

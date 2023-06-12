@@ -3,7 +3,7 @@ package com.hz.yk.dubbo;
 import com.alibaba.dubbo.common.URL;
 import com.alibaba.dubbo.common.extension.ExtensionLoader;
 import com.hz.yk.dubbo.adaptive.AdaptiveExt2;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.regex.Pattern;

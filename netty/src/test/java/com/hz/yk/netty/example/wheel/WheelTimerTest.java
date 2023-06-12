@@ -1,7 +1,7 @@
 package com.hz.yk.netty.example.wheel;
 
 import io.netty.util.HashedWheelTimer;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

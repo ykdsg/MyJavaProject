@@ -1,6 +1,6 @@
 package com.hz.yk.threadlocal;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author wuzheng.yk

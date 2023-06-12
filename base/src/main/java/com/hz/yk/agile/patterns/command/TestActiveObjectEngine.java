@@ -1,7 +1,8 @@
 package com.hz.yk.agile.patterns.command;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Created by wuzheng.yk on 2018/3/14.
@@ -21,7 +22,7 @@ public class TestActiveObjectEngine {
             }
         });
         e.run();
-        Assert.assertTrue ("Command not executed", firstCommandExecuted);
+        assertTrue (firstCommandExecuted,"Command not executed");
 
     }
 
@@ -45,6 +46,6 @@ public class TestActiveObjectEngine {
             }
         });
         e.run();
-        Assert.assertTrue ("Commands not executed",firstCommandExecuted && secondCommandExecuted);
+        assertTrue (firstCommandExecuted && secondCommandExecuted,"Commands not executed");
     }
 }

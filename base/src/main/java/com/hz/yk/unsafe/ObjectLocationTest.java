@@ -1,8 +1,8 @@
 package com.hz.yk.unsafe;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
@@ -16,7 +16,7 @@ public class ObjectLocationTest {
     @SuppressWarnings("unused")
     private int orange = 10;
     Unsafe unsafe  = null;
-    @Before
+    @BeforeAll
     public void setUp() {
         Field theUnsafeInstance;
         try {
@@ -35,7 +35,7 @@ public class ObjectLocationTest {
 
     }
 
-    @After
+    @AfterAll
     public void tearDown() {
     }
 
