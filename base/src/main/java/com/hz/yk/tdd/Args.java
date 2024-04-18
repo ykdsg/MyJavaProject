@@ -1,6 +1,7 @@
 package com.hz.yk.tdd;
 
 import com.google.common.collect.Maps;
+import com.hz.yk.tdd.exception.IllegalOptionException;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Constructor;
@@ -44,9 +45,9 @@ public class Args {
 
     private static Map<Class<?>, OptionParser> PARSERS = Maps.newHashMap();
     static {
-        PARSERS.put(boolean.class, new BooleanOptionParser());
-        PARSERS.put(int.class, new SingleValueOptionParser<Integer>(Integer::parseInt, 0));
-        PARSERS.put(String.class, new SingleValueOptionParser<String>(String::valueOf, ""));
+        PARSERS.put(boolean.class, OptionParsers.bool());
+        PARSERS.put(int.class, OptionParsers.unary(Integer::parseInt, 0));
+        PARSERS.put(String.class, OptionParsers.unary(String::valueOf, ""));
     }
 
 }

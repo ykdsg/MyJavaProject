@@ -1,7 +1,7 @@
 package com.hz.yk.co;
 
 import com.hz.yk.co.rule.ErrorMessageLogger;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.PrintWriter;
@@ -24,7 +24,7 @@ public class LoggerTest {
     private Logger warning_log;
     private Logger info_log;
 
-    @Before
+    @BeforeAll
     public void setup() {
         // 代表特定的日志文件
         PrintWriter err_writer = new PrintWriter(System.err, true);

@@ -1,11 +1,13 @@
 package com.hz.yk.io.nio.reactor;
 
+import org.junit.jupiter.api.Test;
+
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 public class BufferPoolTest {
 
-	@org.junit.Test
+	@Test
 	public void Test() {
 		BufferPool pool = new BufferPool(1024 * 5, 1024);
 		int i = pool.capacity();

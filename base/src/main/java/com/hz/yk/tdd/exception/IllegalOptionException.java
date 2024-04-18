@@ -1,4 +1,4 @@
-package com.hz.yk.tdd;
+package com.hz.yk.tdd.exception;
 
 /**
  * @author wuzheng.yk
